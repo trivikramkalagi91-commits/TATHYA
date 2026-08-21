@@ -301,37 +301,21 @@ export default function App() {
       {/* Main Console Content Body */}
       <div className="flex-1 flex flex-col min-w-0 bg-[var(--bg-base)]">
         {/* Top Ticker Bar (in.investing.com style) */}
-        <div className="bg-white border-b-2 border-black py-2.5 px-8 overflow-x-auto whitespace-nowrap flex flex-row flex-nowrap items-center gap-8 text-[10px] font-mono select-none scrollbar-none">
-          <div className="flex flex-row flex-nowrap items-center gap-2 min-w-max">
-            <span className="text-zinc-650 font-bold whitespace-nowrap">NIFTY 50</span>
-            <span className="text-black font-bold whitespace-nowrap">24,315.20</span>
-            <span className="text-[#10b981] font-semibold whitespace-nowrap">▲ +185.10 (+0.77%)</span>
-          </div>
-          <div className="flex flex-row flex-nowrap items-center gap-2 min-w-max border-l-2 border-black pl-8">
-            <span className="text-zinc-650 font-bold whitespace-nowrap">SENSEX</span>
-            <span className="text-black font-bold whitespace-nowrap">79,642.50</span>
-            <span className="text-[#10b981] font-semibold whitespace-nowrap">▲ +628.30 (+0.80%)</span>
-          </div>
-          <div className="flex flex-row flex-nowrap items-center gap-2 min-w-max border-l-2 border-black pl-8">
-            <span className="text-zinc-650 font-bold whitespace-nowrap">USD/INR</span>
-            <span className="text-black font-bold whitespace-nowrap">83.92</span>
-            <span className="text-[#ef4444] font-semibold whitespace-nowrap">▼ -0.05 (-0.06%)</span>
-          </div>
-          <div className="flex flex-row flex-nowrap items-center gap-2 min-w-max border-l-2 border-black pl-8">
-            <span className="text-zinc-650 font-bold whitespace-nowrap">GOLD IN</span>
-            <span className="text-black font-bold whitespace-nowrap">₹71,850</span>
-            <span className="text-[#10b981] font-semibold whitespace-nowrap">▲ +240 (+0.34%)</span>
-          </div>
-          <div className="flex flex-row flex-nowrap items-center gap-2 min-w-max border-l-2 border-black pl-8">
-            <span className="text-zinc-650 font-bold whitespace-nowrap">BRENT CRUDE</span>
-            <span className="text-black font-bold whitespace-nowrap">$77.12</span>
-            <span className="text-[#ef4444] font-semibold whitespace-nowrap">▼ -0.42 (-0.54%)</span>
-          </div>
-          <div className="flex flex-row flex-nowrap items-center gap-2 min-w-max border-l-2 border-black pl-8">
-            <span className="text-zinc-650 font-bold whitespace-nowrap">US 10Y BOND</span>
-            <span className="text-black font-bold whitespace-nowrap">3.82%</span>
-            <span className="text-[#10b981] font-semibold whitespace-nowrap">▲ +0.02 (+0.52%)</span>
-          </div>
+        <div className="bg-slate-950 border-b border-slate-800 py-3.5 px-8 overflow-x-auto whitespace-nowrap flex flex-row flex-nowrap items-center gap-4 text-xs font-mono select-none scrollbar-none">
+          {[
+            { label: 'NIFTY 50', price: '24,315.20', change: '▲ +185.10 (+0.77%)', positive: true },
+            { label: 'SENSEX', price: '79,642.50', change: '▲ +628.30 (+0.80%)', positive: true },
+            { label: 'USD/INR', price: '83.92', change: '▼ -0.05 (-0.06%)', positive: false },
+            { label: 'GOLD IN', price: '₹71,850', change: '▲ +240 (+0.34%)', positive: true },
+            { label: 'BRENT CRUDE', price: '$77.12', change: '▼ -0.42 (-0.54%)', positive: false },
+            { label: 'US 10Y BOND', price: '3.82%', change: '▲ +0.02 (+0.52%)', positive: true },
+          ].map((item, idx) => (
+            <div key={idx} className="flex flex-row flex-nowrap items-center gap-2 min-w-max bg-slate-900 border border-slate-800 rounded-md px-3 py-1.5">
+              <span className="text-xs font-semibold text-slate-400 whitespace-nowrap">{item.label}</span>
+              <span className="text-sm font-bold text-slate-100 whitespace-nowrap">{item.price}</span>
+              <span className={`font-semibold text-xs whitespace-nowrap ${item.positive ? 'text-emerald-400' : 'text-rose-400'}`}>{item.change}</span>
+            </div>
+          ))}
         </div>
 
         {/* Top Header bar */}
@@ -931,7 +915,7 @@ function OverviewDashboardView() {
   return (
     <div className="flex flex-col gap-8 text-slate-200">
       {/* Dashboard Top Grid Metrics */}
-      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4">
+      <div className="grid-autofit">
         {[
           { title: 'ACTIVE SOURCES', val: metrics?.active_sources || 0, label: 'Monitored sites' },
           { title: 'HEALTHY COLLECTORS', val: metrics?.healthy_collectors || 0, label: 'Scrapers at 100%' },
@@ -940,12 +924,12 @@ function OverviewDashboardView() {
           { title: 'RECORDS COLLECTED', val: metrics?.records_collected || 0, label: 'Scraped items' },
           { title: 'AVG RECOVERY TIME', val: `${metrics?.avg_recovery_time_mins || 0}m`, label: 'From break to heal' }
         ].map((item, idx) => (
-          <div key={idx} className="panel p-4 border border-slate-800/80 bg-slate-900/40 shadow-sm rounded-xl">
-            <span className="text-[10px] font-mono text-slate-500 block uppercase tracking-wider">{item.title}</span>
-            <span className={`text-2xl font-mono font-bold block mt-2 tabular-nums ${item.warning ? 'text-rose-400' : 'text-slate-100'}`}>
+          <div key={idx} className="border border-slate-800 bg-slate-900 rounded-lg p-4 flex flex-col justify-between shadow-sm">
+            <span className="text-xs font-semibold tracking-wider uppercase text-slate-400 block">{item.title}</span>
+            <span className={`text-3xl font-extrabold my-1 block tabular-nums ${item.warning ? 'text-rose-400' : 'text-white'}`}>
               {item.val}
             </span>
-            <span className="text-[10px] text-slate-400 mt-1 block leading-tight">{item.label}</span>
+            <span className="text-xs text-slate-500 font-normal block leading-tight mt-1">{item.label}</span>
           </div>
         ))}
       </div>

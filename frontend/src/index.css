@@ -1,22 +1,34 @@
-/* Modern Core Variables for Tathya - Frontend Practice Light Theme */
+/* Modern Core Variables for Tathya - Dark Slate / Trading Terminal theme */
 :root {
-  --bg-base: #ffffff;          /* Pure White background */
-  --surface: #faf0d9;          /* Classic Cream surface card color */
-  --border-default: #000000;   /* High contrast black borders */
-  --border-active: #000000;    /* Focused active state border */
+  --bg-base: #090d16;          /* Deep zinc/slate-950 base background */
+  --surface: #0f172a;          /* Slate-900 surface for cards/panels */
+  --border-default: #1e293b;   /* Slate-800 subtle card borders */
+  --border-active: #38bdf8;    /* Electric blue active state indicator */
   
   /* Text */
-  --text-primary: #000000;     /* Solid black text */
-  --text-secondary: #3f3f46;   /* Muted dark zinc text */
-  --text-muted: #71717a;       /* Slate muted text */
+  --text-primary: #f8fafc;     /* Clean primary slate text */
+  --text-secondary: #94a3b8;   /* Secondary slate text */
+  --text-muted: #64748b;       /* Muted slate text for timestamps */
   
   /* Statuses */
-  --status-warning: #f59e0b;   /* Warning Amber */
-  --status-positive: #10b981;  /* Positive Emerald */
-  --status-negative: #ef4444;  /* Negative Rose */
+  --status-warning: #f59e0b;   /* Warning Amber badge */
+  --status-positive: #10b981;  /* Positive Emerald health */
+  --status-negative: #ef4444;  /* Negative Rose failure */
   
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   color-scheme: dark;
+}
+
+/* Light retro Frontend Practice theme overlay scoped to landing page */
+.light-theme {
+  --bg-base: #ffffff !important;
+  --surface: #faf0d9 !important;
+  --border-default: #000000 !important;
+  --border-active: #000000 !important;
+  --text-primary: #000000 !important;
+  --text-secondary: #3f3f46 !important;
+  --text-muted: #71717a !important;
+  color-scheme: light !important;
 }
 
 /* Reset */
@@ -307,15 +319,21 @@ a:hover {
 
 /* Grid columns & Spans */
 .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+.grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.grid-cols-6 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.grid-autofit { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) !important; gap: 1rem; }
 .sticky { position: sticky; }
 .top-6 { top: 1.5rem; }
 
 @media (min-width: 768px) {
-  .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  .md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
 }
 
 @media (min-width: 1280px) {
-  .xl\:grid-cols-12 { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+  .xl\:grid-cols-6 { grid-template-columns: repeat(6, minmax(0, 1fr)) !important; }
+  .xl\:grid-cols-12 { grid-template-columns: repeat(12, minmax(0, 1fr)) !important; }
   .xl\:col-span-8 { grid-column: span 8 / span 8; }
   .xl\:col-span-4 { grid-column: span 4 / span 4; }
 }
