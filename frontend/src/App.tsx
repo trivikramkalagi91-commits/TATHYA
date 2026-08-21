@@ -1988,26 +1988,26 @@ function SettingsDashboardView({ user }: { user: User | null }) {
             <label className="text-black font-extrabold uppercase">BRIGHT DATA API TOKEN</label>
             <input 
               type="password" 
-              className="w-full bg-white border-2 border-black rounded-none px-3 py-2 text-xs text-black focus:outline-none font-mono font-bold" 
+              className="w-full bg-zinc-100 border-2 border-black rounded-none px-3 py-2 text-xs text-zinc-500 cursor-not-allowed font-mono font-bold" 
               value={brightToken}
-              onChange={e => setBrightToken(e.target.value)}
+              disabled
             />
-            <span className="text-[10px] text-zinc-650 font-bold block">Backend-only server-side token. Never exposed.</span>
+            <span className="text-[10px] text-zinc-650 font-bold block">Backend-only server-side token. Locked & managed securely via environment variables.</span>
           </div>
 
           <div className="form-group flex flex-col gap-1.5">
             <label className="text-black font-extrabold uppercase">MARKET NEWS PROVIDER KEY (FINNHUB)</label>
             <input 
               type="password" 
-              className="w-full bg-white border-2 border-black rounded-none px-3 py-2 text-xs text-black focus:outline-none font-mono font-bold" 
+              className="w-full bg-zinc-100 border-2 border-black rounded-none px-3 py-2 text-xs text-zinc-500 cursor-not-allowed font-mono font-bold" 
               value={newsToken}
-              onChange={e => setNewsToken(e.target.value)}
+              disabled
             />
-            <span className="text-[10px] text-zinc-650 font-bold block">Used to retrieve real-time US company quotes.</span>
+            <span className="text-[10px] text-zinc-650 font-bold block">Used to retrieve real-time US company quotes. Locked & managed securely via environment variables.</span>
           </div>
 
-          <button type="submit" className="px-4 py-3 border-2 border-black bg-black text-white hover:bg-zinc-800 font-bold text-xs rounded-none cursor-pointer uppercase font-mono shadow-sm mt-2">
-            SAVE CONFIGURATION
+          <button disabled className="px-4 py-3 border-2 border-zinc-400 bg-zinc-200 text-zinc-500 font-bold text-xs rounded-none cursor-not-allowed uppercase font-mono mt-2">
+            SAVE CONFIGURATION (READ-ONLY)
           </button>
         </form>
       </div>
