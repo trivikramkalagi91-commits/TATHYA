@@ -8,7 +8,8 @@ from sqlalchemy.orm import Session
 import jwt
 from backend.app.db.session import get_db
 from backend.app.config import settings
-from backend.app.models.models import User, Workspace, Project
+import json
+from backend.app.models.models import User, Workspace, Project, Source, Collector, Watchlist, WatchlistItem
 from backend.app.schemas.schemas import UserCreate, UserLogin, UserResponse, Token
 
 router = APIRouter(prefix="/api/v1/auth", tags=["auth"])
@@ -90,6 +91,118 @@ def signup(user_in: UserCreate, db: Session = Depends(get_db)):
         workspace_id=workspace.id
     )
     db.add(project)
+    db.commit()
+    db.refresh(project)
+
+    # Seed default data sources for the new project
+    demo_source = Source(
+        name="Tathya Controlled Feed",
+        url="http://localhost:8000/api/v1/demo-site/target",
+        type="demo",
+        project_id=project.id
+    )
+    yahoo_source = Source(
+        name="Yahoo Finance Live",
+        url="https://finance.yahoo.com/news/",
+        type="news",
+        project_id=project.id
+    )
+    google_source = Source(
+        name="Google News Feed",
+        url="https://news.google.com/rss",
+        type="news",
+        project_id=project.id
+    )
+    db.add_all([demo_source, yahoo_source, google_source])
+    db.commit()
+    db.refresh(demo_source)
+    db.refresh(yahoo_source)
+    db.refresh(google_source)
+
+    # Seed default collectors
+    demo_schema = {
+        "symbol": "required",
+        "headline": "required",
+        "timestamp": "required",
+        "category": "optional",
+        "url": "required"
+    }
+    demo_selectors = {
+        "row_container": ".market-event",
+        "symbol": ".symbol",
+        "headline": ".headline",
+        "timestamp": ".timestamp",
+        "category": ".category",
+        "url": "a.url"
+    }
+    demo_collector = Collector(
+        name="Local Demo Scraper",
+        source_id=demo_source.id,
+        status="UNKNOWN",
+        active_schema=json.dumps(demo_schema),
+        selector_mapping=json.dumps(demo_selectors),
+        health_score=100.0
+    )
+
+    yahoo_schema = {
+        "headline": "required",
+        "timestamp": "required",
+        "url": "required"
+    }
+    yahoo_selectors = {
+        "row_container": "section.substream",
+        "headline": "h3",
+        "timestamp": ".publishing",
+        "url": "a"
+    }
+    yahoo_collector = Collector(
+        name="Yahoo News Scraper",
+        source_id=yahoo_source.id,
+        status="UNKNOWN",
+        active_schema=json.dumps(yahoo_schema),
+        selector_mapping=json.dumps(yahoo_selectors),
+        health_score=100.0
+    )
+
+    google_schema = {
+        "headline": "required",
+        "timestamp": "required",
+        "url": "required"
+    }
+    google_selectors = {
+        "row_container": "item",
+        "headline": "title",
+        "timestamp": "pubDate",
+        "url": "link"
+    }
+    google_collector = Collector(
+        name="Google News Scraper",
+        source_id=google_source.id,
+        status="UNKNOWN",
+        active_schema=json.dumps(google_schema),
+        selector_mapping=json.dumps(google_selectors),
+        health_score=100.0
+    )
+    db.add_all([demo_collector, yahoo_collector, google_collector])
+    db.commit()
+
+    # Seed default watchlist
+    watchlist = Watchlist(
+        name="Default Watchlist",
+        user_id=user.id
+    )
+    db.add(watchlist)
+    db.commit()
+    db.refresh(watchlist)
+
+    # Seed initial watchlist symbols
+    symbols = ["TCS", "RELIANCE", "INFOSYS"]
+    for s in symbols:
+        item = WatchlistItem(
+            watchlist_id=watchlist.id,
+            symbol=s
+        )
+        db.add(item)
     db.commit()
 
     return user
