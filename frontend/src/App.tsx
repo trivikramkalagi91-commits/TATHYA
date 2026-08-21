@@ -1874,6 +1874,9 @@ function MarketIntelligenceDashboardView() {
                     <div className="text-[10px] text-black leading-relaxed font-sans bg-zinc-50 p-2.5 border-2 border-black rounded-none font-bold mt-auto">
                       ⚡ <strong>Model Recommendation:</strong> Supporting data pipeline reports 100% selector health. Automated execution sandbox matches historical layout.
                     </div>
+                    <p style={{ fontSize: '9px', lineHeight: '1.3' }} className="text-zinc-650 font-mono font-bold mt-2.5">
+                      ⚠️ <strong>Disclaimer:</strong> Opportunity scores and scenario levels are generated algorithmically for validation purposes. This is not financial advice. Trade at your own risk.
+                    </p>
                   </div>
                 ) : (
                   <div className="flex flex-col justify-center items-center text-center p-8 border-2 border-dashed border-black bg-zinc-50 flex-grow gap-2 h-full rounded-none">
