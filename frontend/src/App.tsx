@@ -50,6 +50,7 @@ export default function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const [alerts, setAlerts] = useState<any[]>([]);
   const [notificationsOpen, setNotificationsOpen] = useState<boolean>(false);
+  const [workspaceOpen, setWorkspaceOpen] = useState<boolean>(false);
   const [authError, setAuthError] = useState<string>('');
 
   // Handle Hash Routing
@@ -215,93 +216,103 @@ export default function App() {
 
   // Render Dashboard Portal Shell
   return (
-    <div className="bg-[var(--bg-base)] min-h-screen text-[var(--text-primary)] flex font-sans">
-      {/* Dashboard Left Sidebar */}
-      <aside className="w-64 border-r-2 border-[var(--border-default)] bg-[var(--surface)] flex flex-col justify-between">
+    <div className="bg-[var(--bg-base)] min-h-screen text-[var(--text-primary)] flex font-sans">      {/* Dashboard Left Sidebar */}
+      <aside className="custom-sidebar">
         <div className="flex flex-col">
-          <div className="h-16 border-b-2 border-[var(--border-default)] flex items-center px-6 gap-2 bg-white">
+          <div className="sidebar-logo-area">
             <span className="font-serif text-xl font-bold tracking-tight text-black">Tathya</span>
-            <span className="text-[9px] bg-[#86efac] text-black border border-black px-1.5 py-0.5 rounded-none font-mono font-bold uppercase tracking-wider">LIVE</span>
+            <span className="text-[9px] bg-[#86efac] text-black border-2 border-black px-1.5 py-0.5 rounded-none font-mono font-bold uppercase tracking-wider">LIVE</span>
           </div>
 
           {/* Workspace Selector */}
-          <div className="px-4 py-3 border-b-2 border-[var(--border-default)] flex flex-col gap-1.5 text-xs font-mono bg-white">
-            <span className="text-zinc-500 text-[9px] font-bold uppercase tracking-wider">// WORKSPACE</span>
-            <div className="flex items-center justify-between text-black cursor-pointer hover:underline">
-              <span className="font-bold">Primary Workspace</span>
-              <ChevronDown size={14} className="text-black" />
+          <div className="sidebar-workspace-area">
+            <span className="text-zinc-550 text-[9px] font-bold uppercase tracking-wider">// WORKSPACE</span>
+            <div 
+              onClick={() => setWorkspaceOpen(!workspaceOpen)} 
+              className="flex items-center justify-between text-black cursor-pointer hover:underline"
+            >
+              <span className="font-bold text-xs">Primary Workspace</span>
+              <ChevronDown size={14} className={`text-black transition-transform ${workspaceOpen ? 'rotate-180' : ''}`} />
             </div>
+            {workspaceOpen && (
+              <div className="absolute left-4 right-4 top-14 bg-white border-2 border-black z-50 p-1 flex flex-col gap-1 shadow-[3px_3px_0px_#000000]">
+                <div onClick={() => { setWorkspaceOpen(false); alert("Switched to Primary Workspace"); }} className="p-2 hover:bg-zinc-100 cursor-pointer font-bold text-[9px] text-black uppercase">Primary Workspace</div>
+                <div onClick={() => { setWorkspaceOpen(false); alert("Switched to Sandbox Analytics"); }} className="p-2 hover:bg-zinc-100 cursor-pointer font-bold text-[9px] text-black uppercase">Sandbox Analytics</div>
+                <div onClick={() => { setWorkspaceOpen(false); alert("Switched to Prod Scraping Flow"); }} className="p-2 hover:bg-zinc-100 cursor-pointer font-bold text-[9px] text-black uppercase">Prod Scraping Flow</div>
+              </div>
+            )}
           </div>
 
           {/* Navigation Tabs */}
-          <nav className="p-4 flex flex-col gap-2.5 text-xs font-bold uppercase tracking-wider font-sans">
+          <nav className="sidebar-links-nav">
             <button
               onClick={() => navigateTo('app-overview')}
-              className={`flex items-center gap-3 w-full px-3.5 py-2.5 transition-all border-2 cursor-pointer ${currentPath === 'app-overview' ? 'bg-black text-white border-black rounded-none' : 'text-zinc-700 bg-transparent border-transparent hover:bg-black/5 hover:text-black rounded-none'}`}
+              className={`sidebar-item-link ${currentPath === 'app-overview' ? 'active' : ''}`}
             >
-              <Activity size={16} />
+              <Activity size={14} />
               <span>Overview</span>
             </button>
             
             <button
               onClick={() => navigateTo('app-sources')}
-              className={`flex items-center gap-3 w-full px-3.5 py-2.5 transition-all border-2 cursor-pointer ${currentPath === 'app-sources' ? 'bg-black text-white border-black rounded-none' : 'text-zinc-700 bg-transparent border-transparent hover:bg-black/5 hover:text-black rounded-none'}`}
+              className={`sidebar-item-link ${currentPath === 'app-sources' ? 'active' : ''}`}
             >
-              <LinkIcon size={16} />
+              <LinkIcon size={14} />
               <span>Sources & Scrapers</span>
             </button>
             
             <button
               onClick={() => navigateTo('app-repairs')}
-              className={`flex items-center gap-3 w-full px-3.5 py-2.5 transition-all border-2 cursor-pointer ${currentPath === 'app-repairs' ? 'bg-black text-white border-black rounded-none' : 'text-zinc-700 bg-transparent border-transparent hover:bg-black/5 hover:text-black rounded-none'}`}
+              className={`sidebar-item-link ${currentPath === 'app-repairs' ? 'active' : ''}`}
             >
-              <Zap size={16} />
+              <Zap size={14} />
               <span>Self-Healing Logs</span>
             </button>
             
             <button
               onClick={() => navigateTo('app-market')}
-              className={`flex items-center gap-3 w-full px-3.5 py-2.5 transition-all border-2 cursor-pointer ${currentPath === 'app-market' ? 'bg-black text-white border-black rounded-none' : 'text-zinc-700 bg-transparent border-transparent hover:bg-black/5 hover:text-black rounded-none'}`}
+              className={`sidebar-item-link ${currentPath === 'app-market' ? 'active' : ''}`}
             >
-              <TrendingUp size={16} />
+              <TrendingUp size={14} />
               <span>Market Intelligence</span>
             </button>
             
             <button
               onClick={() => navigateTo('app-settings')}
-              className={`flex items-center gap-3 w-full px-3.5 py-2.5 transition-all border-2 cursor-pointer ${currentPath === 'app-settings' ? 'bg-black text-white border-black rounded-none' : 'text-zinc-700 bg-transparent border-transparent hover:bg-black/5 hover:text-black rounded-none'}`}
+              className={`sidebar-item-link ${currentPath === 'app-settings' ? 'active' : ''}`}
             >
-              <Settings size={16} />
+              <Settings size={14} />
               <span>Integrations & Keys</span>
             </button>
 
-            <div className="border-t-2 border-[var(--border-default)] my-2"></div>
+            <div className="border-t-2 border-black my-1"></div>
 
             <button
               onClick={() => navigateTo('app-docs')}
-              className={`flex items-center gap-3 w-full px-3.5 py-2.5 transition-all border-2 cursor-pointer ${currentPath === 'app-docs' ? 'bg-black text-white border-black rounded-none' : 'text-zinc-700 bg-transparent border-transparent hover:bg-black/5 hover:text-black rounded-none'}`}
+              className={`sidebar-item-link ${currentPath === 'app-docs' ? 'active' : ''}`}
             >
-              <BookOpen size={16} />
+              <BookOpen size={14} />
               <span>System Manual</span>
             </button>
           </nav>
         </div>
 
         {/* User Footer Panel */}
-        <div className="p-4 border-t-2 border-[var(--border-default)] bg-white flex items-center justify-between">
+        <div className="sidebar-footer">
           <div className="flex flex-col text-xs">
             <span className="font-bold text-black text-[11px]">{user?.full_name || 'Engineer'}</span>
             <span className="text-[9px] text-zinc-500 font-mono tracking-tight">{user?.email}</span>
           </div>
-          <button onClick={handleLogout} className="text-zinc-600 hover:text-black transition-colors border-0 bg-transparent cursor-pointer" title="Logout">
+          <button onClick={handleLogout} className="text-zinc-650 hover:text-black transition-colors border-0 bg-transparent cursor-pointer" title="Logout">
             <LogOut size={16} />
           </button>
         </div>
       </aside>
+
       {/* Main Console Content Body */}
       <div className="flex-1 flex flex-col min-w-0 bg-[var(--bg-base)]">
         {/* Top Ticker Bar (in.investing.com style) */}
-        <div className="bg-white border-b-2 border-black py-3.5 px-8 overflow-x-auto whitespace-nowrap flex flex-row flex-nowrap items-center gap-4 text-xs font-mono select-none scrollbar-none">
+        <div className="custom-ticker">
           {[
             { label: 'NIFTY 50', price: '24,315.20', change: '▲ +185.10 (+0.77%)', positive: true },
             { label: 'SENSEX', price: '79,642.50', change: '▲ +628.30 (+0.80%)', positive: true },
@@ -310,10 +321,10 @@ export default function App() {
             { label: 'BRENT CRUDE', price: '$77.12', change: '▼ -0.42 (-0.54%)', positive: false },
             { label: 'US 10Y BOND', price: '3.82%', change: '▲ +0.02 (+0.52%)', positive: true },
           ].map((item, idx) => (
-            <div key={idx} className="flex flex-row flex-nowrap items-center gap-2 min-w-max bg-white border-2 border-black rounded-none px-3 py-1.5 shadow-sm">
-              <span className="text-xs font-bold text-black whitespace-nowrap">{item.label}</span>
-              <span className="text-xs font-mono font-bold text-zinc-700 whitespace-nowrap">{item.price}</span>
-              <span className={`font-bold text-xs whitespace-nowrap ${item.positive ? 'text-emerald-600' : 'text-rose-600'}`}>{item.change}</span>
+            <div key={idx} className="custom-ticker-item">
+              <span className="text-xs font-bold text-black">{item.label}</span>
+              <span className="text-xs font-mono font-bold text-zinc-700">{item.price}</span>
+              <span className={`font-bold text-xs ${item.positive ? 'text-emerald-600' : 'text-rose-600'}`}>{item.change}</span>
             </div>
           ))}
         </div>
@@ -913,9 +924,9 @@ function OverviewDashboardView() {
   if (loading) return <div className="text-xs font-mono text-zinc-500">LOADING METRICS...</div>;
 
   return (
-    <div className="flex flex-col gap-8 text-slate-200">
+    <div className="flex flex-col gap-8 text-black bg-white">
       {/* Dashboard Top Grid Metrics */}
-      <div className="grid-autofit">
+      <div className="grid-symmetric">
         {[
           { title: 'ACTIVE SOURCES', val: metrics?.active_sources || 0, label: 'Monitored sites' },
           { title: 'HEALTHY COLLECTORS', val: metrics?.healthy_collectors || 0, label: 'Scrapers at 100%' },
@@ -926,50 +937,50 @@ function OverviewDashboardView() {
         ].map((item, idx) => (
           <div key={idx} className="border-2 border-black bg-[#faf0d9] rounded-none p-4 flex flex-col justify-between shadow-sm hover:shadow-[4px_4px_0px_#000000] cursor-pointer transition-all">
             <span className="text-xs font-bold tracking-wider uppercase text-black block">{item.title}</span>
-            <span className={`text-3xl font-extrabold my-1 block tabular-nums ${item.warning ? 'text-red-600' : 'text-black'}`}>
+            <span className={`text-3xl font-extrabold my-1 block tabular-nums ${item.warning ? 'text-red-650' : 'text-black'}`}>
               {item.val}
             </span>
-            <span className="text-xs text-zinc-650 font-bold block leading-tight mt-1">{item.label}</span>
+            <span className="text-xs text-black font-bold block leading-tight mt-1">{item.label}</span>
           </div>
         ))}
       </div>
 
       {/* Main section */}
-      <div className="grid grid-3 gap-6">
+      <div className="grid-two-equal">
         {/* Scraper run history stream */}
-        <div className="panel p-6 border border-[#242427] bg-[#131315] col-span-2">
-          <h2 className="text-md font-mono font-bold mb-4 text-zinc-200">RECENT SCRAPER WORKFLOW ACTIVITIES</h2>
+        <div className="bg-[#faf0d9] border-2 border-black rounded-none p-6 flex flex-col justify-between shadow-sm hover:shadow-[4px_4px_0px_#000000] cursor-pointer transition-all">
+          <h2 className="text-base font-serif font-bold mb-4 text-black uppercase">RECENT SCRAPER WORKFLOW ACTIVITIES</h2>
           <div className="table-container">
             <table className="table">
               <thead>
                 <tr>
-                  <th className="whitespace-nowrap">SCRAPER</th>
-                  <th className="whitespace-nowrap">TIMESTAMP</th>
-                  <th className="whitespace-nowrap">RECORDS</th>
-                  <th className="whitespace-nowrap">HEALTH SCORE</th>
-                  <th className="whitespace-nowrap">STATUS</th>
+                  <th className="whitespace-nowrap border-b-2 border-black text-black font-bold uppercase font-sans text-xs">SCRAPER</th>
+                  <th className="whitespace-nowrap border-b-2 border-black text-black font-bold uppercase font-sans text-xs">STAMP</th>
+                  <th className="whitespace-nowrap border-b-2 border-black text-black font-bold uppercase font-sans text-xs">RECORDS</th>
+                  <th className="whitespace-nowrap border-b-2 border-black text-black font-bold uppercase font-sans text-xs">HEALTH</th>
+                  <th className="whitespace-nowrap border-b-2 border-black text-black font-bold uppercase font-sans text-xs">STATUS</th>
                 </tr>
               </thead>
               <tbody>
                 {history.length === 0 ? (
                   <tr>
-                    <td colSpan={5} className="text-center py-4 text-zinc-600 font-mono">No scrapes executed yet.</td>
+                    <td colSpan={5} className="text-center py-4 text-zinc-700 font-mono font-bold">No scrapes executed yet.</td>
                   </tr>
                 ) : (
                   history.map((run) => (
-                    <tr key={run.id}>
-                      <td className="font-mono whitespace-nowrap">{run.collector_name}</td>
-                      <td className="text-zinc-400 text-[10px] font-mono whitespace-nowrap">
+                    <tr key={run.id} className="border-b border-black/25">
+                      <td className="font-mono font-bold text-black text-xs whitespace-nowrap">{run.collector_name}</td>
+                      <td className="text-zinc-650 text-[10px] font-mono font-bold whitespace-nowrap">
                         {new Date(run.run_at).toLocaleString()}
                       </td>
-                      <td className="font-mono whitespace-nowrap">{run.records_count}</td>
-                      <td className="font-mono font-semibold whitespace-nowrap">
-                        <span className={run.health_score === 100 ? 'text-emerald-400' : run.health_score > 0 ? 'text-amber-400' : 'text-red-400'}>
+                      <td className="font-mono font-bold text-black text-xs whitespace-nowrap">{run.records_count}</td>
+                      <td className="font-mono font-bold whitespace-nowrap">
+                        <span className={run.health_score === 100 ? 'text-emerald-600' : run.health_score > 0 ? 'text-amber-600' : 'text-red-600'}>
                           {run.health_score}%
                         </span>
                       </td>
                       <td className="whitespace-nowrap">
-                        <span className={`badge ${run.status === 'SUCCESS' ? 'badge-success' : run.status === 'DEGRADED' ? 'badge-warning' : 'badge-danger'}`}>
+                        <span className={`badge border border-black font-bold font-mono text-[9px] uppercase px-2 py-0.5 rounded-none ${run.status === 'SUCCESS' ? 'bg-[#86efac] text-black' : run.status === 'DEGRADED' ? 'bg-[#fde047] text-black' : 'bg-red-500 text-white'}`}>
                           {run.status}
                         </span>
                       </td>
@@ -982,23 +993,23 @@ function OverviewDashboardView() {
         </div>
 
         {/* Live system state panel */}
-        <div className="panel p-6 border border-[#242427] bg-[#131315] flex flex-col gap-4">
-          <h2 className="text-md font-mono font-bold text-zinc-200">PIPELINE MONITOR</h2>
-          <div className="flex-1 flex flex-col justify-center items-center text-center p-6 border border-dashed border-[#242427] rounded bg-[#0b0b0c] font-mono">
+        <div className="bg-[#faf0d9] border-2 border-black rounded-none p-6 flex flex-col gap-4 shadow-sm hover:shadow-[4px_4px_0px_#000000] cursor-pointer transition-all">
+          <h2 className="text-base font-serif font-bold text-black uppercase">PIPELINE MONITOR</h2>
+          <div className="flex-1 flex flex-col justify-center items-center text-center p-6 border-2 border-dashed border-black bg-white rounded-none font-mono">
             {metrics?.degraded_collectors > 0 ? (
               <div className="flex flex-col items-center gap-3">
-                <AlertTriangle className="text-red-500 animate-pulse" size={40} />
-                <span className="text-red-400 font-bold text-sm">DEGRADATION DETECTED</span>
-                <p className="text-zinc-500 text-xs">A scraper selector is failing. Tathya has generated a selector repair proposal.</p>
-                <a href="#app-repairs" className="btn btn-danger text-xs py-1.5 px-4 font-bold mt-2">
-                  RESOLVE PIEPLINE BREAK
+                <AlertTriangle className="text-red-600 animate-pulse" size={40} />
+                <span className="text-red-600 font-bold text-xs uppercase">DEGRADATION DETECTED</span>
+                <p className="text-zinc-700 text-[10px] font-bold mt-1">A scraper selector is failing. Tathya has generated a selector repair proposal.</p>
+                <a href="#app-repairs" className="px-4 py-2 border-2 border-black bg-black text-white font-bold text-[10px] uppercase rounded-none mt-2 cursor-pointer hover:bg-zinc-800">
+                  RESOLVE PIPELINE BREAK
                 </a>
               </div>
             ) : (
               <div className="flex flex-col items-center gap-3">
-                <CheckCircle2 className="text-emerald-500" size={40} />
-                <span className="text-emerald-400 font-bold text-sm">ALL SCRAPERS HEALTHY</span>
-                <p className="text-zinc-500 text-xs">Downstream market intelligence feed is consuming verified data.</p>
+                <CheckCircle2 className="text-emerald-600" size={40} />
+                <span className="text-emerald-600 font-bold text-xs uppercase">ALL SCRAPERS HEALTHY</span>
+                <p className="text-zinc-700 text-[10px] font-bold mt-1">Downstream market intelligence feed is consuming verified data.</p>
               </div>
             )}
           </div>
