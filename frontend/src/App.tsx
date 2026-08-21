@@ -1009,7 +1009,7 @@ function OverviewDashboardView() {
         {/* Scraper run history stream */}
         <div className="bg-[#faf0d9] border-2 border-black rounded-none p-6 flex flex-col justify-between shadow-sm hover:shadow-[4px_4px_0px_#000000] cursor-pointer transition-all">
           <h2 className="text-base font-serif font-bold mb-4 text-black uppercase">RECENT SCRAPER WORKFLOW ACTIVITIES</h2>
-          <div className="table-container">
+          <div style={{ maxHeight: '350px', overflowY: 'auto' }} className="table-container">
             <table className="table">
               <thead>
                 <tr>
