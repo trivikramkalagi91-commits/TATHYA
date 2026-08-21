@@ -1160,14 +1160,14 @@ function SourcesDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
         <div className="p-4 border-b-2 border-black font-mono font-bold text-black uppercase tracking-wider text-xs bg-[#faf0d9]">
           // DATA PIPELINE SOURCES
         </div>
-        <div className="flex flex-col divide-y-2 divide-black">
+        <div className="p-4 flex flex-col gap-4 bg-zinc-50">
           {sources.map((source) => {
             const coll = collectors.find(c => c.source_id === source.id);
             return (
               <div 
                 key={source.id} 
                 onClick={() => selectSource(source)}
-                className={`p-4 cursor-pointer text-left border-b-2 border-black transition-all ${selectedSource?.id === source.id ? 'bg-[#faf0d9] border-l-4 border-black font-extrabold' : 'hover:bg-zinc-100 bg-white'}`}
+                className={`border-2 border-black p-4 rounded-none shadow-sm cursor-pointer transition-all text-left flex flex-col gap-2.5 ${selectedSource?.id === source.id ? 'bg-[#faf0d9] shadow-[4px_4px_0px_#000000] font-extrabold' : 'bg-white hover:shadow-[4px_4px_0px_#000000]'}`}
               >
                 <div className="flex justify-between items-center">
                   <strong className="font-mono text-xs text-black font-bold">{source.name}</strong>
@@ -1182,8 +1182,8 @@ function SourcesDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
                     {coll?.status || 'UNKNOWN'}
                   </span>
                 </div>
-                <p className="text-zinc-650 text-[10px] font-mono truncate mt-1.5 font-bold">{source.url}</p>
-                <div className="flex justify-between items-center mt-2.5 text-[10px] font-mono text-zinc-650 font-bold">
+                <p className="text-zinc-650 text-[10px] font-mono truncate mt-0.5 font-bold">{source.url}</p>
+                <div className="flex justify-between items-center mt-0.5 text-[10px] font-mono text-zinc-650 font-bold">
                   <span>Type: {source.type}</span>
                   {coll && <span>Health: {coll.health_score}%</span>}
                 </div>
@@ -1464,7 +1464,7 @@ function RepairsDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
         <div className="p-4 border-b-2 border-black font-mono font-bold text-black uppercase tracking-wider text-xs bg-[#faf0d9]">
           // SELF-HEALING LOGS & PROPOSALS
         </div>
-        <div className="flex flex-col divide-y-2 divide-black">
+        <div className="p-4 flex flex-col gap-4 bg-zinc-55">
           {repairs.length === 0 ? (
             <p className="p-6 text-center text-zinc-650 font-mono font-bold text-xs">No repairs logged.</p>
           ) : (
@@ -1472,7 +1472,7 @@ function RepairsDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
               <div 
                 key={r.id} 
                 onClick={() => selectRepair(r)}
-                className={`p-4 cursor-pointer text-left border-b-2 border-black transition-all ${selectedRepair?.id === r.id ? 'bg-[#faf0d9] border-l-4 border-black font-extrabold' : 'hover:bg-zinc-100 bg-white'}`}
+                className={`border-2 border-black p-4 rounded-none shadow-sm cursor-pointer transition-all text-left flex flex-col gap-2.5 ${selectedRepair?.id === r.id ? 'bg-[#faf0d9] shadow-[4px_4px_0px_#000000] font-extrabold' : 'bg-white hover:shadow-[4px_4px_0px_#000000]'}`}
               >
                 <div className="flex justify-between items-center">
                   <span className="font-mono text-xs font-bold text-black">REPAIR #{r.id}</span>
@@ -1487,8 +1487,8 @@ function RepairsDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
                     {r.status.replace('_', ' ')}
                   </span>
                 </div>
-                <p className="text-zinc-650 text-xs mt-2 truncate font-mono font-bold">{r.failure_reason}</p>
-                <span className="text-[9px] text-zinc-600 font-mono mt-1 block font-bold">
+                <p className="text-zinc-650 text-xs mt-0.5 truncate font-mono font-bold">{r.failure_reason}</p>
+                <span className="text-[9px] text-zinc-600 font-mono mt-0.5 block font-bold">
                   Started: {new Date(r.started_at).toLocaleString()}
                 </span>
               </div>
