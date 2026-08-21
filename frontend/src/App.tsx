@@ -1294,8 +1294,19 @@ function SourcesDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
             </div>
           </div>
         ) : (
-          <div className="border-2 border-black bg-[#faf0d9] p-12 text-center text-black font-mono font-bold shadow-sm">
-            SELECT A SOURCE PIPELINE TO CONFIGURE SELECTORS & TRIGGERS
+          <div className="border-2 border-black bg-[#faf0d9] p-12 text-center text-black flex flex-col items-center justify-center gap-6 shadow-sm min-h-[400px]">
+            <div className="animate-bounce-left text-black">
+              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M9 14L4 9l5-5" />
+                <path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5v0a5.5 5.5 0 0 1-5.5 5.5H11" />
+              </svg>
+            </div>
+            <div className="flex flex-col gap-2">
+              <h3 className="font-serif font-bold text-lg uppercase tracking-tight">Select a Data Source</h3>
+              <p className="text-zinc-650 text-xs font-mono font-bold max-w-sm">
+                Choose a scraper pipeline from the left menu to configure DOM selectors, validation schemas, and trigger target site extractions.
+              </p>
+            </div>
           </div>
         )}
 
