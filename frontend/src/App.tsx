@@ -1306,9 +1306,9 @@ function SourcesDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
             <div className="animate-bounce-left text-black mt-12">
               <svg width="240" height="160" viewBox="0 0 100 60" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
                 {/* Hand-drawn spiral path arching over and pointing left */}
-                <path d="M 85 45 C 95 38, 92 20, 75 18 C 55 15, 38 28, 48 38 C 58 48, 68 35, 58 25 C 48 15, 28 15, 12 28" />
+                <path d="M 85 45 C 95 38, 92 20, 75 18 C 55 15, 38 28, 48 38 C 58 48, 68 35, 58 25 C 48 15, 28 15, 14 26" />
                 {/* Connected sharp arrowhead pointing left */}
-                <path d="M 12 28 L 24 20 M 12 28 L 24 36" />
+                <path d="M 28 20 L 10 25 L 24 36" />
               </svg>
             </div>
           </div>
