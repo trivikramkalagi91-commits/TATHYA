@@ -1155,29 +1155,36 @@ function SourcesDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
     : null;
 
   return (
-    <div className="grid grid-3 gap-8 text-slate-200">
+    <div className="grid-two-equal text-black">
       {/* Left panel: Sources List */}
-      <div className="panel border border-slate-800/80 bg-[#151618]">
-        <div className="p-4 border-b border-slate-800/80 font-mono font-bold text-slate-300 uppercase tracking-wider text-[10px]">
+      <div className="border-2 border-black bg-white rounded-none p-0 flex flex-col shadow-sm">
+        <div className="p-4 border-b-2 border-black font-mono font-bold text-black uppercase tracking-wider text-xs bg-[#faf0d9]">
           // DATA PIPELINE SOURCES
         </div>
-        <div className="flex flex-col divide-y divide-slate-800/60">
+        <div className="flex flex-col divide-y-2 divide-black">
           {sources.map((source) => {
             const coll = collectors.find(c => c.source_id === source.id);
             return (
               <div 
                 key={source.id} 
                 onClick={() => selectSource(source)}
-                className={`p-4 cursor-pointer text-left transition-all ${selectedSource?.id === source.id ? 'bg-[#222326] border-l-2 border-white' : 'hover:bg-slate-800/30'}`}
+                className={`p-4 cursor-pointer text-left transition-all ${selectedSource?.id === source.id ? 'bg-[#faf0d9] border-l-4 border-black font-extrabold' : 'hover:bg-zinc-100 bg-white'}`}
               >
                 <div className="flex justify-between items-center">
-                  <strong className="font-mono text-xs text-slate-100">{source.name}</strong>
-                  <span className={`badge ${coll?.status === 'HEALTHY' ? 'badge-success' : coll?.status === 'DEGRADED' || coll?.status === 'FAILED' ? 'badge-danger' : 'badge-muted'}`}>
+                  <strong className="font-mono text-xs text-black font-bold">{source.name}</strong>
+                  <span 
+                    style={{ 
+                      backgroundColor: coll?.status === 'HEALTHY' ? '#e6f4ea' : coll?.status === 'DEGRADED' || coll?.status === 'FAILED' ? '#fce8e6' : '#f1f3f4',
+                      color: coll?.status === 'HEALTHY' ? '#137333' : coll?.status === 'DEGRADED' || coll?.status === 'FAILED' ? '#c5221f' : '#3c4043',
+                      borderColor: coll?.status === 'HEALTHY' ? '#137333' : coll?.status === 'DEGRADED' || coll?.status === 'FAILED' ? '#c5221f' : '#3c4043'
+                    }} 
+                    className="badge border font-bold font-mono text-[9px] uppercase px-2 py-0.5 rounded-none"
+                  >
                     {coll?.status || 'UNKNOWN'}
                   </span>
                 </div>
-                <p className="text-slate-500 text-[10px] font-mono truncate mt-1.5">{source.url}</p>
-                <div className="flex justify-between items-center mt-2.5 text-[10px] font-mono text-slate-400">
+                <p className="text-zinc-650 text-[10px] font-mono truncate mt-1.5 font-bold">{source.url}</p>
+                <div className="flex justify-between items-center mt-2.5 text-[10px] font-mono text-zinc-650 font-bold">
                   <span>Type: {source.type}</span>
                   {coll && <span>Health: {coll.health_score}%</span>}
                 </div>
@@ -1188,14 +1195,14 @@ function SourcesDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
       </div>
 
       {/* Right panel: Selected Source Details */}
-      <div className="col-span-2 flex flex-col gap-6">
+      <div className="flex flex-col gap-6">
         {selectedSource ? (
-          <div className="panel border border-slate-800/80 bg-[#151618]">
+          <div className="border-2 border-black bg-white rounded-none flex flex-col shadow-sm">
             {/* Header */}
-            <div className="p-6 border-b border-slate-800/80 flex justify-between items-center bg-[#0c0d0e]/60">
+            <div className="p-6 border-b-2 border-black flex justify-between items-center bg-[#faf0d9]">
               <div>
-                <h2 className="text-sm font-mono font-bold text-slate-100 uppercase tracking-wider">// {selectedSource.name}</h2>
-                <a href={selectedSource.url} target="_blank" rel="noreferrer" className="text-slate-500 text-[10px] font-mono block mt-1.5 hover:underline truncate max-w-md">
+                <h2 className="text-sm font-serif font-bold text-black uppercase tracking-wider">// {selectedSource.name}</h2>
+                <a href={selectedSource.url} target="_blank" rel="noreferrer" className="text-zinc-650 text-[10px] font-mono block mt-1.5 hover:underline truncate max-w-md font-bold">
                   {selectedSource.url}
                 </a>
               </div>
@@ -1204,7 +1211,7 @@ function SourcesDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
                 <button 
                   onClick={() => executeScrape(currentCollector.id)}
                   disabled={scraping}
-                  className="btn btn-primary text-xs font-bold py-2 px-4 shadow-sm"
+                  className="px-4 py-2 border-2 border-black bg-black text-white hover:bg-zinc-800 font-bold text-xs flex items-center gap-2 rounded-none cursor-pointer"
                 >
                   {scraping ? (
                     <>
@@ -1223,21 +1230,21 @@ function SourcesDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
 
             {/* Controlled demo site structural control - CRITICAL FOR HACKATHON DEMO */}
             {selectedSource.type === 'demo' && (
-              <div className="p-4 border-b border-slate-800/60 bg-[#0c0d0e]/40 font-mono text-xs flex justify-between items-center gap-4">
+              <div className="p-4 border-b-2 border-black bg-zinc-50 font-mono text-xs flex justify-between items-center gap-4">
                 <div>
-                  <strong className="text-slate-200 font-bold block mb-1 uppercase text-[10px]">// CONTROLLED TARGET SITE DOM LAYOUT</strong>
-                  <p className="text-slate-500 text-[10px]">Alter the actual HTML of the target site locally to break and heal the scraper selectors.</p>
+                  <strong className="text-black font-extrabold block mb-1 uppercase text-[10px]">// CONTROLLED TARGET SITE DOM LAYOUT</strong>
+                  <p className="text-zinc-650 text-[10px] font-bold">Alter the actual HTML of the target site locally to break and heal the scraper selectors.</p>
                 </div>
-                <div className="flex border border-slate-800/80 rounded bg-[#0c0d0e] p-0.5">
+                <div className="flex border-2 border-black bg-white p-0.5">
                   <button 
                     onClick={() => toggleLayout('A')}
-                    className={`px-3 py-1.5 rounded font-bold transition-all text-[10px] border-0 cursor-pointer ${layoutVersion === 'A' ? 'bg-[#222326] text-white' : 'text-slate-500 bg-transparent'}`}
+                    className={`px-3 py-1.5 font-bold transition-all text-[10px] border-0 cursor-pointer rounded-none ${layoutVersion === 'A' ? 'bg-black text-white' : 'text-zinc-650 bg-transparent hover:bg-zinc-100'}`}
                   >
                     Version A (Healthy)
                   </button>
                   <button 
                     onClick={() => toggleLayout('B')}
-                    className={`px-3 py-1.5 rounded font-bold transition-all text-[10px] border-0 cursor-pointer ${layoutVersion === 'B' ? 'bg-[#222326] text-white' : 'text-slate-500 bg-transparent'}`}
+                    className={`px-3 py-1.5 font-bold transition-all text-[10px] border-0 cursor-pointer rounded-none ${layoutVersion === 'B' ? 'bg-black text-white' : 'text-zinc-650 bg-transparent hover:bg-zinc-100'}`}
                   >
                     Version B (Changed DOM)
                   </button>
@@ -1246,28 +1253,28 @@ function SourcesDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
             )}
 
             {/* Tabs */}
-            <div className="flex border-b border-slate-800/80 text-[10px] font-mono bg-[#0c0d0e]/30">
+            <div className="flex border-b-2 border-black text-[10px] font-mono bg-zinc-100">
               <button 
                 onClick={() => setActiveTab('overview')}
-                className={`px-6 py-3 border-0 transition-colors cursor-pointer ${activeTab === 'overview' ? 'border-b-2 border-white text-slate-100 bg-[#222326]' : 'text-slate-500 hover:text-slate-300 bg-transparent'}`}
+                className={`px-6 py-3 border-r-2 border-black border-0 transition-colors cursor-pointer font-bold ${activeTab === 'overview' ? 'bg-black text-white' : 'text-zinc-600 hover:bg-zinc-200'}`}
               >
                 SELECTOR MAPPING
               </button>
               <button 
                 onClick={() => setActiveTab('schema')}
-                className={`px-6 py-3 border-0 transition-colors cursor-pointer ${activeTab === 'schema' ? 'border-b-2 border-white text-slate-100 bg-[#222326]' : 'text-slate-500 hover:text-slate-300 bg-transparent'}`}
+                className={`px-6 py-3 border-r-2 border-black border-0 transition-colors cursor-pointer font-bold ${activeTab === 'schema' ? 'bg-black text-white' : 'text-zinc-600 hover:bg-zinc-200'}`}
               >
                 VALIDATION SCHEMA
               </button>
             </div>
 
             {/* Tab contents */}
-            <div className="p-6 font-mono text-xs">
+            <div className="p-6 font-mono text-xs bg-white text-black">
               {activeTab === 'overview' && currentCollector && (
                 <div className="flex flex-col gap-4">
-                  <div className="bg-[#0c0d0e] p-4 rounded-xl border border-slate-800/80">
-                    <span className="text-slate-500 block mb-2">// ACTIVE CSS PARSING PATHS</span>
-                    <pre className="text-slate-300">
+                  <div className="bg-[#faf0d9] p-4 border-2 border-black">
+                    <span className="text-zinc-650 font-bold block mb-2">// ACTIVE CSS PARSING PATHS</span>
+                    <pre className="text-black font-bold">
                       {JSON.stringify(currentCollector.selector_mapping, null, 2)}
                     </pre>
                   </div>
@@ -1276,9 +1283,9 @@ function SourcesDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
 
               {activeTab === 'schema' && currentCollector && (
                 <div className="flex flex-col gap-4">
-                  <div className="bg-[#0c0d0e] p-4 rounded-xl border border-slate-800/80">
-                    <span className="text-slate-500 block mb-2">// DATA FIELDS VALIDATION CHECKLIST</span>
-                    <pre className="text-slate-300">
+                  <div className="bg-[#faf0d9] p-4 border-2 border-black">
+                    <span className="text-zinc-650 font-bold block mb-2">// DATA FIELDS VALIDATION CHECKLIST</span>
+                    <pre className="text-black font-bold">
                       {JSON.stringify(currentCollector.active_schema, null, 2)}
                     </pre>
                   </div>
@@ -1287,7 +1294,7 @@ function SourcesDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
             </div>
           </div>
         ) : (
-          <div className="panel border border-slate-800/80 bg-[#151618] p-12 text-center text-slate-500 font-mono">
+          <div className="border-2 border-black bg-[#faf0d9] p-12 text-center text-black font-mono font-bold shadow-sm">
             SELECT A SOURCE PIPELINE TO CONFIGURE SELECTORS & TRIGGERS
           </div>
         )}
