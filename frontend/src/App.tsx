@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import {
   Activity,
   Settings,
-  Shield,
   Zap,
   AlertTriangle,
   TrendingUp,
@@ -1459,30 +1458,37 @@ function RepairsDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
   if (loading) return <div className="text-xs font-mono text-zinc-500">LOADING REPAIRS...</div>;
 
   return (
-    <div className="grid grid-3 gap-8 text-slate-200">
+    <div className="grid-two-equal text-black">
       {/* Left List of Repairs */}
-      <div className="panel border border-slate-800/80 bg-[#151618]">
-        <div className="p-4 border-b border-slate-800/80 font-mono font-bold text-slate-300 uppercase tracking-wider text-[10px]">
+      <div className="border-2 border-black bg-white rounded-none p-0 flex flex-col shadow-sm">
+        <div className="p-4 border-b-2 border-black font-mono font-bold text-black uppercase tracking-wider text-xs bg-[#faf0d9]">
           // SELF-HEALING LOGS & PROPOSALS
         </div>
-        <div className="flex flex-col divide-y divide-slate-800/60">
+        <div className="flex flex-col divide-y-2 divide-black">
           {repairs.length === 0 ? (
-            <p className="p-6 text-center text-slate-500 font-mono text-xs">No repairs logged.</p>
+            <p className="p-6 text-center text-zinc-650 font-mono font-bold text-xs">No repairs logged.</p>
           ) : (
             repairs.map((r) => (
               <div 
                 key={r.id} 
                 onClick={() => selectRepair(r)}
-                className={`p-4 cursor-pointer text-left transition-all ${selectedRepair?.id === r.id ? 'bg-[#222326] border-l-2 border-white' : 'hover:bg-slate-800/30'}`}
+                className={`p-4 cursor-pointer text-left transition-all ${selectedRepair?.id === r.id ? 'bg-[#faf0d9] border-l-4 border-black font-extrabold' : 'hover:bg-zinc-100 bg-white'}`}
               >
                 <div className="flex justify-between items-center">
-                  <span className="font-mono text-xs font-bold text-slate-200">REPAIR #{r.id}</span>
-                  <span className={`badge ${r.status === 'REPAIRED' ? 'badge-success' : r.status === 'PENDING_APPROVAL' ? 'badge-warning' : 'badge-danger'}`}>
+                  <span className="font-mono text-xs font-bold text-black">REPAIR #{r.id}</span>
+                  <span 
+                    style={{ 
+                      backgroundColor: r.status === 'REPAIRED' ? '#e6f4ea' : r.status === 'PENDING_APPROVAL' ? '#fef7e0' : '#fce8e6',
+                      color: r.status === 'REPAIRED' ? '#137333' : r.status === 'PENDING_APPROVAL' ? '#b06000' : '#c5221f',
+                      borderColor: r.status === 'REPAIRED' ? '#137333' : r.status === 'PENDING_APPROVAL' ? '#b06000' : '#c5221f'
+                    }} 
+                    className="badge border font-bold font-mono text-[9px] uppercase px-2 py-0.5 rounded-none"
+                  >
                     {r.status.replace('_', ' ')}
                   </span>
                 </div>
-                <p className="text-slate-400 text-xs mt-2 truncate font-mono">{r.failure_reason}</p>
-                <span className="text-[9px] text-slate-500 font-mono mt-1 block">
+                <p className="text-zinc-650 text-xs mt-2 truncate font-mono font-bold">{r.failure_reason}</p>
+                <span className="text-[9px] text-zinc-600 font-mono mt-1 block font-bold">
                   Started: {new Date(r.started_at).toLocaleString()}
                 </span>
               </div>
@@ -1492,36 +1498,43 @@ function RepairsDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
       </div>
 
       {/* Right Proposal Detail */}
-      <div className="col-span-2">
+      <div>
         {selectedRepair ? (
-          <div className="panel border border-slate-800/80 bg-[#151618] p-6 flex flex-col gap-6 font-mono text-xs">
+          <div className="border-2 border-black bg-white rounded-none p-6 flex flex-col gap-6 font-mono text-xs shadow-sm text-black">
             {/* Header */}
-            <div className="flex justify-between items-center border-b border-slate-800/80 pb-4">
+            <div className="flex justify-between items-center border-b-2 border-black pb-4">
               <div>
-                <h3 className="text-sm font-bold text-slate-100 uppercase tracking-wider">// HEALING PLAN FOR REPAIR #{selectedRepair.id}</h3>
-                <span className="text-slate-500 text-[10px] mt-1 block">Failure reason: {selectedRepair.failure_reason}</span>
+                <h3 className="text-sm font-serif font-bold text-black uppercase tracking-wider">// HEALING PLAN FOR REPAIR #{selectedRepair.id}</h3>
+                <span className="text-zinc-650 text-[10px] mt-1 block font-bold">Failure reason: {selectedRepair.failure_reason}</span>
               </div>
-              <span className={`badge ${selectedRepair.status === 'REPAIRED' ? 'badge-success' : selectedRepair.status === 'PENDING_APPROVAL' ? 'badge-warning' : 'badge-danger'}`}>
+              <span 
+                style={{ 
+                  backgroundColor: selectedRepair.status === 'REPAIRED' ? '#e6f4ea' : selectedRepair.status === 'PENDING_APPROVAL' ? '#fef7e0' : '#fce8e6',
+                  color: selectedRepair.status === 'REPAIRED' ? '#137333' : selectedRepair.status === 'PENDING_APPROVAL' ? '#b06000' : '#c5221f',
+                  borderColor: selectedRepair.status === 'REPAIRED' ? '#137333' : selectedRepair.status === 'PENDING_APPROVAL' ? '#b06000' : '#c5221f'
+                }} 
+                className="badge border font-bold font-mono text-[9px] uppercase px-2 py-0.5 rounded-none"
+              >
                 {selectedRepair.status.replace('_', ' ')}
               </span>
             </div>
 
             {/* Before / After comparison */}
             <div>
-              <strong className="text-slate-400 mb-2 block">// SELECTOR CONFIGURATION DIFF (PROPOSED FIXES)</strong>
+              <strong className="text-zinc-650 font-bold mb-2 block">// SELECTOR CONFIGURATION DIFF (PROPOSED FIXES)</strong>
               <div className="grid grid-2 gap-4">
-                <div className="p-4 rounded-xl border border-rose-950/20 bg-rose-950/5">
-                  <span className="text-rose-400 font-bold block mb-1">DEGRADED CONFIG (VERSION A)</span>
-                  <span className="text-slate-500 block text-[9px]">Failed to parse fields</span>
-                  <pre className="text-slate-450 mt-2 bg-[#0c0d0e] p-3 rounded-lg text-[10px] whitespace-pre-wrap">
+                <div className="p-4 border-2 border-black bg-zinc-55">
+                  <span className="text-red-750 font-bold block mb-1">DEGRADED CONFIG (VERSION A)</span>
+                  <span className="text-zinc-600 block text-[9px] font-bold">Failed to parse fields</span>
+                  <pre className="text-black font-bold mt-2 bg-[#faf0d9] p-3 border border-black text-[10px] whitespace-pre-wrap">
                     {`row_container: .market-event\nsymbol: .symbol\nheadline: .headline\ntimestamp: .timestamp`}
                   </pre>
                 </div>
                 
-                <div className="p-4 rounded-xl border border-emerald-950/20 bg-emerald-950/5">
-                  <span className="text-emerald-400 font-bold block mb-1">REPAIRED CONFIG (PROPOSAL)</span>
-                  <span className="text-slate-500 block text-[9px]">Deduced from Version B footprint</span>
-                  <pre className="text-slate-300 mt-2 bg-[#0c0d0e] p-3 rounded-lg text-[10px] whitespace-pre-wrap">
+                <div className="p-4 border-2 border-black bg-zinc-55">
+                  <span className="text-emerald-750 font-bold block mb-1">REPAIRED CONFIG (PROPOSAL)</span>
+                  <span className="text-zinc-600 block text-[9px] font-bold">Deduced from Version B footprint</span>
+                  <pre className="text-black font-bold mt-2 bg-[#faf0d9] p-3 border border-black text-[10px] whitespace-pre-wrap">
                     {`row_container: article.event-card\nsymbol: attr:data-symbol\nheadline: .title\ntimestamp: time`}
                   </pre>
                 </div>
@@ -1529,20 +1542,20 @@ function RepairsDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
             </div>
 
             {/* Healing Heuristic Explanation */}
-            <div className="bg-[#0c0d0e] p-4 rounded-xl border border-slate-800/80">
-              <span className="text-slate-500 block mb-2">// DOM Footprint Alignment Logs</span>
-              <p className="text-slate-400 leading-relaxed text-[11px] whitespace-pre-wrap">
+            <div className="bg-[#faf0d9] p-4 border-2 border-black">
+              <span className="text-zinc-650 font-bold block mb-2">// DOM Footprint Alignment Logs</span>
+              <p className="text-black font-mono font-bold leading-relaxed text-[11px] whitespace-pre-wrap">
                 {selectedRepair.verification_details}
               </p>
             </div>
 
             {/* Action CTA */}
             {selectedRepair.status === 'PENDING_APPROVAL' && (
-              <div className="flex flex-col gap-4 border-t border-slate-800/80 pt-4">
+              <div className="flex flex-col gap-4 border-t-2 border-black pt-4">
                 <button 
                   onClick={() => approveProposal(selectedRepair.id)}
                   disabled={approving}
-                  className="btn btn-primary w-full py-2.5 font-bold font-mono text-sm shadow-sm"
+                  className="px-4 py-3 border-2 border-black bg-black text-white hover:bg-zinc-800 font-bold text-xs rounded-none cursor-pointer uppercase"
                 >
                   {approving ? 'VERIFYING HEALING FLOW...' : 'APPROVE & RESTORE DATA PIPELINE'}
                 </button>
@@ -1551,10 +1564,10 @@ function RepairsDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
 
             {/* Dynamic Approval/Verification progress log */}
             {verificationLog.length > 0 && (
-              <div className="bg-[#0c0d0e] p-4 rounded-xl border border-slate-800/80 flex flex-col gap-1 mt-2">
-                <span className="text-amber-500 font-bold mb-2">// LIVE VERIFICATION PROGRESS</span>
+              <div className="bg-[#faf0d9] p-4 border-2 border-black flex flex-col gap-1 mt-2">
+                <span className="text-amber-800 font-bold mb-2">// LIVE VERIFICATION PROGRESS</span>
                 {verificationLog.map((log, idx) => (
-                  <p key={idx} className="text-slate-400 font-mono text-[10px] animate-pulse">
+                  <p key={idx} className="text-black font-mono text-[10px] font-bold animate-pulse">
                     &gt; {log}
                   </p>
                 ))}
@@ -1562,9 +1575,23 @@ function RepairsDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
             )}
           </div>
         ) : (
-          <div className="panel border border-[#242427] bg-[#131315] p-12 flex flex-col items-center justify-center text-center text-zinc-500 font-mono min-h-[400px] gap-4">
-            <Shield className="text-zinc-600 animate-pulse" size={48} />
-            <span>SELECT A REPAIR EVENT TO AUDIT HEALTH METRIC RECOVERY</span>
+          <div style={{ minHeight: '400px' }} className="flex flex-col items-center justify-start gap-8">
+            {/* Cream text box surrounding only the text content */}
+            <div className="border-2 border-black bg-[#faf0d9] p-8 text-center text-black flex flex-col gap-2 shadow-sm w-full">
+              <h3 className="font-serif font-bold text-base uppercase tracking-tight">Select a Repair Event</h3>
+              <p className="text-zinc-650 text-xs font-mono font-bold">
+                Choose a self-healing log event from the left list to audit metric recovery alignment logs and verify target pipeline restoration.
+              </p>
+            </div>
+            {/* Enlarged bouncing hand-drawn spiral arrow pointing at the left repairs list */}
+            <div className="animate-bounce-left text-black mt-12">
+              <svg width="240" height="160" viewBox="0 0 100 60" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
+                {/* Hand-drawn spiral path arching over, inverted upside down, pointing left */}
+                <path d="M 85 15 C 95 22, 92 40, 75 42 C 55 45, 38 32, 48 22 C 58 12, 68 25, 58 32 C 48 38, 28 32, 12 30" />
+                {/* Connected sharp symmetrical arrowhead pointing left */}
+                <path d="M 26 22 L 12 30 L 26 38" />
+              </svg>
+            </div>
           </div>
         )}
       </div>
