@@ -1294,15 +1294,17 @@ function SourcesDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
             </div>
           </div>
         ) : (
-          <div style={{ minHeight: '400px' }} className="border-2 border-black bg-[#faf0d9] p-12 text-center text-black flex flex-col items-center justify-start gap-8 shadow-sm">
-            <div className="flex flex-col gap-2">
-              <h3 className="font-serif font-bold text-lg uppercase tracking-tight">Select a Data Source</h3>
-              <p className="text-zinc-650 text-xs font-mono font-bold max-w-sm">
+          <div style={{ minHeight: '400px' }} className="flex flex-col items-center justify-start gap-8">
+            {/* Cream text box surrounding only the text content */}
+            <div className="border-2 border-black bg-[#faf0d9] p-8 text-center text-black flex flex-col gap-2 shadow-sm w-full">
+              <h3 className="font-serif font-bold text-base uppercase tracking-tight">Select a Data Source</h3>
+              <p className="text-zinc-650 text-xs font-mono font-bold">
                 Choose a scraper pipeline from the left menu to configure DOM selectors, validation schemas, and trigger target site extractions.
               </p>
             </div>
-            <div className="animate-bounce-left text-black mt-8">
-              <svg width="180" height="120" viewBox="0 0 100 60" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+            {/* Enlarged bouncing hand-drawn spiral arrow pointing at the left scrapers list */}
+            <div className="animate-bounce-left text-black mt-12">
+              <svg width="240" height="160" viewBox="0 0 100 60" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                 {/* Hand-drawn spiral path arching over and pointing left */}
                 <path d="M 85 45 C 95 38, 92 20, 75 18 C 55 15, 38 28, 48 38 C 58 48, 68 35, 58 25 C 48 15, 28 15, 12 28" />
                 {/* Hand-drawn arrowhead pointing left */}
