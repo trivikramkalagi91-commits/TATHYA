@@ -367,10 +367,10 @@ a:hover {
   .md\:inline { display: inline !important; }
 }
 
-.border-b-2 { border-bottom-width: 2px !important; }
-.border-t-2 { border-top-width: 2px !important; }
-.border-l-2 { border-left-width: 2px !important; }
-.border-2 { border-width: 2px !important; }
+.border-b-2 { border-bottom-width: 2px !important; border-style: solid !important; }
+.border-t-2 { border-top-width: 2px !important; border-style: solid !important; }
+.border-l-2 { border-left-width: 2px !important; border-style: solid !important; }
+.border-2 { border-width: 2px !important; border-style: solid !important; }
 .border-black { border-color: #000000 !important; }
 .rounded-none { border-radius: 0px !important; }
 
