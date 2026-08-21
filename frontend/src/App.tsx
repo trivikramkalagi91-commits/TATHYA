@@ -169,20 +169,18 @@ export default function App() {
         {/* Marketing Navbar */}
         <header className="border-b-2 border-black bg-white sticky top-0 z-50">
           <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-            <div className="flex items-center gap-8">
+            <div className="flex items-center gap-6 text-xs text-zinc-800 font-bold uppercase tracking-wider">
               <span 
-                className="font-serif text-2xl font-bold tracking-tight text-black cursor-pointer hover:underline"
+                className="font-serif text-2xl font-bold tracking-tight text-black cursor-pointer hover:underline normal-case mr-1"
                 onClick={() => navigateTo('home')}
               >
                 Tathya
               </span>
-              <nav className="hidden md:flex items-center gap-6 text-xs text-zinc-800 font-bold uppercase tracking-wider">
-                <a href="#product" className={`hover:underline ${currentPath === 'product' ? 'underline decoration-2' : ''}`}>Product</a>
-                <a href="#solutions" className={`hover:underline ${currentPath === 'solutions' ? 'underline decoration-2' : ''}`}>Solutions</a>
-                <a href="#how-it-works" className={`hover:underline ${currentPath === 'how-it-works' ? 'underline decoration-2' : ''}`}>How It Works</a>
-                <a href="#security" className={`hover:underline ${currentPath === 'security' ? 'underline decoration-2' : ''}`}>Security</a>
-                <a href="#docs" className={`hover:underline ${currentPath === 'docs' ? 'underline decoration-2' : ''}`}>Documentation</a>
-              </nav>
+              <a href="#product" className={`hover:underline ${currentPath === 'product' ? 'underline decoration-2' : ''}`}>Product</a>
+              <a href="#solutions" className={`hover:underline ${currentPath === 'solutions' ? 'underline decoration-2' : ''}`}>Solutions</a>
+              <a href="#how-it-works" className={`hover:underline ${currentPath === 'how-it-works' ? 'underline decoration-2' : ''}`}>How It Works</a>
+              <a href="#security" className={`hover:underline ${currentPath === 'security' ? 'underline decoration-2' : ''}`}>Security</a>
+              <a href="#docs" className={`hover:underline ${currentPath === 'docs' ? 'underline decoration-2' : ''}`}>Documentation</a>
             </div>
             
             <div className="flex items-center gap-4 font-mono text-xs">
