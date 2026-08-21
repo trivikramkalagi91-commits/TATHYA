@@ -168,7 +168,7 @@ export default function App() {
       <div className="bg-white min-h-screen text-black flex flex-col selection:bg-black selection:text-white font-sans">
         {/* Marketing Navbar */}
         <header className="border-b-2 border-black bg-white sticky top-0 z-50">
-          <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+          <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
             <div className="flex items-center gap-6 text-xs text-zinc-800 font-bold uppercase tracking-wider">
               <span 
                 className="font-serif text-2xl font-bold tracking-tight text-black cursor-pointer hover:underline normal-case mr-1"
