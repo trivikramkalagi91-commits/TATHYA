@@ -11,9 +11,10 @@ import {
   CheckCircle2,
   Bell,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   BookOpen,
   LogOut,
-  Menu,
   Link as LinkIcon
 } from 'lucide-react';
 import api from './lib/api';
@@ -375,9 +376,9 @@ export default function App() {
             <button 
               onClick={() => setSidebarOpen(!sidebarOpen)}
               className="p-2 border-2 border-black bg-white text-black hover:bg-zinc-100 flex items-center justify-center cursor-pointer rounded-none"
-              title="Toggle Sidebar"
+              title={sidebarOpen ? "Collapse Sidebar" : "Expand Sidebar"}
             >
-              <Menu size={16} />
+              {sidebarOpen ? <ChevronLeft size={16} /> : <ChevronRight size={16} />}
             </button>
             <div className="flex items-center gap-2 text-xs font-mono text-zinc-650 font-bold">
               <span>CONSOLE</span>
