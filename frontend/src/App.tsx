@@ -1888,7 +1888,7 @@ function MarketIntelligenceDashboardView() {
         </div>
 
         {/* Right Section (col-span-4): Sticky Verified News Timeline Sidebar */}
-        <div className="xl:col-span-4 h-[calc(100vh-140px)] sticky top-6 overflow-y-auto bg-white border-2 border-black rounded-none flex flex-col shadow-sm text-black">
+        <div className="xl:col-span-4 sticky top-6 bg-white border-2 border-black rounded-none flex flex-col shadow-sm text-black">
           <div className="p-4 border-b-2 border-black bg-[#faf0d9] flex justify-between items-center sticky top-0 z-10">
             <div>
               <h2 className="font-mono text-xs font-bold text-black tracking-wider">// VERIFIED TIMELINE</h2>
@@ -1897,7 +1897,7 @@ function MarketIntelligenceDashboardView() {
             <span className="px-2 py-0.5 border border-black bg-emerald-50 text-emerald-700 text-[9px] font-bold rounded-none">LIVE FEED</span>
           </div>
           
-          <div className="p-4 flex flex-col gap-3">
+          <div style={{ maxHeight: 'calc(100vh - 200px)', overflowY: 'auto' }} className="p-4 flex flex-col gap-3">
             {timeline.length === 0 ? (
               <div className="flex flex-col justify-center items-center text-center py-20 text-zinc-650 font-mono text-xs gap-3 font-bold">
                 <RefreshCw size={24} className="animate-spin text-black" />
