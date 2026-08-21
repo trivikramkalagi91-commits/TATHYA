@@ -659,7 +659,7 @@ function SolutionsView() {
     <div className="py-20 px-6 max-w-4xl mx-auto flex flex-col gap-8">
       <h1 className="text-3xl font-mono font-bold">Market Intelligence Use Cases</h1>
       <p className="text-zinc-400 text-sm">
-        For trading operations and market analysts, stale information is dead information. Hathya/Tathya provides the tools to monitor:
+        For trading operations and market analysts, stale information is dead information. Tathya provides the tools to monitor:
       </p>
       <ul className="list-disc list-inside text-zinc-400 text-sm flex flex-col gap-3 font-mono">
         <li><strong className="text-zinc-200">Company Press Portals:</strong> Detect announcements from corporate pages instantly.</li>
