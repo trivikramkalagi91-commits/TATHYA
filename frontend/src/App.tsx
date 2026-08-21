@@ -1305,10 +1305,10 @@ function SourcesDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
             {/* Enlarged bouncing hand-drawn spiral arrow pointing at the left scrapers list */}
             <div className="animate-bounce-left text-black mt-12">
               <svg width="240" height="160" viewBox="0 0 100 60" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
-                {/* Hand-drawn spiral path arching over and pointing left */}
-                <path d="M 85 45 C 95 38, 92 20, 75 18 C 55 15, 38 28, 48 38 C 58 48, 68 35, 58 25 C 48 15, 28 15, 14 26" />
+                {/* Hand-drawn spiral path arching over, inverted upside down, pointing left */}
+                <path d="M 85 15 C 95 22, 92 40, 75 42 C 55 45, 38 32, 48 22 C 58 12, 68 25, 58 35 C 48 45, 28 45, 14 34" />
                 {/* Connected sharp arrowhead pointing left */}
-                <path d="M 28 20 L 10 25 L 24 36" />
+                <path d="M 28 40 L 10 34 L 24 24" />
               </svg>
             </div>
           </div>
