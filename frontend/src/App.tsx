@@ -390,7 +390,12 @@ export default function App() {
           </div>
 
           {/* Topbar Actions */}
+          {/* Topbar Actions */}
           <div className="flex items-center gap-4">
+            <span className="text-[10px] text-black font-mono font-bold border-2 border-black bg-[#faf0d9] px-3 py-1.5 rounded-none uppercase shadow-[2px_2px_0px_#000000] shrink-0">
+              Environment: <strong className="text-amber-600 font-extrabold">Live Scrapers Enabled</strong>
+            </span>
+
             {/* Notification Badge Menu */}
             <div className="relative">
               <button 
@@ -440,10 +445,6 @@ export default function App() {
                 </div>
               )}
             </div>
-            
-            <span className="text-[10px] text-black font-mono font-bold border-2 border-black bg-[#faf0d9] px-3 py-1.5 rounded-none uppercase ml-2 shadow-[2px_2px_0px_#000000] shrink-0">
-              Environment: <strong className="text-amber-600 font-extrabold">Live Scrapers Enabled</strong>
-            </span>
           </div>
         </header>
 
