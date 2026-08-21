@@ -715,20 +715,20 @@ function SecurityView() {
 
 function DocsView() {
   return (
-    <div className="py-20 px-6 max-w-4xl mx-auto flex flex-col gap-6 font-mono text-xs">
-      <h1 className="text-2xl font-bold text-zinc-100">Developer Documentation & Quickstart</h1>
-      <div className="panel p-6 border border-[#242427] bg-[#131315] flex flex-col gap-4">
+    <div className="py-12 px-6 max-w-4xl mx-auto flex flex-col gap-6 font-mono text-xs text-black">
+      <h1 className="text-2xl font-serif font-bold text-black uppercase tracking-tight">Developer Documentation & Quickstart</h1>
+      <div className="border-2 border-black bg-[#faf0d9] p-8 flex flex-col gap-6 shadow-sm rounded-none">
         <div>
-          <strong className="text-amber-500">1. Setup Environment</strong>
-          <pre className="text-zinc-500 bg-[#0b0b0c] p-3 rounded mt-2 border border-[#242427]">
+          <strong className="text-black font-extrabold uppercase text-sm border-b-2 border-black pb-1.5 mb-3 block">1. Setup Environment</strong>
+          <pre className="text-black font-bold bg-white p-4 border-2 border-black rounded-none mt-2 font-mono whitespace-pre-wrap leading-relaxed shadow-sm">
 {`DATABASE_URL=sqlite:///./tathya.db
 BRIGHT_DATA_API_TOKEN=your_token_here
 MARKET_NEWS_API_KEY=finnhub_key_here`}
           </pre>
         </div>
         <div>
-          <strong className="text-amber-500">2. Run Local Servers</strong>
-          <pre className="text-zinc-500 bg-[#0b0b0c] p-3 rounded mt-2 border border-[#242427]">
+          <strong className="text-black font-extrabold uppercase text-sm border-b-2 border-black pb-1.5 mb-3 block">2. Run Local Servers</strong>
+          <pre className="text-black font-bold bg-white p-4 border-2 border-black rounded-none mt-2 font-mono whitespace-pre-wrap leading-relaxed shadow-sm">
 {`# Backend
 cd backend
 pip install -r requirements.txt
@@ -741,8 +741,8 @@ npm run dev`}
           </pre>
         </div>
         <div>
-          <strong className="text-amber-500">3. End-to-End Scraper Breakage Demonstration</strong>
-          <p className="text-zinc-400 mt-1">
+          <strong className="text-black font-extrabold uppercase text-sm border-b-2 border-black pb-1.5 mb-3 block">3. End-to-End Scraper Breakage Demonstration</strong>
+          <p className="text-black font-bold mt-2.5 leading-relaxed font-mono">
             Navigate to 'Sources' in the Console. Toggle the Controlled Target site from Version A to Version B. Click 'Run' to trigger a degradation event. Go to 'Self-Healing' to review selectors, approve the proposal, and rerun the scraper to confirm 100% health recovery.
           </p>
         </div>
