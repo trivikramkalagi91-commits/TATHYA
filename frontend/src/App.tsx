@@ -176,6 +176,13 @@ export default function App() {
               >
                 Tathya
               </span>
+              <nav className="hidden md:flex items-center gap-6 text-xs text-zinc-800 font-bold uppercase tracking-wider">
+                <a href="#product" className={`hover:underline ${currentPath === 'product' ? 'underline decoration-2' : ''}`}>Product</a>
+                <a href="#solutions" className={`hover:underline ${currentPath === 'solutions' ? 'underline decoration-2' : ''}`}>Solutions</a>
+                <a href="#how-it-works" className={`hover:underline ${currentPath === 'how-it-works' ? 'underline decoration-2' : ''}`}>How It Works</a>
+                <a href="#security" className={`hover:underline ${currentPath === 'security' ? 'underline decoration-2' : ''}`}>Security</a>
+                <a href="#docs" className={`hover:underline ${currentPath === 'docs' ? 'underline decoration-2' : ''}`}>Documentation</a>
+              </nav>
             </div>
             
             <div className="flex items-center gap-4 font-mono text-xs">
@@ -184,27 +191,31 @@ export default function App() {
                   <button onClick={() => navigateTo('app-overview')} className="px-4 py-2 border-2 border-black bg-black text-white font-bold rounded-none cursor-pointer">
                     CONSOLE
                   </button>
-                  <button onClick={handleLogout} className="text-zinc-650 hover:text-black font-bold cursor-pointer border-0 bg-transparent">
+                  <button onClick={handleLogout} className="text-zinc-600 hover:text-black font-bold cursor-pointer border-0 bg-transparent">
                     LOGOUT
                   </button>
                 </>
               ) : (
                 <>
                   <a href="#login" className="px-4 py-2 text-black hover:underline font-bold">
-                    LOGIN
+                    SIGN IN
                   </a>
-                  <button onClick={() => navigateTo('signup')} className="px-4 py-2 border-2 border-black bg-black text-white font-bold rounded-none cursor-pointer">
-                    SIGN UP
-                  </button>
+                  <a href="#signup" className="px-4 py-2 border-2 border-black bg-black text-white font-bold rounded-none hover:bg-zinc-800">
+                    GET STARTED
+                  </a>
                 </>
               )}
             </div>
           </div>
         </header>
 
-        {/* Marketing Main View */}
-        <main className="flex-grow">
-          {(currentPath === 'home' || currentPath === 'product' || currentPath === 'solutions' || currentPath === 'how-it-works' || currentPath === 'security') && <HomeView />}
+        {/* Public Routes Rendering */}
+        <main className="flex-1 bg-white">
+          {currentPath === 'home' && <HomeView />}
+          {currentPath === 'product' && <ProductView />}
+          {currentPath === 'solutions' && <SolutionsView />}
+          {currentPath === 'how-it-works' && <HowItWorksView />}
+          {currentPath === 'security' && <SecurityView />}
           {currentPath === 'docs' && <DocsView />}
           {currentPath === 'login' && <LoginView setUser={setUser} fetchAlerts={fetchAlerts} error={authError} setError={setAuthError} />}
           {currentPath === 'signup' && <SignupView setUser={setUser} fetchAlerts={fetchAlerts} error={authError} setError={setAuthError} />}
@@ -213,7 +224,12 @@ export default function App() {
         {/* Marketing Footer */}
         <footer className="bg-black text-white py-12 border-t-2 border-black flex flex-col gap-6 items-center justify-center text-center">
           <span className="font-serif text-xl font-bold tracking-tight">Tathya Scraper Platform</span>
-          <span className="text-[10px] text-zinc-600 font-mono">Tathya Platform - © 2026</span>
+          <div className="flex gap-6 text-xs font-bold uppercase tracking-wider text-zinc-400">
+            <a href="#product" className="hover:text-white">Product</a>
+            <a href="#solutions" className="hover:text-white">Solutions</a>
+            <a href="#docs" className="hover:text-white">Docs</a>
+          </div>
+          <span className="text-[10px] text-zinc-650 font-mono">Tathya Platform - © 2026</span>
         </footer>
       </div>
     );
@@ -614,7 +630,88 @@ function HomeView() {
   );
 }
 
+function ProductView() {
+  return (
+    <div className="py-20 px-6 max-w-4xl mx-auto flex flex-col gap-10">
+      <h1 className="text-3xl font-mono font-bold">Core Scraper Health & Repair Engine</h1>
+      <p className="text-zinc-400 text-sm">
+        Tathya is built on the principle of "evidence before action." It continuously validates scraper output datasets against JSON-Schema definitions. It assigns a precise quality health score to every scrape run. If a field fails (e.g. goes from 100% presence to 0% due to class changes), the system halts downstream publication, files a repair, and maps structural fixes.
+      </p>
+      <div className="panel p-6 border border-[#242427] bg-[#131315] font-mono text-xs">
+        <h3 className="font-bold text-amber-500 mb-2">// AUTOMATED HEALING ALGORITHM IN ACTION</h3>
+        <p className="text-zinc-400 mb-3">When a site layout shift occurs:</p>
+        <pre className="text-zinc-500 bg-[#0b0b0c] p-4 rounded border border-[#242427]">
+{`[TATHYA ALERT] Collector "Yahoo News Scraper" health score degraded from 100% to 0%.
+[TATHYA ALERT] Required field "headline" is missing across all 5 scraped records.
+[TATHYA ENGINE] Initializing selector matching heuristic check...
+[TATHYA ENGINE] Matching historical value "TCS expands partnership" against DOM...
+[TATHYA ENGINE] Located match in tag "h2" with class ".title".
+[TATHYA PROPOSAL] Proposed change: headline path ".headline" -> ".title"
+[TATHYA SYSTEM] Awaiting human verification and approval.`}
+        </pre>
+      </div>
+    </div>
+  );
+}
 
+function SolutionsView() {
+  return (
+    <div className="py-20 px-6 max-w-4xl mx-auto flex flex-col gap-8">
+      <h1 className="text-3xl font-mono font-bold">Market Intelligence Use Cases</h1>
+      <p className="text-zinc-400 text-sm">
+        For trading operations and market analysts, stale information is dead information. Hathya/Tathya provides the tools to monitor:
+      </p>
+      <ul className="list-disc list-inside text-zinc-400 text-sm flex flex-col gap-3 font-mono">
+        <li><strong className="text-zinc-200">Company Press Portals:</strong> Detect announcements from corporate pages instantly.</li>
+        <li><strong className="text-zinc-200">Financial News Feeds:</strong> Gather cross-source article confirmation to reduce signal noise.</li>
+        <li><strong className="text-zinc-200">Regulatory Filings:</strong> Keep track of public disclosures from SEC registries.</li>
+      </ul>
+      <p className="text-zinc-500 text-xs mt-4">
+        Disclaimer: Tathya is an intelligence aggregator. We do not guarantee trading profits or financial performance. Evidence before action.
+      </p>
+    </div>
+  );
+}
+
+function HowItWorksView() {
+  return (
+    <div className="py-20 px-6 max-w-4xl mx-auto flex flex-col gap-8">
+      <h1 className="text-3xl font-mono font-bold">How Tathya Works</h1>
+      <div className="flex flex-col gap-6">
+        {[
+          { step: '1', title: 'Connect Data Source', desc: 'Specify the URL of the press portal, regulatory feed, or news site.' },
+          { step: '2', title: 'Define Active Schema', desc: 'Define which fields are required (e.g. symbol, headline) and optional.' },
+          { step: '3', title: 'Live Health Scoring', desc: 'Tathya scrapes the site periodically and flags missing or malformed records.' },
+          { step: '4', title: 'Interactive Self-Healing', desc: 'If the DOM changes, Tathya deduces new selectors. Approve the proposal to update selectors instantly.' }
+        ].map((item, idx) => (
+          <div key={idx} className="flex gap-4">
+            <div className="w-8 h-8 rounded-full bg-[#78350f] text-[#f59e0b] flex align-center justify-center font-bold font-mono">
+              {item.step}
+            </div>
+            <div>
+              <h3 className="font-semibold font-mono text-zinc-200">{item.title}</h3>
+              <p className="text-zinc-400 text-sm mt-1">{item.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function SecurityView() {
+  return (
+    <div className="py-20 px-6 max-w-3xl mx-auto flex flex-col gap-6">
+      <h1 className="text-3xl font-mono font-bold">Security, Secret Handling & Compliance</h1>
+      <p className="text-zinc-400 text-sm leading-relaxed">
+        Tathya is built with professional SaaS security controls. Your private API credentials (like `BRIGHT_DATA_API_TOKEN` and news tokens) are handled exclusively on the backend. They are never exposed to the client-side JavaScript or committed to source control.
+      </p>
+      <p className="text-zinc-400 text-sm leading-relaxed">
+        We utilize database-level constraints to partition data. Additionally, every record extracted maintains a strict schema footprint, including extraction time and original source URL, so analysts can click "View Source" to trace any data point back to its original public page.
+      </p>
+    </div>
+  );
+}
 
 function DocsView() {
   return (
