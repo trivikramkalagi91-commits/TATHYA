@@ -1749,19 +1749,19 @@ function MarketIntelligenceDashboardView() {
                         className={`cursor-pointer transition-colors duration-150 ${selectedSymbol === item.symbol ? 'bg-[#faf0d9] border-l-4 border-black font-extrabold' : 'hover:bg-zinc-100 bg-white'}`}
                         onClick={() => setSelectedSymbol(item.symbol)}
                       >
-                        <td className="py-3 px-4 font-bold text-black min-w-[100px] text-left whitespace-nowrap">{item.symbol}</td>
-                        <td className="py-3 px-4 text-right min-w-[110px] tabular-nums font-mono whitespace-nowrap font-bold">
+                        <td className="py-3 px-4 font-bold text-black min-w-[100px] text-left border-b-2 border-black whitespace-nowrap">{item.symbol}</td>
+                        <td className="py-3 px-4 text-right min-w-[110px] tabular-nums font-mono border-b-2 border-black whitespace-nowrap font-bold">
                           {item.price ? (item.symbol.includes('.NS') || item.symbol.includes('TCS') || item.symbol.includes('RELIANCE') || item.symbol.includes('INFOSYS') ? `₹${item.price.toFixed(2)}` : `$${item.price.toFixed(2)}`) : 'N/A'}
                         </td>
-                        <td style={{ color: item.change_pct >= 0 ? '#137333' : '#c5221f' }} className="py-3 px-4 text-right min-w-[110px] tabular-nums font-mono whitespace-nowrap font-bold">
+                        <td style={{ color: item.change_pct >= 0 ? '#137333' : '#c5221f' }} className="py-3 px-4 text-right min-w-[110px] tabular-nums font-mono border-b-2 border-black whitespace-nowrap font-bold">
                           {item.change_pct ? `${item.change_pct > 0 ? '+' : ''}${item.change_pct.toFixed(2)}%` : 'N/A'}
                         </td>
-                        <td className="py-3 px-4 text-center min-w-[100px] whitespace-nowrap">
+                        <td className="py-3 px-4 text-center min-w-[100px] border-b-2 border-black whitespace-nowrap">
                           <span className="px-2 py-0.5 border border-black bg-zinc-100 text-black text-[10px] font-bold rounded-none">
                             {item.event_count} news
                           </span>
                         </td>
-                        <td className="py-2 px-4 text-right min-w-[130px] font-mono whitespace-nowrap">
+                        <td className="py-2 px-4 text-right min-w-[130px] font-mono border-b-2 border-black whitespace-nowrap">
                           <div className="flex flex-col items-end gap-1">
                             <span className="font-bold text-black text-[10px]">{item.opportunity_score ? `${item.opportunity_score}/100` : 'N/A'}</span>
                             {item.opportunity_score !== null && (
@@ -1774,7 +1774,7 @@ function MarketIntelligenceDashboardView() {
                             )}
                           </div>
                         </td>
-                        <td className="py-3 px-4 text-right min-w-[100px] whitespace-nowrap">
+                        <td className="py-3 px-4 text-right min-w-[100px] border-b-2 border-black whitespace-nowrap">
                           <div className="flex items-center justify-end gap-3">
                             <button 
                               onClick={(e) => { e.stopPropagation(); setSelectedSymbol(item.symbol); }}
