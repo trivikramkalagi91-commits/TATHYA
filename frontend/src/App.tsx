@@ -350,7 +350,7 @@ export default function App() {
               <div key={idx} className="custom-ticker-item">
                 <span className="text-xs font-bold text-black">{item.label}</span>
                 <span className="text-xs font-mono font-bold text-zinc-700">{item.price}</span>
-                <span className={`font-bold text-xs ${item.positive ? 'text-emerald-600' : 'text-rose-600'}`}>{item.change}</span>
+                <span style={{ color: item.positive ? '#10b981' : '#ef4444' }} className="font-bold text-xs">{item.change}</span>
               </div>
             ))}
             {/* Duplicated for seamless loop animation */}
@@ -365,7 +365,7 @@ export default function App() {
               <div key={`dup-${idx}`} className="custom-ticker-item">
                 <span className="text-xs font-bold text-black">{item.label}</span>
                 <span className="text-xs font-mono font-bold text-zinc-700">{item.price}</span>
-                <span className={`font-bold text-xs ${item.positive ? 'text-emerald-600' : 'text-rose-600'}`}>{item.change}</span>
+                <span style={{ color: item.positive ? '#10b981' : '#ef4444' }} className="font-bold text-xs">{item.change}</span>
               </div>
             ))}
           </div>
@@ -1035,12 +1035,19 @@ function OverviewDashboardView() {
                       </td>
                       <td className="font-mono font-bold text-black text-xs whitespace-nowrap">{run.records_count}</td>
                       <td className="font-mono font-bold whitespace-nowrap">
-                        <span className={run.health_score === 100 ? 'text-emerald-600' : run.health_score > 0 ? 'text-amber-600' : 'text-red-600'}>
+                        <span style={{ color: run.health_score === 100 ? '#10b981' : run.health_score > 0 ? '#d97706' : '#ef4444' }} className="font-extrabold">
                           {run.health_score}%
                         </span>
                       </td>
                       <td className="whitespace-nowrap">
-                        <span className={`badge border border-black font-bold font-mono text-[9px] uppercase px-2 py-0.5 rounded-none ${run.status === 'SUCCESS' ? 'bg-[#86efac] text-black' : run.status === 'DEGRADED' ? 'bg-[#fde047] text-black' : 'bg-red-500 text-white'}`}>
+                        <span 
+                          style={{ 
+                            backgroundColor: run.status === 'SUCCESS' ? '#e6f4ea' : run.status === 'DEGRADED' ? '#fef7e0' : '#fce8e6',
+                            color: run.status === 'SUCCESS' ? '#137333' : run.status === 'DEGRADED' ? '#b06000' : '#c5221f',
+                            borderColor: run.status === 'SUCCESS' ? '#137333' : run.status === 'DEGRADED' ? '#b06000' : '#c5221f'
+                          }} 
+                          className="badge border font-bold font-mono text-[9px] uppercase px-2 py-0.5 rounded-none"
+                        >
                           {run.status}
                         </span>
                       </td>
