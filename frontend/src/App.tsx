@@ -215,131 +215,132 @@ export default function App() {
 
   // Render Dashboard Portal Shell
   return (
-    <div className="bg-[#0b0b0c] min-h-screen text-zinc-100 flex font-sans">
+    <div className="bg-[var(--bg-base)] min-h-screen text-[var(--text-primary)] flex font-sans">
       {/* Dashboard Left Sidebar */}
-      <aside className="w-64 border-r border-[#242427] bg-[#131315] flex flex-col">
-        <div className="h-16 border-b border-[#242427] flex items-center px-6 gap-2">
-          <span className="font-mono text-lg font-bold tracking-widest text-[#f59e0b]">TATHYA</span>
-          <span className="text-[10px] bg-[#78350f] text-[#f59e0b] px-1.5 py-0.5 rounded font-mono font-bold">LIVE</span>
-        </div>
-
-        {/* Workspace Selector */}
-        <div className="px-4 py-3 border-b border-[#242427] flex flex-col gap-1.5 text-xs font-mono bg-[#0b0b0c]">
-          <span className="text-zinc-500 text-[10px]">WORKSPACE</span>
-          <div className="flex items-center justify-between text-zinc-300 cursor-pointer hover:text-slate-100 transition-colors">
-            <span className="font-semibold text-slate-200">Primary Workspace</span>
-            <ChevronDown size={14} className="text-amber-500" />
+      <aside className="w-64 border-r-2 border-[var(--border-default)] bg-[var(--surface)] flex flex-col justify-between">
+        <div className="flex flex-col">
+          <div className="h-16 border-b-2 border-[var(--border-default)] flex items-center px-6 gap-2 bg-white">
+            <span className="font-serif text-xl font-bold tracking-tight text-black">Tathya</span>
+            <span className="text-[9px] bg-[#86efac] text-black border border-black px-1.5 py-0.5 rounded-none font-mono font-bold uppercase tracking-wider">LIVE</span>
           </div>
+
+          {/* Workspace Selector */}
+          <div className="px-4 py-3 border-b-2 border-[var(--border-default)] flex flex-col gap-1.5 text-xs font-mono bg-white">
+            <span className="text-zinc-500 text-[9px] font-bold uppercase tracking-wider">// WORKSPACE</span>
+            <div className="flex items-center justify-between text-black cursor-pointer hover:underline">
+              <span className="font-bold">Primary Workspace</span>
+              <ChevronDown size={14} className="text-black" />
+            </div>
+          </div>
+
+          {/* Navigation Tabs */}
+          <nav className="p-4 flex flex-col gap-2.5 text-xs font-bold uppercase tracking-wider font-sans">
+            <button
+              onClick={() => navigateTo('app-overview')}
+              className={`flex items-center gap-3 w-full px-3.5 py-2.5 transition-all border-2 cursor-pointer ${currentPath === 'app-overview' ? 'bg-black text-white border-black rounded-none' : 'text-zinc-700 bg-transparent border-transparent hover:bg-black/5 hover:text-black rounded-none'}`}
+            >
+              <Activity size={16} />
+              <span>Overview</span>
+            </button>
+            
+            <button
+              onClick={() => navigateTo('app-sources')}
+              className={`flex items-center gap-3 w-full px-3.5 py-2.5 transition-all border-2 cursor-pointer ${currentPath === 'app-sources' ? 'bg-black text-white border-black rounded-none' : 'text-zinc-700 bg-transparent border-transparent hover:bg-black/5 hover:text-black rounded-none'}`}
+            >
+              <LinkIcon size={16} />
+              <span>Sources & Scrapers</span>
+            </button>
+            
+            <button
+              onClick={() => navigateTo('app-repairs')}
+              className={`flex items-center gap-3 w-full px-3.5 py-2.5 transition-all border-2 cursor-pointer ${currentPath === 'app-repairs' ? 'bg-black text-white border-black rounded-none' : 'text-zinc-700 bg-transparent border-transparent hover:bg-black/5 hover:text-black rounded-none'}`}
+            >
+              <Zap size={16} />
+              <span>Self-Healing Logs</span>
+            </button>
+            
+            <button
+              onClick={() => navigateTo('app-market')}
+              className={`flex items-center gap-3 w-full px-3.5 py-2.5 transition-all border-2 cursor-pointer ${currentPath === 'app-market' ? 'bg-black text-white border-black rounded-none' : 'text-zinc-700 bg-transparent border-transparent hover:bg-black/5 hover:text-black rounded-none'}`}
+            >
+              <TrendingUp size={16} />
+              <span>Market Intelligence</span>
+            </button>
+            
+            <button
+              onClick={() => navigateTo('app-settings')}
+              className={`flex items-center gap-3 w-full px-3.5 py-2.5 transition-all border-2 cursor-pointer ${currentPath === 'app-settings' ? 'bg-black text-white border-black rounded-none' : 'text-zinc-700 bg-transparent border-transparent hover:bg-black/5 hover:text-black rounded-none'}`}
+            >
+              <Settings size={16} />
+              <span>Integrations & Keys</span>
+            </button>
+
+            <div className="border-t-2 border-[var(--border-default)] my-2"></div>
+
+            <button
+              onClick={() => navigateTo('app-docs')}
+              className={`flex items-center gap-3 w-full px-3.5 py-2.5 transition-all border-2 cursor-pointer ${currentPath === 'app-docs' ? 'bg-black text-white border-black rounded-none' : 'text-zinc-700 bg-transparent border-transparent hover:bg-black/5 hover:text-black rounded-none'}`}
+            >
+              <BookOpen size={16} />
+              <span>System Manual</span>
+            </button>
+          </nav>
         </div>
-
-        {/* Navigation Tabs */}
-        <nav className="flex-1 p-4 flex flex-col gap-2 text-sm font-mono">
-          <button
-            onClick={() => navigateTo('app-overview')}
-            className={`flex items-center gap-3 w-full px-3.5 py-2.5 rounded-lg text-left transition-all duration-150 ${currentPath === 'app-overview' ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20 font-semibold' : 'text-slate-400 hover:bg-[#1b1b1e] hover:text-slate-200'}`}
-          >
-            <Activity size={16} />
-            <span>Overview</span>
-          </button>
-          
-          <button
-            onClick={() => navigateTo('app-sources')}
-            className={`flex items-center gap-3 w-full px-3.5 py-2.5 rounded-lg text-left transition-all duration-150 ${currentPath === 'app-sources' ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20 font-semibold' : 'text-slate-400 hover:bg-[#1b1b1e] hover:text-slate-200'}`}
-          >
-            <LinkIcon size={16} />
-            <span>Sources & Scrapers</span>
-          </button>
-          
-          <button
-            onClick={() => navigateTo('app-repairs')}
-            className={`flex items-center gap-3 w-full px-3.5 py-2.5 rounded-lg text-left transition-all duration-150 ${currentPath === 'app-repairs' ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20 font-semibold' : 'text-slate-400 hover:bg-[#1b1b1e] hover:text-slate-200'}`}
-          >
-            <Zap size={16} />
-            <span>Self-Healing Logs</span>
-          </button>
-          
-          <button
-            onClick={() => navigateTo('app-market')}
-            className={`flex items-center gap-3 w-full px-3.5 py-2.5 rounded-lg text-left transition-all duration-150 ${currentPath === 'app-market' ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20 font-semibold' : 'text-slate-400 hover:bg-[#1b1b1e] hover:text-slate-200'}`}
-          >
-            <TrendingUp size={16} />
-            <span>Market Intelligence</span>
-          </button>
-          
-          <button
-            onClick={() => navigateTo('app-settings')}
-            className={`flex items-center gap-3 w-full px-3.5 py-2.5 rounded-lg text-left transition-all duration-150 ${currentPath === 'app-settings' ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20 font-semibold' : 'text-slate-400 hover:bg-[#1b1b1e] hover:text-slate-200'}`}
-          >
-            <Settings size={16} />
-            <span>Integrations & Keys</span>
-          </button>
-
-          <div className="border-t border-[#242427] my-3"></div>
-
-          <button
-            onClick={() => navigateTo('app-docs')}
-            className={`flex items-center gap-3 w-full px-3.5 py-2.5 rounded-lg text-left transition-all duration-150 ${currentPath === 'app-docs' ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20 font-semibold' : 'text-slate-400 hover:bg-[#1b1b1e] hover:text-slate-200'}`}
-          >
-            <BookOpen size={16} />
-            <span>System Manual</span>
-          </button>
-        </nav>
 
         {/* User Footer Panel */}
-        <div className="p-4 border-t border-[#242427] bg-[#0b0b0c] flex items-center justify-between">
+        <div className="p-4 border-t-2 border-[var(--border-default)] bg-white flex items-center justify-between">
           <div className="flex flex-col text-xs">
-            <span className="font-semibold text-zinc-300 text-[11px]">{user?.full_name || 'Engineer'}</span>
-            <span className="text-[10px] text-zinc-500 font-mono">{user?.email}</span>
+            <span className="font-bold text-black text-[11px]">{user?.full_name || 'Engineer'}</span>
+            <span className="text-[9px] text-zinc-500 font-mono tracking-tight">{user?.email}</span>
           </div>
-          <button onClick={handleLogout} className="text-zinc-500 hover:text-zinc-200 transition-colors" title="Logout">
+          <button onClick={handleLogout} className="text-zinc-600 hover:text-black transition-colors border-0 bg-transparent cursor-pointer" title="Logout">
             <LogOut size={16} />
           </button>
         </div>
       </aside>
-
       {/* Main Console Content Body */}
-      <div className="flex-1 flex flex-col min-w-0 bg-[#090d16]">
+      <div className="flex-1 flex flex-col min-w-0 bg-[var(--bg-base)]">
         {/* Top Ticker Bar (in.investing.com style) */}
-        <div className="bg-[#0f172a]/95 backdrop-blur-sm border-b border-[#1e293b] py-2.5 px-8 overflow-x-auto whitespace-nowrap flex flex-row flex-nowrap items-center gap-8 text-[10px] font-mono select-none scrollbar-none">
+        <div className="bg-white border-b-2 border-black py-2.5 px-8 overflow-x-auto whitespace-nowrap flex flex-row flex-nowrap items-center gap-8 text-[10px] font-mono select-none scrollbar-none">
           <div className="flex flex-row flex-nowrap items-center gap-2 min-w-max">
-            <span className="text-slate-400 font-bold whitespace-nowrap">NIFTY 50</span>
-            <span className="text-slate-100 font-bold whitespace-nowrap">24,315.20</span>
-            <span className="text-emerald-400 font-semibold whitespace-nowrap">▲ +185.10 (+0.77%)</span>
+            <span className="text-zinc-650 font-bold whitespace-nowrap">NIFTY 50</span>
+            <span className="text-black font-bold whitespace-nowrap">24,315.20</span>
+            <span className="text-[#10b981] font-semibold whitespace-nowrap">▲ +185.10 (+0.77%)</span>
           </div>
-          <div className="flex flex-row flex-nowrap items-center gap-2 min-w-max border-l border-slate-800 pl-8">
-            <span className="text-slate-400 font-bold whitespace-nowrap">SENSEX</span>
-            <span className="text-slate-100 font-bold whitespace-nowrap">79,642.50</span>
-            <span className="text-emerald-400 font-semibold whitespace-nowrap">▲ +628.30 (+0.80%)</span>
+          <div className="flex flex-row flex-nowrap items-center gap-2 min-w-max border-l-2 border-black pl-8">
+            <span className="text-zinc-650 font-bold whitespace-nowrap">SENSEX</span>
+            <span className="text-black font-bold whitespace-nowrap">79,642.50</span>
+            <span className="text-[#10b981] font-semibold whitespace-nowrap">▲ +628.30 (+0.80%)</span>
           </div>
-          <div className="flex flex-row flex-nowrap items-center gap-2 min-w-max border-l border-slate-800 pl-8">
-            <span className="text-slate-400 font-bold whitespace-nowrap">USD/INR</span>
-            <span className="text-slate-100 font-bold whitespace-nowrap">83.92</span>
-            <span className="text-rose-400 font-semibold whitespace-nowrap">▼ -0.05 (-0.06%)</span>
+          <div className="flex flex-row flex-nowrap items-center gap-2 min-w-max border-l-2 border-black pl-8">
+            <span className="text-zinc-650 font-bold whitespace-nowrap">USD/INR</span>
+            <span className="text-black font-bold whitespace-nowrap">83.92</span>
+            <span className="text-[#ef4444] font-semibold whitespace-nowrap">▼ -0.05 (-0.06%)</span>
           </div>
-          <div className="flex flex-row flex-nowrap items-center gap-2 min-w-max border-l border-slate-800 pl-8">
-            <span className="text-slate-400 font-bold whitespace-nowrap">GOLD IN</span>
-            <span className="text-slate-100 font-bold whitespace-nowrap">₹71,850</span>
-            <span className="text-emerald-400 font-semibold whitespace-nowrap">▲ +240 (+0.34%)</span>
+          <div className="flex flex-row flex-nowrap items-center gap-2 min-w-max border-l-2 border-black pl-8">
+            <span className="text-zinc-650 font-bold whitespace-nowrap">GOLD IN</span>
+            <span className="text-black font-bold whitespace-nowrap">₹71,850</span>
+            <span className="text-[#10b981] font-semibold whitespace-nowrap">▲ +240 (+0.34%)</span>
           </div>
-          <div className="flex flex-row flex-nowrap items-center gap-2 min-w-max border-l border-slate-800 pl-8">
-            <span className="text-slate-400 font-bold whitespace-nowrap">BRENT CRUDE</span>
-            <span className="text-slate-100 font-bold whitespace-nowrap">$77.12</span>
-            <span className="text-rose-400 font-semibold whitespace-nowrap">▼ -0.42 (-0.54%)</span>
+          <div className="flex flex-row flex-nowrap items-center gap-2 min-w-max border-l-2 border-black pl-8">
+            <span className="text-zinc-650 font-bold whitespace-nowrap">BRENT CRUDE</span>
+            <span className="text-black font-bold whitespace-nowrap">$77.12</span>
+            <span className="text-[#ef4444] font-semibold whitespace-nowrap">▼ -0.42 (-0.54%)</span>
           </div>
-          <div className="flex flex-row flex-nowrap items-center gap-2 min-w-max border-l border-slate-800 pl-8">
-            <span className="text-slate-400 font-bold whitespace-nowrap">US 10Y BOND</span>
-            <span className="text-slate-100 font-bold whitespace-nowrap">3.82%</span>
-            <span className="text-emerald-400 font-semibold whitespace-nowrap">▲ +0.02 (+0.52%)</span>
+          <div className="flex flex-row flex-nowrap items-center gap-2 min-w-max border-l-2 border-black pl-8">
+            <span className="text-zinc-650 font-bold whitespace-nowrap">US 10Y BOND</span>
+            <span className="text-black font-bold whitespace-nowrap">3.82%</span>
+            <span className="text-[#10b981] font-semibold whitespace-nowrap">▲ +0.02 (+0.52%)</span>
           </div>
         </div>
 
         {/* Top Header bar */}
-        <header className="h-16 border-b border-[#242427] bg-[#131315] flex items-center justify-between px-8">
+        <header className="h-16 border-b-2 border-black bg-white flex items-center justify-between px-8">
           {/* Breadcrumbs */}
-          <div className="flex items-center gap-2 text-xs font-mono text-zinc-500">
+          <div className="flex items-center gap-2 text-xs font-mono text-zinc-600">
             <span>CONSOLE</span>
             <span>/</span>
-            <span className="text-zinc-300 uppercase">{currentPath.replace('app-', '')}</span>
+            <span className="text-black font-bold uppercase">{currentPath.replace('app-', '')}</span>
           </div>
 
           {/* Topbar Actions */}
@@ -348,7 +349,7 @@ export default function App() {
             <div className="relative">
               <button 
                 onClick={() => setNotificationsOpen(!notificationsOpen)}
-                className="p-1.5 rounded hover:bg-[#1b1b1e] text-zinc-400 hover:text-zinc-100 flex items-center relative"
+                className="p-1.5 rounded hover:bg-zinc-100 text-zinc-600 hover:text-black flex items-center relative border-0 bg-transparent cursor-pointer"
               >
                 <Bell size={16} />
                 {alerts.filter(a => !a.read).length > 0 && (
@@ -357,29 +358,29 @@ export default function App() {
               </button>
               
               {notificationsOpen && (
-                <div className="absolute right-0 mt-2 w-80 panel shadow-2xl z-50 text-xs font-mono">
-                  <div className="p-3 border-b border-[#242427] font-semibold flex justify-between items-center">
+                <div className="absolute right-0 mt-2 w-80 bg-[#faf0d9] border-2 border-black rounded-none shadow-2xl z-50 text-xs font-mono text-black">
+                  <div className="p-3 border-b-2 border-black font-bold flex justify-between items-center bg-white">
                     <span>SYSTEM ALERTS ({alerts.filter(a => !a.read).length})</span>
-                    <button onClick={() => setNotificationsOpen(false)} className="text-zinc-500">Close</button>
+                    <button onClick={() => setNotificationsOpen(false)} className="text-zinc-500 border-0 bg-transparent cursor-pointer">Close</button>
                   </div>
                   <div className="max-h-60 overflow-y-auto">
                     {alerts.length === 0 ? (
                       <p className="p-4 text-center text-zinc-600">No active system alerts.</p>
                     ) : (
                       alerts.map((alert) => (
-                        <div key={alert.id} className={`p-3 border-b border-[#242427] flex flex-col gap-1 ${alert.read ? 'opacity-50' : 'bg-[#1b1b1e]'}`}>
+                        <div key={alert.id} className={`p-3 border-b border-black/30 flex flex-col gap-1 ${alert.read ? 'opacity-50' : 'bg-white'}`}>
                           <div className="flex justify-between items-center">
-                            <span className={`font-semibold ${alert.severity === 'CRITICAL' ? 'text-red-400' : 'text-amber-400'}`}>
+                            <span className={`font-bold ${alert.severity === 'CRITICAL' ? 'text-red-600' : 'text-amber-600'}`}>
                               {alert.title}
                             </span>
                             {!alert.read && (
-                              <button onClick={() => markAlertRead(alert.id)} className="text-zinc-400 hover:text-zinc-200">
+                              <button onClick={() => markAlertRead(alert.id)} className="text-zinc-500 hover:text-black border-0 bg-transparent cursor-pointer">
                                 [Dismiss]
                               </button>
                             )}
                           </div>
-                          <p className="text-zinc-400 text-[10px]">{alert.description}</p>
-                          <span className="text-[9px] text-zinc-600">{new Date(alert.created_at).toLocaleTimeString()}</span>
+                          <p className="text-zinc-700 text-[10px] leading-relaxed">{alert.description}</p>
+                          <span className="text-[9px] text-zinc-500">{new Date(alert.created_at).toLocaleTimeString()}</span>
                         </div>
                       ))
                     )}
@@ -388,8 +389,7 @@ export default function App() {
               )}
             </div>
             
-            <div className="h-6 w-[1px] bg-[#242427]"></div>
-            <span className="text-xs text-zinc-400 font-mono">Environment: <strong className="text-amber-500">Live Scrapers Enabled</strong></span>
+            <span className="text-xs text-black font-mono">Environment: <strong className="text-amber-600">Live Scrapers Enabled</strong></span>
           </div>
         </header>
 

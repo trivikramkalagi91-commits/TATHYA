@@ -1,14 +1,14 @@
-/* Modern Core Variables for Tathya - Kin Premium Theme */
+/* Modern Core Variables for Tathya - Frontend Practice Light Theme */
 :root {
-  --bg-base: #0c0d0e;          /* Clean dark base charcoal */
-  --surface: #151618;          /* Sleek surface card gray */
-  --border-default: #222326;   /* Precise default border gray */
-  --border-active: #3e3f42;    /* Focused/active state border */
+  --bg-base: #ffffff;          /* Pure White background */
+  --surface: #faf0d9;          /* Classic Cream surface card color */
+  --border-default: #000000;   /* High contrast black borders */
+  --border-active: #000000;    /* Focused active state border */
   
   /* Text */
-  --text-primary: #ffffff;     /* Solid White */
-  --text-secondary: #8e8e93;   /* Muted gray */
-  --text-muted: #52525b;       /* Slate dark gray */
+  --text-primary: #000000;     /* Solid black text */
+  --text-secondary: #3f3f46;   /* Muted dark zinc text */
+  --text-muted: #71717a;       /* Slate muted text */
   
   /* Statuses */
   --status-warning: #f59e0b;   /* Warning Amber */
@@ -252,20 +252,20 @@ a:hover {
 
 .table th {
   padding: 0.75rem 1rem;
-  border-bottom: 1px solid var(--border-focus);
+  border-bottom: 1px solid var(--border-active);
   color: var(--text-secondary);
   font-weight: 500;
-  background-color: var(--bg-surface);
+  background-color: var(--surface);
 }
 
 .table td {
   padding: 0.75rem 1rem;
-  border-bottom: 1px solid var(--border-muted);
+  border-bottom: 1px solid var(--border-default);
   color: var(--text-primary);
 }
 
 .table tbody tr:hover {
-  background-color: var(--bg-surface-hover);
+  background-color: rgba(0, 0, 0, 0.04);
 }
 
 /* Custom Interactive Scraper Timeline */
@@ -339,3 +339,53 @@ a:hover {
 .scrollbar-none::-webkit-scrollbar { display: none; }
 .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
 .flex-nowrap { flex-wrap: nowrap; }
+
+/* Frontend Practice Light Theme Core Classes */
+.bg-white { background-color: #ffffff !important; }
+.text-black { color: #000000 !important; }
+.bg-black { background-color: #000000 !important; }
+.text-white { color: #ffffff !important; }
+
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.justify-center { justify-content: center; }
+.hidden { display: none; }
+.max-w-7xl { max-width: 80rem; }
+.px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+.py-16 { padding-top: 4rem; padding-bottom: 4rem; }
+.gap-8 { gap: 2rem; }
+
+@media (min-width: 768px) {
+  .md\:flex { display: flex !important; }
+  .md\:inline { display: inline !important; }
+}
+
+.border-b-2 { border-bottom-width: 2px !important; }
+.border-t-2 { border-top-width: 2px !important; }
+.border-l-2 { border-left-width: 2px !important; }
+.border-2 { border-width: 2px !important; }
+.border-black { border-color: #000000 !important; }
+.rounded-none { border-radius: 0px !important; }
+
+.bg-\[\#faf0d9\] { background-color: #faf0d9 !important; }
+.bg-\[\#faf0d9\]\/60 { background-color: rgba(250, 240, 217, 0.6) !important; }
+
+.hover\:shadow-\[6px_6px_0px_\#000000\]:hover { box-shadow: 6px 6px 0px #000000 !important; }
+.hover\:shadow-\[4px_4px_0px_\#000\]:hover { box-shadow: 4px 4px 0px #000 !important; }
+
+.font-serif { font-family: Georgia, Cambria, "Times New Roman", Times, serif !important; }
+.font-sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important; }
+.font-mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important; }
+
+.text-5xl { font-size: 3rem !important; }
+.text-4xl { font-size: 2.25rem !important; }
+.text-3xl { font-size: 1.875rem !important; }
+.text-2xl { font-size: 1.5rem !important; }
+.text-lg { font-size: 1.125rem !important; }
+.text-xs { font-size: 0.75rem !important; }
+
+.tracking-tight { letter-spacing: -0.025em !important; }
+.leading-tight { line-height: 1.25 !important; }
+.underline { text-decoration-line: underline !important; }
+.decoration-2 { text-decoration-thickness: 2px !important; }
+
