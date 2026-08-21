@@ -1160,7 +1160,7 @@ function SourcesDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
         <div className="p-4 border-b-2 border-black font-mono font-bold text-black uppercase tracking-wider text-xs bg-[#faf0d9]">
           // DATA PIPELINE SOURCES
         </div>
-        <div className="p-4 flex flex-col gap-4 bg-zinc-50">
+        <div style={{ maxHeight: 'calc(100vh - 180px)', overflowY: 'auto' }} className="p-4 flex flex-col gap-4 bg-zinc-50">
           {sources.map((source) => {
             const coll = collectors.find(c => c.source_id === source.id);
             return (
@@ -1464,7 +1464,7 @@ function RepairsDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
         <div className="p-4 border-b-2 border-black font-mono font-bold text-black uppercase tracking-wider text-xs bg-[#faf0d9]">
           // SELF-HEALING LOGS & PROPOSALS
         </div>
-        <div className="p-4 flex flex-col gap-4 bg-zinc-55">
+        <div style={{ maxHeight: 'calc(100vh - 180px)', overflowY: 'auto' }} className="p-4 flex flex-col gap-4 bg-zinc-55">
           {repairs.length === 0 ? (
             <p className="p-6 text-center text-zinc-650 font-mono font-bold text-xs">No repairs logged.</p>
           ) : (
