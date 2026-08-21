@@ -53,6 +53,7 @@ export default function App() {
   const [notificationsOpen, setNotificationsOpen] = useState<boolean>(false);
   const [workspaceOpen, setWorkspaceOpen] = useState<boolean>(false);
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(true);
+  const [selectedWorkspace, setSelectedWorkspace] = useState<string>("Primary Workspace");
   const [authError, setAuthError] = useState<string>('');
 
   // Handle Hash Routing
@@ -105,6 +106,25 @@ export default function App() {
     try {
       await api.post(`/api/v1/alerts/${id}/read`);
       fetchAlerts();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const deleteAlert = async (id: number) => {
+    try {
+      setAlerts(prev => prev.filter(a => a.id !== id));
+      await api.delete(`/api/v1/alerts/${id}`).catch(() => {});
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const clearAllAlerts = async () => {
+    try {
+      const currentAlerts = [...alerts];
+      setAlerts([]);
+      await Promise.all(currentAlerts.map(a => api.delete(`/api/v1/alerts/${a.id}`).catch(() => {})));
     } catch (err) {
       console.error(err);
     }
@@ -235,14 +255,14 @@ export default function App() {
                 onClick={() => setWorkspaceOpen(!workspaceOpen)} 
                 className="flex items-center justify-between text-black cursor-pointer hover:underline"
               >
-                <span className="font-bold text-xs">Primary Workspace</span>
+                <span className="font-bold text-xs">{selectedWorkspace}</span>
                 <ChevronDown size={14} className={`text-black transition-transform ${workspaceOpen ? 'rotate-180' : ''}`} />
               </div>
               {workspaceOpen && (
-                <div className="absolute left-4 right-4 top-14 bg-white border-2 border-black z-50 p-1 flex flex-col gap-1 shadow-[3px_3px_0px_#000000]">
-                  <div onClick={() => { setWorkspaceOpen(false); alert("Switched to Primary Workspace"); }} className="p-2 hover:bg-zinc-100 cursor-pointer font-bold text-[9px] text-black uppercase">Primary Workspace</div>
-                  <div onClick={() => { setWorkspaceOpen(false); alert("Switched to Sandbox Analytics"); }} className="p-2 hover:bg-zinc-100 cursor-pointer font-bold text-[9px] text-black uppercase">Sandbox Analytics</div>
-                  <div onClick={() => { setWorkspaceOpen(false); alert("Switched to Prod Scraping Flow"); }} className="p-2 hover:bg-zinc-100 cursor-pointer font-bold text-[9px] text-black uppercase">Prod Scraping Flow</div>
+                <div style={{ width: '224px' }} className="absolute left-4 top-14 bg-white border-2 border-black z-50 p-1 flex flex-col gap-1 shadow-[3px_3px_0px_#000000]">
+                  <div onClick={() => { setSelectedWorkspace("Primary Workspace"); setWorkspaceOpen(false); }} className="p-2 hover:bg-zinc-100 cursor-pointer font-bold text-[9px] text-black uppercase">Primary Workspace</div>
+                  <div onClick={() => { setSelectedWorkspace("Sandbox Analytics"); setWorkspaceOpen(false); }} className="p-2 hover:bg-zinc-100 cursor-pointer font-bold text-[9px] text-black uppercase">Sandbox Analytics</div>
+                  <div onClick={() => { setSelectedWorkspace("Prod Scraping Flow"); setWorkspaceOpen(false); }} className="p-2 hover:bg-zinc-100 cursor-pointer font-bold text-[9px] text-black uppercase">Prod Scraping Flow</div>
                 </div>
               )}
             </div>
@@ -384,29 +404,35 @@ export default function App() {
               </button>
               
               {notificationsOpen && (
-                <div className="absolute right-0 mt-2 w-80 bg-[#faf0d9] border-2 border-black rounded-none shadow-2xl z-50 text-xs font-mono text-black">
-                  <div className="p-3 border-b-2 border-black font-bold flex justify-between items-center bg-white">
-                    <span>SYSTEM ALERTS ({alerts.filter(a => !a.read).length})</span>
-                    <button onClick={() => setNotificationsOpen(false)} className="text-zinc-500 border-0 bg-transparent cursor-pointer">Close</button>
+                <div style={{ width: '350px' }} className="absolute right-0 mt-3 bg-white border-2 border-black rounded-none shadow-[4px_4px_0px_#000000] z-50 text-xs font-mono text-black">
+                  <div className="p-3 border-b-2 border-black font-bold flex justify-between items-center bg-[#faf0d9]">
+                    <span>SYSTEM ALERTS ({alerts.length})</span>
+                    <div className="flex items-center gap-2">
+                      {alerts.length > 0 && (
+                        <button onClick={clearAllAlerts} className="text-red-600 hover:underline border-0 bg-transparent cursor-pointer font-bold text-[10px] uppercase mr-2">[Clear All]</button>
+                      )}
+                      <button onClick={() => setNotificationsOpen(false)} className="text-zinc-650 hover:text-black border-0 bg-transparent cursor-pointer font-bold text-[10px] uppercase">[Close]</button>
+                    </div>
                   </div>
-                  <div className="max-h-60 overflow-y-auto">
+                  <div className="max-h-80 overflow-y-auto bg-white">
                     {alerts.length === 0 ? (
-                      <p className="p-4 text-center text-zinc-600">No active system alerts.</p>
+                      <p className="p-6 text-center text-zinc-650 font-bold uppercase">No active system alerts.</p>
                     ) : (
                       alerts.map((alert) => (
-                        <div key={alert.id} className={`p-3 border-b border-black/30 flex flex-col gap-1 ${alert.read ? 'opacity-50' : 'bg-white'}`}>
-                          <div className="flex justify-between items-center">
-                            <span className={`font-bold ${alert.severity === 'CRITICAL' ? 'text-red-600' : 'text-amber-600'}`}>
+                        <div key={alert.id} className={`p-4 border-b-2 border-black/10 flex flex-col gap-1.5 ${alert.read ? 'opacity-60 bg-white' : 'bg-[#faf0d9]/30'}`}>
+                          <div className="flex justify-between items-start gap-2">
+                            <span className={`font-extrabold text-[11px] uppercase ${alert.severity === 'CRITICAL' ? 'text-red-650' : 'text-amber-650'}`}>
                               {alert.title}
                             </span>
-                            {!alert.read && (
-                              <button onClick={() => markAlertRead(alert.id)} className="text-zinc-500 hover:text-black border-0 bg-transparent cursor-pointer">
-                                [Dismiss]
-                              </button>
-                            )}
+                            <div className="flex items-center gap-1.5 shrink-0">
+                              {!alert.read && (
+                                <button onClick={() => markAlertRead(alert.id)} className="text-emerald-700 hover:underline border-0 bg-transparent cursor-pointer font-bold text-[9px] uppercase">[Read]</button>
+                              )}
+                              <button onClick={() => deleteAlert(alert.id)} className="text-red-600 hover:underline border-0 bg-transparent cursor-pointer font-bold text-[9px] uppercase">[Delete]</button>
+                            </div>
                           </div>
-                          <p className="text-zinc-700 text-[10px] leading-relaxed">{alert.description}</p>
-                          <span className="text-[9px] text-zinc-500">{new Date(alert.created_at).toLocaleTimeString()}</span>
+                          <p className="text-zinc-800 text-[10px] font-bold leading-normal">{alert.description}</p>
+                          <span className="text-[9px] text-zinc-550 font-bold">{new Date(alert.created_at).toLocaleString()}</span>
                         </div>
                       ))
                     )}
@@ -415,7 +441,9 @@ export default function App() {
               )}
             </div>
             
-            <span className="text-xs text-black font-mono">Environment: <strong className="text-amber-600">Live Scrapers Enabled</strong></span>
+            <span className="text-[10px] text-black font-mono font-bold border-2 border-black bg-[#faf0d9] px-3 py-1.5 rounded-none uppercase ml-2 shadow-[2px_2px_0px_#000000] shrink-0">
+              Environment: <strong className="text-amber-600 font-extrabold">Live Scrapers Enabled</strong>
+            </span>
           </div>
         </header>
 
