@@ -210,7 +210,7 @@ export default function App() {
         </header>
 
         {/* Public Routes Rendering */}
-        <main className="flex-1 bg-white">
+        <main style={{ minHeight: 'calc(100vh - 260px)' }} className="flex-1 bg-white">
           {currentPath === 'home' && <HomeView />}
           {currentPath === 'product' && <ProductView />}
           {currentPath === 'solutions' && <SolutionsView />}
@@ -222,14 +222,14 @@ export default function App() {
         </main>
 
         {/* Marketing Footer */}
-        <footer className="bg-black text-white py-12 border-t-2 border-black flex flex-col gap-6 items-center justify-center text-center">
+        <footer className="bg-black text-white py-12 border-t-2 border-black flex flex-col gap-6 items-center justify-center text-center w-full mt-auto">
           <span className="font-serif text-xl font-bold tracking-tight">Tathya Scraper Platform</span>
-          <div className="flex gap-6 text-xs font-bold uppercase tracking-wider text-zinc-400">
-            <a href="#product" className="hover:text-white">Product</a>
-            <a href="#solutions" className="hover:text-white">Solutions</a>
-            <a href="#docs" className="hover:text-white">Docs</a>
+          <div className="flex gap-6 text-xs font-bold uppercase tracking-wider">
+            <a href="#product" style={{ color: '#ffffff' }} className="hover:underline">Product</a>
+            <a href="#solutions" style={{ color: '#ffffff' }} className="hover:underline">Solutions</a>
+            <a href="#docs" style={{ color: '#ffffff' }} className="hover:underline">Docs</a>
           </div>
-          <span className="text-[10px] text-zinc-650 font-mono">Tathya Platform - © 2026</span>
+          <span className="text-[10px] text-zinc-400 font-mono">Tathya Platform - © 2026</span>
         </footer>
       </div>
     );
