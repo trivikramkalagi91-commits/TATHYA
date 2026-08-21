@@ -1,30 +1,19 @@
 /* Modern Core Variables for Tathya - Kin Premium Theme */
 :root {
-  --bg-main: #0c0d0e;          /* Clean dark charcoal */
-  --bg-surface: #151618;       /* Sleek surface dark gray */
-  --bg-surface-hover: #222326; /* Slight hover shift */
-  --border-muted: #222326;     /* Precise border gray */
-  --border-focus: #3e3f42;     /* Active state border */
+  --bg-base: #0c0d0e;          /* Clean dark base charcoal */
+  --surface: #151618;          /* Sleek surface card gray */
+  --border-default: #222326;   /* Precise default border gray */
+  --border-active: #3e3f42;    /* Focused/active state border */
   
   /* Text */
-  --text-primary: #ffffff;     /* Off-white */
+  --text-primary: #ffffff;     /* Solid White */
   --text-secondary: #8e8e93;   /* Muted gray */
   --text-muted: #52525b;       /* Slate dark gray */
   
-  /* Accents - Premium High Contrast White */
-  --accent-primary: #ffffff;   /* Solid white primary */
-  --accent-hover: #e4e4e7;     /* Light gray hover */
-  --accent-muted: #27272a;     /* Muted dark background */
-  
-  /* Functional Statuses */
-  --color-success: #10b981;    /* Clean green */
-  --color-success-bg: #064e3b;
-  --color-warning: #f59e0b;    /* Warm amber/orange */
-  --color-warning-bg: #78350f;
-  --color-danger: #ef4444;     /* Crisp red */
-  --color-danger-bg: #7f1d1d;
-  --color-info: #3b82f6;       /* Blue */
-  --color-info-bg: #1e3a8a;
+  /* Statuses */
+  --status-warning: #f59e0b;   /* Warning Amber */
+  --status-positive: #10b981;  /* Positive Emerald */
+  --status-negative: #ef4444;  /* Negative Rose */
   
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   color-scheme: dark;
@@ -38,7 +27,7 @@
 }
 
 body {
-  background-color: var(--bg-main);
+  background-color: var(--bg-base);
   color: var(--text-primary);
   line-height: 1.5;
   overflow-x: hidden;
@@ -50,14 +39,14 @@ body {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--bg-main);
+  background: var(--bg-base);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--border-muted);
+  background: var(--border-default);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--border-focus);
+  background: var(--border-active);
 }
 
 /* Typography Helpers */
@@ -68,7 +57,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 a {
-  color: var(--accent-primary);
+  color: var(--text-primary);
   text-decoration: none;
   transition: color 0.15s ease;
 }
@@ -122,18 +111,18 @@ a:hover {
 
 /* Panels & Borders */
 .panel {
-  background-color: var(--bg-surface);
-  border: 1px solid var(--border-muted);
+  background-color: var(--surface);
+  border: 1px solid var(--border-default);
   border-radius: 8px;
   overflow: hidden;
 }
 
 .border-b {
-  border-bottom: 1px solid var(--border-muted);
+  border-bottom: 1px solid var(--border-default);
 }
 
 .border-r {
-  border-right: 1px solid var(--border-muted);
+  border-right: 1px solid var(--border-default);
 }
 
 /* Badges */
@@ -149,23 +138,27 @@ a:hover {
 }
 
 .badge-success {
-  background-color: var(--color-success-bg);
-  color: var(--color-success);
+  background-color: rgba(16, 185, 129, 0.1);
+  color: var(--status-positive);
+  border: 1px solid rgba(16, 185, 129, 0.2);
 }
 
 .badge-warning {
-  background-color: var(--color-warning-bg);
-  color: var(--color-warning);
+  background-color: rgba(245, 158, 11, 0.1);
+  color: var(--status-warning);
+  border: 1px solid rgba(245, 158, 11, 0.2);
 }
 
 .badge-danger {
-  background-color: var(--color-danger-bg);
-  color: var(--color-danger);
+  background-color: rgba(239, 68, 68, 0.1);
+  color: var(--status-negative);
+  border: 1px solid rgba(239, 68, 68, 0.2);
 }
 
 .badge-muted {
-  background-color: #27272a;
+  background-color: var(--surface);
   color: var(--text-secondary);
+  border: 1px solid var(--border-default);
 }
 
 /* Forms */
@@ -183,8 +176,8 @@ a:hover {
 }
 
 .form-input {
-  background-color: var(--bg-main);
-  border: 1px solid var(--border-muted);
+  background-color: var(--bg-base);
+  border: 1px solid var(--border-default);
   color: var(--text-primary);
   padding: 0.65rem 0.85rem;
   border-radius: 8px;
@@ -193,7 +186,7 @@ a:hover {
   font-size: 0.9rem;
 }
 .form-input:focus {
-  border-color: var(--border-focus);
+  border-color: var(--border-active);
 }
 
 /* Buttons */
@@ -212,36 +205,36 @@ a:hover {
 }
 
 .btn-primary {
-  background-color: var(--accent-primary);
-  color: #0c0d0e;
+  background-color: var(--text-primary);
+  color: var(--bg-base);
   font-weight: 600;
 }
 .btn-primary:hover {
-  background-color: var(--accent-hover);
+  background-color: var(--text-secondary);
 }
 .btn-primary:disabled {
-  background-color: var(--border-muted);
-  color: var(--text-secondary);
+  background-color: var(--surface);
+  color: var(--text-muted);
   cursor: not-allowed;
 }
 
 .btn-secondary {
   background-color: transparent;
-  border-color: var(--border-muted);
+  border-color: var(--border-default);
   color: var(--text-primary);
 }
 .btn-secondary:hover {
-  background-color: var(--bg-surface-hover);
-  border-color: var(--border-focus);
+  background-color: var(--surface);
+  border-color: var(--border-active);
 }
 
 .btn-danger {
-  background-color: var(--color-danger-bg);
-  border-color: var(--color-danger);
-  color: var(--color-danger);
+  background-color: rgba(239, 68, 68, 0.1);
+  border-color: var(--status-negative);
+  color: var(--status-negative);
 }
 .btn-danger:hover {
-  background-color: #991b1b;
+  background-color: rgba(239, 68, 68, 0.2);
 }
 
 /* Professional Monospace Tables */

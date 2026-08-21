@@ -405,83 +405,171 @@ export default function App() {
    ============================================================================ */
 
 function HomeView() {
+  const [filter, setFilter] = useState<'all' | 'healthy' | 'warning' | 'standby'>('all');
+
+  const projects = [
+    {
+      name: "Yahoo Finance Live",
+      category: "Financial News",
+      status: "healthy",
+      statusText: "HEALTHY",
+      color: "bg-emerald-500",
+      pillStyle: "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20",
+      description: "Asynchronous scraper monitoring live financial headlines, tickers, and price actions.",
+      difficulty: "Hard",
+      target: "finance.yahoo.com"
+    },
+    {
+      name: "Google News Feed",
+      category: "News Aggregator",
+      status: "healthy",
+      statusText: "HEALTHY",
+      color: "bg-emerald-500",
+      pillStyle: "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20",
+      description: "Continuous XML feed collector fetching macroeconomic headlines and keyword anchors.",
+      difficulty: "Easy",
+      target: "news.google.com"
+    },
+    {
+      name: "Tathya Controlled Feed",
+      category: "Local Sandbox",
+      status: "healthy",
+      statusText: "HEALTHY",
+      color: "bg-emerald-500",
+      pillStyle: "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20",
+      description: "Local mock DOM target server testing self-healing algorithms and selectors in isolation.",
+      difficulty: "Medium",
+      target: "localhost:8000"
+    },
+    {
+      name: "SEC Regulatory Filings",
+      category: "Corporate Disclosures",
+      status: "warning",
+      statusText: "PAUSED",
+      color: "bg-amber-500",
+      pillStyle: "bg-amber-500/10 text-amber-400 border border-amber-500/20",
+      description: "Regulatory registry scraper tracking SEC Edgar XBRL financial files and forms.",
+      difficulty: "Hard",
+      target: "sec.gov/edgar"
+    },
+    {
+      name: "NSE Press Portal",
+      category: "Indian Markets",
+      status: "standby",
+      statusText: "STANDBY",
+      color: "bg-indigo-500",
+      pillStyle: "bg-indigo-500/10 text-indigo-400 border border-indigo-500/20",
+      description: "Exchange disclosure collector monitoring Indian corporate press releases and statements.",
+      difficulty: "Medium",
+      target: "nseindia.com"
+    }
+  ];
+
+  const filteredProjects = projects.filter(p => {
+    if (filter === 'all') return true;
+    return p.status === filter;
+  });
+
   return (
-    <div className="flex flex-col gap-20 py-20 px-6 max-w-5xl mx-auto">
-      {/* Hero */}
-      <section className="text-center flex flex-col align-center gap-6 py-10">
-        <h1 className="text-5xl font-mono tracking-tight font-extrabold max-w-3xl leading-tight">
-          Web data that <span className="text-[#f59e0b]">doesn't break</span>.
+    <div className="flex flex-col gap-12 py-16 px-6 max-w-6xl mx-auto text-slate-200">
+      {/* Hero Header */}
+      <section className="flex flex-col gap-4 text-left max-w-3xl">
+        <span className="font-mono text-xs text-amber-500 tracking-widest font-bold uppercase">// FRONTEND PRACTICE</span>
+        <h1 className="text-4xl md:text-5xl font-mono font-extrabold tracking-tight text-white leading-tight">
+          Recreate real-world <br/>
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-200">data pipelines</span>.
         </h1>
-        <p className="text-zinc-400 text-lg max-w-2xl font-sans">
-          Tathya continuously monitors critical web data pipelines, detects selector degradation, and uses self-healing automation to restore them before stale data reaches your decisions.
+        <p className="text-slate-400 text-sm md:text-base leading-relaxed font-sans mt-2">
+          A curated collection of web scrapers and self-healing intelligence pipelines. Audit DOM structures, monitor selector health, and practice data healing models.
         </p>
-        <div className="flex justify-center gap-4 font-mono mt-4">
-          <a href="#signup" className="btn btn-primary px-6 py-2.5 font-bold">
-            GET STARTED
-          </a>
-          <a href="#how-it-works" className="btn btn-secondary px-6 py-2.5">
-            SEE HOW IT WORKS
-          </a>
+      </section>
+
+      {/* Filter Tabs Navigation */}
+      <div className="border-b border-slate-800 pb-3 flex flex-wrap gap-2 items-center justify-between mt-4">
+        <div className="flex bg-[#151618] p-1 rounded-lg border border-slate-800/80 gap-1">
+          {(['all', 'healthy', 'warning', 'standby'] as const).map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setFilter(tab)}
+              className={`px-3 py-1.5 rounded-md font-semibold text-xs font-mono transition-all border-0 cursor-pointer uppercase ${filter === tab ? 'bg-[#222326] text-white' : 'text-slate-400 hover:text-slate-200 bg-transparent'}`}
+            >
+              {tab}
+            </button>
+          ))}
         </div>
+        <span className="text-[10px] text-slate-500 font-mono font-semibold uppercase">Showing {filteredProjects.length} Monitored Targets</span>
+      </div>
+
+      {/* Interactive Project Grid */}
+      <section className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        {filteredProjects.map((project, idx) => (
+          <div 
+            key={idx} 
+            className="group bg-[#151618] border border-slate-800/80 rounded-2xl overflow-hidden hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between shadow-lg cursor-pointer"
+            onClick={() => window.location.hash = '#login'}
+          >
+            {/* Color Accent Card Top Header */}
+            <div className="h-2.5 bg-gradient-to-r from-slate-800 to-slate-700/80 relative">
+              <span className={`absolute right-4 top-1.5 w-1.5 h-1.5 rounded-full ${project.color}`}></span>
+            </div>
+
+            <div className="p-5 flex-1 flex flex-col gap-4">
+              <div className="flex justify-between items-start">
+                <span className="text-[10px] text-slate-500 font-mono font-bold uppercase tracking-wider">{project.category}</span>
+                <span className={`px-2 py-0.5 rounded text-[8px] font-bold font-mono ${project.pillStyle}`}>
+                  {project.statusText}
+                </span>
+              </div>
+
+              <div className="flex flex-col gap-1.5">
+                <h3 className="text-base font-bold text-white font-sans group-hover:text-amber-400 transition-colors">
+                  {project.name}
+                </h3>
+                <p className="text-slate-400 text-xs leading-relaxed font-sans">
+                  {project.description}
+                </p>
+              </div>
+            </div>
+
+            {/* Bottom Card Footer Details */}
+            <div className="p-4 bg-[#0c0d0e]/60 border-t border-slate-800/40 flex justify-between items-center font-mono text-[9px] text-slate-500">
+              <div className="flex gap-2">
+                <span>DIFFICULTY:</span>
+                <strong className="text-slate-400">{project.difficulty.toUpperCase()}</strong>
+              </div>
+              <span className="text-sky-400 hover:underline">{project.target}</span>
+            </div>
+          </div>
+        ))}
       </section>
 
       {/* Website change issue callout */}
-      <section className="panel p-8 grid grid-2 gap-8 border border-[#242427] align-center">
+      <section className="bg-[#151618] border border-slate-800/80 rounded-2xl p-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-center mt-6">
         <div>
-          <span className="font-mono text-xs text-[#f59e0b] font-bold">THE ROOT PROBLEM</span>
-          <h2 className="text-2xl mt-2 font-mono font-bold leading-tight">The web changes. Your pipeline shouldn't have to stop.</h2>
-          <p className="text-zinc-400 text-sm mt-3">
+          <span className="font-mono text-xs text-amber-500 font-bold uppercase">// THE CORE CHALLENGE</span>
+          <h2 className="text-2xl mt-2 font-mono font-bold leading-tight text-white">Websites break. Tathya heals them.</h2>
+          <p className="text-slate-400 text-xs mt-3 leading-relaxed font-sans">
             Websites deploy changes daily. A renamed class, a restructured tag, or a new attribute silently breaks standard scrapers. Broken scrapers produce missing fields and corrupt downstream data layers without throwing server errors.
           </p>
         </div>
-        <div className="grid grid-2 gap-3 text-xs font-mono">
-          <div className="p-4 border border-[#242427] bg-[#131315]">
-            <strong className="text-amber-500">DOM redesigns</strong>
-            <p className="text-zinc-500 mt-1">Div classes shift during system deployments.</p>
+        <div className="grid grid-cols-2 gap-3 text-[10px] font-mono">
+          <div className="p-3 border border-slate-800/80 bg-[#0c0d0e]/60 rounded-xl">
+            <strong className="text-amber-400">DOM REDESIGNS</strong>
+            <p className="text-slate-500 mt-1">Div classes shift during system deployments.</p>
           </div>
-          <div className="p-4 border border-[#242427] bg-[#131315]">
-            <strong className="text-amber-500">Renamed fields</strong>
-            <p className="text-zinc-500 mt-1">Identifiers mapping symbols are relocated.</p>
+          <div className="p-3 border border-slate-800/80 bg-[#0c0d0e]/60 rounded-xl">
+            <strong className="text-amber-400">RENAMED FIELDS</strong>
+            <p className="text-slate-500 mt-1">Identifiers mapping symbols are relocated.</p>
           </div>
-          <div className="p-4 border border-[#242427] bg-[#131315]">
-            <strong className="text-amber-500">Dynamic UI layouts</strong>
-            <p className="text-zinc-500 mt-1">Asynchronous elements bypass basic HTTP calls.</p>
+          <div className="p-3 border border-slate-800/80 bg-[#0c0d0e]/60 rounded-xl">
+            <strong className="text-amber-400">DYNAMIC LAYOUTS</strong>
+            <p className="text-slate-500 mt-1">Asynchronous elements bypass basic HTTP calls.</p>
           </div>
-          <div className="p-4 border border-[#242427] bg-[#131315]">
-            <strong className="text-amber-500">Missing Elements</strong>
-            <p className="text-zinc-500 mt-1">Timestamps and category footers disappear.</p>
+          <div className="p-3 border border-slate-800/80 bg-[#0c0d0e]/60 rounded-xl">
+            <strong className="text-amber-400">MISSING DOM</strong>
+            <p className="text-slate-500 mt-1">Timestamps and category footers disappear.</p>
           </div>
         </div>
-      </section>
-
-      {/* How it works pipeline diagram */}
-      <section className="flex flex-col gap-6 text-center">
-        <h2 className="text-3xl font-mono font-bold">Self-Healing Pipeline Architecture</h2>
-        <div className="grid grid-5 gap-4 mt-6 text-left">
-          {[
-            { step: '1. SCRAPE', desc: 'Fetches HTML using current selectors' },
-            { step: '2. VALIDATE', desc: 'Checks fields against schema' },
-            { step: '3. DETECT', desc: 'Identifies missing fields and calculates score' },
-            { step: '4. REPAIR', desc: 'Heuristics align selector proposal' },
-            { step: '5. VERIFY', desc: 'Tests selector correction against target DOM' }
-          ].map((item, idx) => (
-            <div key={idx} className="panel p-4 border border-[#242427] bg-[#131315]">
-              <strong className="font-mono text-xs text-[#f59e0b] block mb-2">{item.step}</strong>
-              <p className="text-zinc-400 text-xs">{item.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-      
-      {/* Security notice */}
-      <section className="panel p-8 border border-[#242427] flex flex-col gap-4 text-left">
-        <div className="flex align-center gap-3">
-          <Shield className="text-[#f59e0b]" size={24} />
-          <h2 className="text-2xl font-mono font-bold">Production-Grade Security & Provenance</h2>
-        </div>
-        <p className="text-zinc-400 text-sm">
-          Tathya is engineered for security. Secrets, including Bright Data tokens and Finnhub keys, are stored server-side. Downstream market decisions preserve complete data provenance: users can review exact scrape timestamps, extraction history, and source URLs.
-        </p>
       </section>
     </div>
   );
@@ -840,9 +928,9 @@ function OverviewDashboardView() {
   if (loading) return <div className="text-xs font-mono text-zinc-500">LOADING METRICS...</div>;
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-8 text-slate-200">
       {/* Dashboard Top Grid Metrics */}
-      <div className="grid grid-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4">
         {[
           { title: 'ACTIVE SOURCES', val: metrics?.active_sources || 0, label: 'Monitored sites' },
           { title: 'HEALTHY COLLECTORS', val: metrics?.healthy_collectors || 0, label: 'Scrapers at 100%' },
@@ -851,12 +939,12 @@ function OverviewDashboardView() {
           { title: 'RECORDS COLLECTED', val: metrics?.records_collected || 0, label: 'Scraped items' },
           { title: 'AVG RECOVERY TIME', val: `${metrics?.avg_recovery_time_mins || 0}m`, label: 'From break to heal' }
         ].map((item, idx) => (
-          <div key={idx} className="panel p-4 border border-[#242427] bg-[#131315]">
-            <span className="text-[10px] font-mono text-zinc-500 block">{item.title}</span>
-            <span className={`text-2xl font-mono font-bold block mt-1 ${item.warning ? 'text-red-400' : 'text-[#f59e0b]'}`}>
+          <div key={idx} className="panel p-4 border border-slate-800/80 bg-slate-900/40 shadow-sm rounded-xl">
+            <span className="text-[10px] font-mono text-slate-500 block uppercase tracking-wider">{item.title}</span>
+            <span className={`text-2xl font-mono font-bold block mt-2 tabular-nums ${item.warning ? 'text-rose-400' : 'text-slate-100'}`}>
               {item.val}
             </span>
-            <span className="text-[10px] text-zinc-400 mt-1 block">{item.label}</span>
+            <span className="text-[10px] text-slate-400 mt-1 block leading-tight">{item.label}</span>
           </div>
         ))}
       </div>
@@ -1004,29 +1092,29 @@ function SourcesDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
     : null;
 
   return (
-    <div className="grid grid-3 gap-8">
+    <div className="grid grid-3 gap-8 text-slate-200">
       {/* Left panel: Sources List */}
-      <div className="panel border border-[#242427] bg-[#131315]">
-        <div className="p-4 border-b border-[#242427] font-mono font-bold text-zinc-300">
-          DATA PIPELINE SOURCES
+      <div className="panel border border-slate-800/80 bg-[#151618]">
+        <div className="p-4 border-b border-slate-800/80 font-mono font-bold text-slate-300 uppercase tracking-wider text-[10px]">
+          // DATA PIPELINE SOURCES
         </div>
-        <div className="flex flex-col divide-y divide-[#242427]">
+        <div className="flex flex-col divide-y divide-slate-800/60">
           {sources.map((source) => {
             const coll = collectors.find(c => c.source_id === source.id);
             return (
               <div 
                 key={source.id} 
                 onClick={() => selectSource(source)}
-                className={`p-4 cursor-pointer text-left ${selectedSource?.id === source.id ? 'bg-[#1b1b1e]' : 'hover:bg-[#1b1b1e]'}`}
+                className={`p-4 cursor-pointer text-left transition-all ${selectedSource?.id === source.id ? 'bg-[#222326] border-l-2 border-white' : 'hover:bg-slate-800/30'}`}
               >
-                <div className="flex justify-between align-center">
-                  <strong className="font-mono text-sm text-zinc-100">{source.name}</strong>
+                <div className="flex justify-between items-center">
+                  <strong className="font-mono text-xs text-slate-100">{source.name}</strong>
                   <span className={`badge ${coll?.status === 'HEALTHY' ? 'badge-success' : coll?.status === 'DEGRADED' || coll?.status === 'FAILED' ? 'badge-danger' : 'badge-muted'}`}>
                     {coll?.status || 'UNKNOWN'}
                   </span>
                 </div>
-                <p className="text-zinc-500 text-[10px] font-mono truncate mt-1">{source.url}</p>
-                <div className="flex justify-between align-center mt-2 text-[10px] font-mono text-zinc-400">
+                <p className="text-slate-500 text-[10px] font-mono truncate mt-1.5">{source.url}</p>
+                <div className="flex justify-between items-center mt-2.5 text-[10px] font-mono text-slate-400">
                   <span>Type: {source.type}</span>
                   {coll && <span>Health: {coll.health_score}%</span>}
                 </div>
@@ -1039,12 +1127,12 @@ function SourcesDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
       {/* Right panel: Selected Source Details */}
       <div className="col-span-2 flex flex-col gap-6">
         {selectedSource ? (
-          <div className="panel border border-[#242427] bg-[#131315]">
+          <div className="panel border border-slate-800/80 bg-[#151618]">
             {/* Header */}
-            <div className="p-6 border-b border-[#242427] flex justify-between align-center bg-[#0c0c0d]">
+            <div className="p-6 border-b border-slate-800/80 flex justify-between items-center bg-[#0c0d0e]/60">
               <div>
-                <h2 className="text-lg font-mono font-bold text-zinc-100">{selectedSource.name}</h2>
-                <a href={selectedSource.url} target="_blank" rel="noreferrer" className="text-zinc-500 text-xs font-mono block mt-1 hover:underline truncate max-w-md">
+                <h2 className="text-sm font-mono font-bold text-slate-100 uppercase tracking-wider">// {selectedSource.name}</h2>
+                <a href={selectedSource.url} target="_blank" rel="noreferrer" className="text-slate-500 text-[10px] font-mono block mt-1.5 hover:underline truncate max-w-md">
                   {selectedSource.url}
                 </a>
               </div>
@@ -1053,7 +1141,7 @@ function SourcesDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
                 <button 
                   onClick={() => executeScrape(currentCollector.id)}
                   disabled={scraping}
-                  className="btn btn-primary text-xs font-bold py-2 px-4"
+                  className="btn btn-primary text-xs font-bold py-2 px-4 shadow-sm"
                 >
                   {scraping ? (
                     <>
@@ -1072,21 +1160,21 @@ function SourcesDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
 
             {/* Controlled demo site structural control - CRITICAL FOR HACKATHON DEMO */}
             {selectedSource.type === 'demo' && (
-              <div className="p-4 border-b border-amber-900/40 bg-amber-950/20 font-mono text-xs flex justify-between align-center gap-4">
+              <div className="p-4 border-b border-slate-800/60 bg-[#0c0d0e]/40 font-mono text-xs flex justify-between items-center gap-4">
                 <div>
-                  <strong className="text-amber-400 font-bold block mb-1">CONTROLLED TARGET SITE DOM LAYOUT</strong>
-                  <p className="text-zinc-400 text-[10px]">Alter the actual HTML of the target site locally to break and heal the scraper selectors.</p>
+                  <strong className="text-slate-200 font-bold block mb-1 uppercase text-[10px]">// CONTROLLED TARGET SITE DOM LAYOUT</strong>
+                  <p className="text-slate-500 text-[10px]">Alter the actual HTML of the target site locally to break and heal the scraper selectors.</p>
                 </div>
-                <div className="flex border border-[#242427] rounded bg-[#0b0b0c]">
+                <div className="flex border border-slate-800/80 rounded bg-[#0c0d0e] p-0.5">
                   <button 
                     onClick={() => toggleLayout('A')}
-                    className={`px-3 py-1.5 rounded font-bold ${layoutVersion === 'A' ? 'bg-[#78350f] text-[#f59e0b]' : 'text-zinc-400'}`}
+                    className={`px-3 py-1.5 rounded font-bold transition-all text-[10px] border-0 cursor-pointer ${layoutVersion === 'A' ? 'bg-[#222326] text-white' : 'text-slate-500 bg-transparent'}`}
                   >
                     Version A (Healthy)
                   </button>
                   <button 
                     onClick={() => toggleLayout('B')}
-                    className={`px-3 py-1.5 rounded font-bold ${layoutVersion === 'B' ? 'bg-[#78350f] text-[#f59e0b]' : 'text-zinc-400'}`}
+                    className={`px-3 py-1.5 rounded font-bold transition-all text-[10px] border-0 cursor-pointer ${layoutVersion === 'B' ? 'bg-[#222326] text-white' : 'text-slate-500 bg-transparent'}`}
                   >
                     Version B (Changed DOM)
                   </button>
@@ -1095,16 +1183,16 @@ function SourcesDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
             )}
 
             {/* Tabs */}
-            <div className="flex border-b border-[#242427] text-xs font-mono">
+            <div className="flex border-b border-slate-800/80 text-[10px] font-mono bg-[#0c0d0e]/30">
               <button 
                 onClick={() => setActiveTab('overview')}
-                className={`px-6 py-3 ${activeTab === 'overview' ? 'border-b-2 border-[#f59e0b] text-zinc-100 bg-[#1b1b1e]' : 'text-zinc-500 hover:text-zinc-300'}`}
+                className={`px-6 py-3 border-0 transition-colors cursor-pointer ${activeTab === 'overview' ? 'border-b-2 border-white text-slate-100 bg-[#222326]' : 'text-slate-500 hover:text-slate-300 bg-transparent'}`}
               >
                 SELECTOR MAPPING
               </button>
               <button 
                 onClick={() => setActiveTab('schema')}
-                className={`px-6 py-3 ${activeTab === 'schema' ? 'border-b-2 border-[#f59e0b] text-zinc-100 bg-[#1b1b1e]' : 'text-zinc-500 hover:text-zinc-300'}`}
+                className={`px-6 py-3 border-0 transition-colors cursor-pointer ${activeTab === 'schema' ? 'border-b-2 border-white text-slate-100 bg-[#222326]' : 'text-slate-500 hover:text-slate-300 bg-transparent'}`}
               >
                 VALIDATION SCHEMA
               </button>
@@ -1114,9 +1202,9 @@ function SourcesDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
             <div className="p-6 font-mono text-xs">
               {activeTab === 'overview' && currentCollector && (
                 <div className="flex flex-col gap-4">
-                  <div className="bg-[#0b0b0c] p-4 rounded border border-[#242427]">
-                    <span className="text-zinc-500 block mb-2">// ACTIVE CSS PARSING PATHS</span>
-                    <pre className="text-zinc-300">
+                  <div className="bg-[#0c0d0e] p-4 rounded-xl border border-slate-800/80">
+                    <span className="text-slate-500 block mb-2">// ACTIVE CSS PARSING PATHS</span>
+                    <pre className="text-slate-300">
                       {JSON.stringify(currentCollector.selector_mapping, null, 2)}
                     </pre>
                   </div>
@@ -1125,9 +1213,9 @@ function SourcesDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
 
               {activeTab === 'schema' && currentCollector && (
                 <div className="flex flex-col gap-4">
-                  <div className="bg-[#0b0b0c] p-4 rounded border border-[#242427]">
-                    <span className="text-zinc-500 block mb-2">// DATA FIELDS VALIDATION CHECKLIST</span>
-                    <pre className="text-zinc-300">
+                  <div className="bg-[#0c0d0e] p-4 rounded-xl border border-slate-800/80">
+                    <span className="text-slate-500 block mb-2">// DATA FIELDS VALIDATION CHECKLIST</span>
+                    <pre className="text-slate-300">
                       {JSON.stringify(currentCollector.active_schema, null, 2)}
                     </pre>
                   </div>
@@ -1136,7 +1224,7 @@ function SourcesDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
             </div>
           </div>
         ) : (
-          <div className="panel border border-[#242427] bg-[#131315] p-12 text-center text-zinc-500 font-mono">
+          <div className="panel border border-slate-800/80 bg-[#151618] p-12 text-center text-slate-500 font-mono">
             SELECT A SOURCE PIPELINE TO CONFIGURE SELECTORS & TRIGGERS
           </div>
         )}
@@ -1271,30 +1359,30 @@ function RepairsDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
   if (loading) return <div className="text-xs font-mono text-zinc-500">LOADING REPAIRS...</div>;
 
   return (
-    <div className="grid grid-3 gap-8">
+    <div className="grid grid-3 gap-8 text-slate-200">
       {/* Left List of Repairs */}
-      <div className="panel border border-[#242427] bg-[#131315]">
-        <div className="p-4 border-b border-[#242427] font-mono font-bold text-zinc-300">
-          SELF-HEALING LOGS & PROPOSALS
+      <div className="panel border border-slate-800/80 bg-[#151618]">
+        <div className="p-4 border-b border-slate-800/80 font-mono font-bold text-slate-300 uppercase tracking-wider text-[10px]">
+          // SELF-HEALING LOGS & PROPOSALS
         </div>
-        <div className="flex flex-col divide-y divide-[#242427]">
+        <div className="flex flex-col divide-y divide-slate-800/60">
           {repairs.length === 0 ? (
-            <p className="p-6 text-center text-zinc-600 font-mono text-xs">No repairs logged.</p>
+            <p className="p-6 text-center text-slate-500 font-mono text-xs">No repairs logged.</p>
           ) : (
             repairs.map((r) => (
               <div 
                 key={r.id} 
                 onClick={() => selectRepair(r)}
-                className={`p-4 cursor-pointer text-left ${selectedRepair?.id === r.id ? 'bg-[#1b1b1e]' : 'hover:bg-[#1b1b1e]'}`}
+                className={`p-4 cursor-pointer text-left transition-all ${selectedRepair?.id === r.id ? 'bg-[#222326] border-l-2 border-white' : 'hover:bg-slate-800/30'}`}
               >
-                <div className="flex justify-between align-center">
-                  <span className="font-mono text-xs font-bold text-[#f59e0b]">REPAIR #{r.id}</span>
+                <div className="flex justify-between items-center">
+                  <span className="font-mono text-xs font-bold text-slate-200">REPAIR #{r.id}</span>
                   <span className={`badge ${r.status === 'REPAIRED' ? 'badge-success' : r.status === 'PENDING_APPROVAL' ? 'badge-warning' : 'badge-danger'}`}>
                     {r.status.replace('_', ' ')}
                   </span>
                 </div>
-                <p className="text-zinc-400 text-xs mt-2 truncate font-mono">{r.failure_reason}</p>
-                <span className="text-[9px] text-zinc-500 font-mono mt-1 block">
+                <p className="text-slate-400 text-xs mt-2 truncate font-mono">{r.failure_reason}</p>
+                <span className="text-[9px] text-slate-500 font-mono mt-1 block">
                   Started: {new Date(r.started_at).toLocaleString()}
                 </span>
               </div>
@@ -1306,12 +1394,12 @@ function RepairsDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
       {/* Right Proposal Detail */}
       <div className="col-span-2">
         {selectedRepair ? (
-          <div className="panel border border-[#242427] bg-[#131315] p-6 flex flex-col gap-6 font-mono text-xs">
+          <div className="panel border border-slate-800/80 bg-[#151618] p-6 flex flex-col gap-6 font-mono text-xs">
             {/* Header */}
-            <div className="flex justify-between align-center border-b border-[#242427] pb-4">
+            <div className="flex justify-between items-center border-b border-slate-800/80 pb-4">
               <div>
-                <h3 className="text-md font-bold text-zinc-200">HEALING PLAN FOR REPAIR #{selectedRepair.id}</h3>
-                <span className="text-zinc-500 text-[10px] mt-1 block">Failure reason: {selectedRepair.failure_reason}</span>
+                <h3 className="text-sm font-bold text-slate-100 uppercase tracking-wider">// HEALING PLAN FOR REPAIR #{selectedRepair.id}</h3>
+                <span className="text-slate-500 text-[10px] mt-1 block">Failure reason: {selectedRepair.failure_reason}</span>
               </div>
               <span className={`badge ${selectedRepair.status === 'REPAIRED' ? 'badge-success' : selectedRepair.status === 'PENDING_APPROVAL' ? 'badge-warning' : 'badge-danger'}`}>
                 {selectedRepair.status.replace('_', ' ')}
@@ -1320,20 +1408,20 @@ function RepairsDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
 
             {/* Before / After comparison */}
             <div>
-              <strong className="text-zinc-400 mb-2 block">// SELECTOR CONFIGURATION DIFF (PROPOSED FIXES)</strong>
+              <strong className="text-slate-400 mb-2 block">// SELECTOR CONFIGURATION DIFF (PROPOSED FIXES)</strong>
               <div className="grid grid-2 gap-4">
-                <div className="p-4 rounded border border-red-900/30 bg-red-950/10">
-                  <span className="text-red-400 font-bold block mb-1">DEGRADED CONFIG (VERSION A)</span>
-                  <span className="text-zinc-500 block text-[9px]">Failed to parse fields</span>
-                  <pre className="text-zinc-400 mt-2 bg-[#0c0c0d] p-3 rounded text-[10px] whitespace-pre-wrap">
+                <div className="p-4 rounded-xl border border-rose-950/20 bg-rose-950/5">
+                  <span className="text-rose-400 font-bold block mb-1">DEGRADED CONFIG (VERSION A)</span>
+                  <span className="text-slate-500 block text-[9px]">Failed to parse fields</span>
+                  <pre className="text-slate-450 mt-2 bg-[#0c0d0e] p-3 rounded-lg text-[10px] whitespace-pre-wrap">
                     {`row_container: .market-event\nsymbol: .symbol\nheadline: .headline\ntimestamp: .timestamp`}
                   </pre>
                 </div>
                 
-                <div className="p-4 rounded border border-emerald-900/30 bg-emerald-950/10">
+                <div className="p-4 rounded-xl border border-emerald-950/20 bg-emerald-950/5">
                   <span className="text-emerald-400 font-bold block mb-1">REPAIRED CONFIG (PROPOSAL)</span>
-                  <span className="text-zinc-500 block text-[9px]">Deduced from Version B footprint</span>
-                  <pre className="text-zinc-300 mt-2 bg-[#0c0c0d] p-3 rounded text-[10px] whitespace-pre-wrap">
+                  <span className="text-slate-500 block text-[9px]">Deduced from Version B footprint</span>
+                  <pre className="text-slate-300 mt-2 bg-[#0c0d0e] p-3 rounded-lg text-[10px] whitespace-pre-wrap">
                     {`row_container: article.event-card\nsymbol: attr:data-symbol\nheadline: .title\ntimestamp: time`}
                   </pre>
                 </div>
@@ -1341,20 +1429,20 @@ function RepairsDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
             </div>
 
             {/* Healing Heuristic Explanation */}
-            <div className="bg-[#0b0b0c] p-4 rounded border border-[#242427]">
-              <span className="text-zinc-500 block mb-2">// DOM Footprint Alignment Logs</span>
-              <p className="text-zinc-400 leading-relaxed text-[11px] whitespace-pre-wrap">
+            <div className="bg-[#0c0d0e] p-4 rounded-xl border border-slate-800/80">
+              <span className="text-slate-500 block mb-2">// DOM Footprint Alignment Logs</span>
+              <p className="text-slate-400 leading-relaxed text-[11px] whitespace-pre-wrap">
                 {selectedRepair.verification_details}
               </p>
             </div>
 
             {/* Action CTA */}
             {selectedRepair.status === 'PENDING_APPROVAL' && (
-              <div className="flex flex-col gap-4 border-t border-[#242427] pt-4">
+              <div className="flex flex-col gap-4 border-t border-slate-800/80 pt-4">
                 <button 
                   onClick={() => approveProposal(selectedRepair.id)}
                   disabled={approving}
-                  className="btn btn-primary w-full py-2.5 font-bold font-mono text-sm"
+                  className="btn btn-primary w-full py-2.5 font-bold font-mono text-sm shadow-sm"
                 >
                   {approving ? 'VERIFYING HEALING FLOW...' : 'APPROVE & RESTORE DATA PIPELINE'}
                 </button>
@@ -1363,10 +1451,10 @@ function RepairsDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
 
             {/* Dynamic Approval/Verification progress log */}
             {verificationLog.length > 0 && (
-              <div className="bg-[#0c0c0d] p-4 rounded border border-[#242427] flex flex-col gap-1 mt-2">
+              <div className="bg-[#0c0d0e] p-4 rounded-xl border border-slate-800/80 flex flex-col gap-1 mt-2">
                 <span className="text-amber-500 font-bold mb-2">// LIVE VERIFICATION PROGRESS</span>
                 {verificationLog.map((log, idx) => (
-                  <p key={idx} className="text-zinc-400 font-mono text-[10px] animate-pulse">
+                  <p key={idx} className="text-slate-400 font-mono text-[10px] animate-pulse">
                     &gt; {log}
                   </p>
                 ))}
@@ -1466,18 +1554,20 @@ function MarketIntelligenceDashboardView() {
     return 'bg-slate-800/40 text-slate-400 border border-slate-700/50';
   };
 
-  if (loading) return <div className="text-xs font-mono text-zinc-500">LOADING MARKET INTELLIGENCE...</div>;
+  if (loading) return <div className="text-xs font-mono text-slate-500">LOADING MARKET INTELLIGENCE...</div>;
+
+  const activeOpp = opportunities.find(o => o.symbol === selectedSymbol);
 
   return (
     <div className="flex flex-col gap-6 text-slate-200">
       {/* Top Banner Alert Strip */}
-      <div className="panel p-3.5 border border-slate-800 bg-[#0f172a] font-mono text-xs flex justify-between items-center rounded-xl">
+      <div className="panel p-3.5 border border-slate-800/80 bg-[#151618] font-mono text-xs flex justify-between items-center rounded-xl">
         <div className="flex items-center gap-2">
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
           </span>
-          <span className="text-slate-300">Verified Downstream Intelligence Feed: <strong className="text-emerald-400 font-bold">ACTIVE</strong></span>
+          <span className="text-slate-300">Verified Downstream Intelligence Feed: <strong className="text-emerald-450 font-bold">ACTIVE</strong></span>
         </div>
         <span className="text-slate-500 hidden md:inline text-[10px]">Only verified data from healthy collectors updates this screen.</span>
       </div>
@@ -1489,10 +1579,10 @@ function MarketIntelligenceDashboardView() {
         <div className="xl:col-span-8 flex flex-col gap-6 w-full">
           
           {/* Watchlist Section */}
-          <div className="bg-slate-900/80 border border-slate-800/80 rounded-xl p-5 shadow-lg">
+          <div className="panel border border-slate-800/80 bg-[#151618] p-5 shadow-lg">
             <div className="flex flex-col gap-4 mb-4">
               <div>
-                <h2 className="font-mono text-sm font-bold text-slate-200 uppercase tracking-wider">// WATCHLIST SYMBOL TRACKER</h2>
+                <h2 className="font-mono text-xs font-bold text-slate-200 uppercase tracking-wider">// WATCHLIST SYMBOL TRACKER</h2>
                 <span className="text-[10px] text-slate-500">Institutional real-time quotes</span>
               </div>
 
@@ -1502,14 +1592,14 @@ function MarketIntelligenceDashboardView() {
                   <input 
                     type="text" 
                     placeholder="SYMBOL (e.g. TCS)" 
-                    className="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-amber-500 font-mono uppercase"
+                    className="w-full bg-[#0c0d0e] border border-slate-800/80 rounded-lg px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-slate-500 font-mono uppercase"
                     value={symbolInput}
                     onChange={e => setSymbolInput(e.target.value)}
                   />
                 </div>
                 <button 
                   type="submit" 
-                  className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-semibold px-4 py-2 rounded-lg text-sm transition-colors whitespace-nowrap"
+                  className="bg-white hover:bg-slate-200 text-[#0c0d0e] font-bold px-4 py-2 rounded-lg text-xs transition-colors whitespace-nowrap border-0 cursor-pointer"
                 >
                   + Add Symbol
                 </button>
@@ -1520,7 +1610,7 @@ function MarketIntelligenceDashboardView() {
             <div className="w-full overflow-x-auto">
               <table className="w-full text-left border-collapse text-xs font-mono">
                 <thead>
-                  <tr className="border-b border-slate-800 bg-[#0c101c]/50">
+                  <tr className="border-b border-slate-800/80 bg-[#0c0d0e]/50">
                     <th className="py-3 px-4 font-bold text-slate-400 min-w-[100px] text-left">SYMBOL</th>
                     <th className="py-3 px-4 font-bold text-slate-400 min-w-[110px] text-right">LAST PRICE</th>
                     <th className="py-3 px-4 font-bold text-slate-400 min-w-[110px] text-right">DAILY CHANGE</th>
@@ -1532,34 +1622,34 @@ function MarketIntelligenceDashboardView() {
                 <tbody className="divide-y divide-slate-800/60">
                   {watchlist.length === 0 ? (
                     <tr>
-                      <td colSpan={6} className="text-center py-8 text-slate-600 font-mono">No companies on watchlist.</td>
+                      <td colSpan={6} className="text-center py-8 text-slate-500 font-mono">No companies on watchlist.</td>
                     </tr>
                   ) : (
                     watchlist.map((item) => (
                       <tr 
                         key={item.id} 
-                        className={`cursor-pointer transition-colors duration-150 ${selectedSymbol === item.symbol ? 'bg-sky-950/20 border-l-2 border-sky-400' : 'hover:bg-slate-800/30'}`}
+                        className={`cursor-pointer transition-colors duration-150 ${selectedSymbol === item.symbol ? 'bg-[#222326] border-l-2 border-white' : 'hover:bg-slate-800/30'}`}
                         onClick={() => setSelectedSymbol(item.symbol)}
                       >
                         <td className="py-3 px-4 font-bold text-slate-300 min-w-[100px] text-left whitespace-nowrap">{item.symbol}</td>
                         <td className="py-3 px-4 text-right min-w-[110px] tabular-nums font-mono whitespace-nowrap">
                           {item.price ? (item.symbol.includes('.NS') || item.symbol.includes('TCS') || item.symbol.includes('RELIANCE') || item.symbol.includes('INFOSYS') ? `₹${item.price.toFixed(2)}` : `$${item.price.toFixed(2)}`) : 'N/A'}
                         </td>
-                        <td className={`py-3 px-4 text-right min-w-[110px] tabular-nums font-mono whitespace-nowrap ${item.change_pct >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
+                        <td className={`py-3 px-4 text-right min-w-[110px] tabular-nums font-mono whitespace-nowrap ${item.change_pct >= 0 ? 'text-[#10b981]' : 'text-[#ef4444]'}`}>
                           {item.change_pct ? `${item.change_pct > 0 ? '+' : ''}${item.change_pct.toFixed(2)}%` : 'N/A'}
                         </td>
                         <td className="py-3 px-4 text-center min-w-[100px] whitespace-nowrap">
-                          <span className="px-2 py-0.5 rounded bg-slate-800/80 text-slate-300 text-[10px] font-medium border border-slate-700/50">
+                          <span className="px-2 py-0.5 rounded bg-slate-900/60 text-slate-300 text-[10px] font-medium border border-slate-800/80">
                             {item.event_count} news
                           </span>
                         </td>
                         <td className="py-2 px-4 text-right min-w-[130px] font-mono whitespace-nowrap">
                           <div className="flex flex-col items-end gap-1">
-                            <span className="font-bold text-sky-400 text-[10px]">{item.opportunity_score ? `${item.opportunity_score}/100` : 'N/A'}</span>
+                            <span className="font-bold text-slate-300 text-[10px]">{item.opportunity_score ? `${item.opportunity_score}/100` : 'N/A'}</span>
                             {item.opportunity_score !== null && (
-                              <div className="w-16 h-1 bg-slate-800 rounded-full overflow-hidden">
+                              <div className="w-16 h-1 bg-slate-900 rounded-full overflow-hidden">
                                 <div 
-                                  className={`h-full rounded-full ${item.opportunity_score >= 70 ? 'bg-emerald-500' : item.opportunity_score >= 40 ? 'bg-sky-400' : 'bg-rose-500'}`}
+                                  className={`h-full rounded-full ${item.opportunity_score >= 70 ? 'bg-[#10b981]' : item.opportunity_score >= 40 ? 'bg-sky-400' : 'bg-[#ef4444]'}`}
                                   style={{ width: `${item.opportunity_score}%` }}
                                 ></div>
                               </div>
@@ -1570,13 +1660,13 @@ function MarketIntelligenceDashboardView() {
                           <div className="flex items-center justify-end gap-3">
                             <button 
                               onClick={(e) => { e.stopPropagation(); setSelectedSymbol(item.symbol); }}
-                              className="text-sky-400 hover:text-sky-300 font-mono text-[10px] font-semibold border-b border-sky-400/30 hover:border-sky-300/60 pb-0.5 transition-all"
+                              className="text-slate-300 hover:text-white font-mono text-[10px] font-semibold border-b border-slate-700 pb-0.5 transition-all bg-transparent border-t-0 border-x-0 cursor-pointer"
                             >
                               ANALYZE
                             </button>
                             <button 
                               onClick={(e) => { e.stopPropagation(); removeFromWatchlist(item.symbol); }} 
-                              className="text-slate-500 hover:text-rose-400 transition-colors p-1"
+                              className="text-slate-500 hover:text-[#ef4444] transition-colors p-1 border-0 bg-transparent cursor-pointer"
                             >
                               <Trash2 size={13} />
                             </button>
@@ -1591,109 +1681,115 @@ function MarketIntelligenceDashboardView() {
           </div>
  
           {/* Bottom Row split: Evidence & Trade Scenario */}
-          {whyMoved && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Evidence Breakdown Card */}
+            <div className="panel border border-slate-800/80 bg-[#151618] p-5 shadow-lg flex flex-col gap-4 min-h-[360px]">
+              <div className="border-b border-slate-800/60 pb-3 flex justify-between items-center bg-transparent">
+                <h3 className="text-xs font-mono font-bold text-slate-400 tracking-wider uppercase">
+                  // EVIDENCE BREAKDOWN{whyMoved ? `: ${whyMoved.symbol}` : ''}
+                </h3>
+                <span className="text-[10px] text-slate-500 font-mono">Real-time signals</span>
+              </div>
               
-              {/* Evidence Breakdown Card */}
-              <div className="bg-slate-900/80 border border-slate-800/80 rounded-xl p-5 shadow-lg flex flex-col gap-4 min-h-[360px]">
-                <div className="border-b border-slate-800 pb-3 flex justify-between items-center">
-                  <h3 className="text-xs font-mono font-bold text-slate-400 tracking-wider">
-                    // EVIDENCE BREAKDOWN: <span className="text-sky-400">{whyMoved.symbol}</span>
-                  </h3>
-                  <span className="text-[10px] text-slate-500 font-mono">Real-time signals</span>
-                </div>
-                
-                <div className="flex-grow flex flex-col gap-3 max-h-[260px] overflow-y-auto pr-1">
-                  {whyMoved.possible_factors.length === 0 ? (
-                    <div className="text-center py-12 text-slate-600 font-mono text-xs border border-dashed border-slate-800 rounded-lg bg-[#090d16]">
-                      INSUFFICIENT EVIDENCE REGISTERED
-                    </div>
-                  ) : (
-                    whyMoved.possible_factors.map((f: any, idx: number) => (
-                      <div key={idx} className="p-3 border border-slate-800/80 rounded-lg bg-[#090d16] text-[11px] hover:border-slate-700/60 transition-colors">
-                        <div className="flex flex-col gap-1 text-[9px] font-mono border-b border-slate-800 pb-1.5 mb-2">
-                          <div className="flex justify-between items-center">
-                            <span className="text-sky-400 font-bold uppercase">{f.type}</span>
-                            <span className="text-slate-500">Source: {f.source}</span>
-                          </div>
+              <div className="flex-grow flex flex-col gap-3 max-h-[260px] overflow-y-auto pr-1">
+                {!whyMoved ? (
+                  <div className="flex flex-col justify-center items-center text-center p-8 border border-dashed border-slate-800/80 rounded-xl bg-[#0c0d0e]/40 flex-grow gap-2 h-full">
+                    <Activity className="text-slate-700" size={32} />
+                    <span className="text-slate-500 font-mono text-[10px] font-bold uppercase">NO ACTIVE SYMBOL</span>
+                    <p className="text-slate-500 text-[10px] max-w-[200px] leading-relaxed">Select a symbol from the watchlist to view verified signals explaining market fluctuations.</p>
+                  </div>
+                ) : whyMoved.possible_factors.length === 0 ? (
+                  <div className="text-center py-12 text-slate-500 font-mono text-xs border border-dashed border-slate-800/80 rounded-xl bg-[#0c0d0e]/40 h-full flex items-center justify-center">
+                    INSUFFICIENT EVIDENCE REGISTERED
+                  </div>
+                ) : (
+                  whyMoved.possible_factors.map((f: any, idx: number) => (
+                    <div key={idx} className="p-3 border border-slate-800/80 rounded-lg bg-[#0c0d0e]/40 text-[11px] hover:border-slate-850 transition-colors">
+                      <div className="flex flex-col gap-1 text-[9px] font-mono border-b border-slate-800/60 pb-1.5 mb-2">
+                        <div className="flex justify-between items-center">
+                          <span className="text-sky-400 font-bold uppercase">{f.type}</span>
+                          <span className="text-slate-500">Source: {f.source}</span>
                         </div>
-                        <p className="text-slate-300 leading-relaxed font-sans">{f.evidence}</p>
                       </div>
-                    ))
-                  )}
-                </div>
+                      <p className="text-slate-300 leading-relaxed font-sans">{f.evidence}</p>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+
+            {/* Trade Scenario Card */}
+            <div className="panel border border-slate-800/80 bg-[#151618] p-5 shadow-lg flex flex-col gap-4 min-h-[360px]">
+              <div className="border-b border-slate-800/60 pb-3">
+                <h3 className="text-xs font-mono font-bold text-slate-400 tracking-wider uppercase">
+                  // QUANT TRADE SCENARIO{whyMoved ? `: ${whyMoved.symbol}` : ''}
+                </h3>
               </div>
 
-              {/* Trade Scenario Card */}
-              <div className="bg-slate-900/80 border border-slate-800/80 rounded-xl p-5 shadow-lg flex flex-col gap-4 min-h-[360px]">
-                <div className="border-b border-slate-800 pb-3">
-                  <h3 className="text-xs font-mono font-bold text-slate-400 tracking-wider">
-                    // QUANT TRADE SCENARIO: <span className="text-sky-400">{whyMoved.symbol}</span>
-                  </h3>
-                </div>
-
-                {opportunities.find(o => o.symbol === whyMoved.symbol) ? (
-                  (() => {
-                    const opp = opportunities.find(o => o.symbol === whyMoved.symbol);
-                    return (
-                      <div className="flex flex-col justify-between flex-grow gap-4 text-xs font-mono">
-                        <div className="flex flex-col gap-2 bg-[#090d16] p-4 rounded-lg border border-slate-800/60">
-                          <div className="flex justify-between border-b border-slate-800/50 py-1.5">
-                            <span className="text-slate-500">Entry Zone:</span>
-                            <strong className="text-slate-200 tabular-nums">{opp.trade_scenario.entry_zone}</strong>
-                          </div>
-                          <div className="flex justify-between border-b border-slate-800/50 py-1.5">
-                            <span className="text-slate-500">Invalidation Level:</span>
-                            <strong className="text-rose-400 tabular-nums">{opp.trade_scenario.invalidation_level}</strong>
-                          </div>
-                          <div className="flex justify-between border-b border-slate-800/50 py-1.5">
-                            <span className="text-slate-500">Scenario Target:</span>
-                            <strong className="text-emerald-400 tabular-nums">{opp.trade_scenario.target_target}</strong>
-                          </div>
-                          <div className="flex justify-between py-1.5">
-                            <span className="text-slate-500">Risk/Reward:</span>
-                            <strong className="text-sky-400 tabular-nums">{opp.trade_scenario.risk_reward_ratio}</strong>
-                          </div>
-                        </div>
-                        <div className="text-[10px] text-slate-500 leading-relaxed font-sans bg-slate-900/50 p-2.5 rounded border border-slate-800/30">
-                          ⚡ <strong>Model Recommendation:</strong> Supporting data pipeline reports 100% selector health. Automated execution sandbox matches historical layout.
-                        </div>
+              <div className="flex flex-col flex-grow">
+                {!whyMoved ? (
+                  <div className="flex flex-col justify-center items-center text-center p-8 border border-dashed border-slate-800/80 rounded-xl bg-[#0c0d0e]/40 flex-grow gap-2 h-full">
+                    <Activity className="text-slate-700" size={32} />
+                    <span className="text-slate-500 font-mono text-[10px] font-bold uppercase">NO ACTIVE SCENARIO</span>
+                    <p className="text-slate-500 text-[10px] max-w-[200px] leading-relaxed">Select a symbol to generate entry, invalidation, and target levels.</p>
+                  </div>
+                ) : activeOpp ? (
+                  <div className="flex flex-col justify-between flex-grow gap-4 text-xs font-mono">
+                    <div className="flex flex-col gap-2 bg-[#0c0d0e]/40 p-4 rounded-xl border border-slate-800/60">
+                      <div className="flex justify-between border-b border-slate-800/50 py-1.5">
+                        <span className="text-slate-500">Entry Zone:</span>
+                        <strong className="text-slate-200 tabular-nums">{activeOpp.trade_scenario.entry_zone}</strong>
                       </div>
-                    );
-                  })()
+                      <div className="flex justify-between border-b border-slate-800/50 py-1.5">
+                        <span className="text-slate-500">Invalidation Level:</span>
+                        <strong className="text-rose-450 tabular-nums">{activeOpp.trade_scenario.invalidation_level}</strong>
+                      </div>
+                      <div className="flex justify-between border-b border-slate-800/50 py-1.5">
+                        <span className="text-slate-500">Scenario Target:</span>
+                        <strong className="text-emerald-450 tabular-nums">{activeOpp.trade_scenario.target_target}</strong>
+                      </div>
+                      <div className="flex justify-between py-1.5">
+                        <span className="text-slate-500">Risk/Reward:</span>
+                        <strong className="text-sky-400 tabular-nums">{activeOpp.trade_scenario.risk_reward_ratio}</strong>
+                      </div>
+                    </div>
+                    <div className="text-[10px] text-slate-500 leading-relaxed font-sans bg-[#0c0d0e]/30 p-2.5 rounded-lg border border-slate-800/40">
+                      ⚡ <strong>Model Recommendation:</strong> Supporting data pipeline reports 100% selector health. Automated execution sandbox matches historical layout.
+                    </div>
+                  </div>
                 ) : (
-                  <div className="flex flex-col justify-center items-center text-center p-8 border border-dashed border-slate-800 rounded-lg bg-[#090d16] flex-grow gap-2">
+                  <div className="flex flex-col justify-center items-center text-center p-8 border border-dashed border-slate-800/80 rounded-xl bg-[#0c0d0e]/40 flex-grow gap-2 h-full">
                     <Activity className="text-slate-700" size={32} />
                     <span className="text-slate-500 font-mono text-[10px] font-bold uppercase">NO TRADE SCENARIOS CALCULATED</span>
-                    <p className="text-slate-600 text-[10px] max-w-[200px] leading-relaxed">Add news-active symbols or run scrapers to trigger opportunity model signals.</p>
+                    <p className="text-slate-500 text-[10px] max-w-[200px] leading-relaxed">Add news-active symbols or run scrapers to trigger opportunity model signals.</p>
                   </div>
                 )}
               </div>
             </div>
-          )}
+          </div>
         </div>
 
         {/* Right Section (col-span-4): Sticky Verified News Timeline Sidebar */}
-        <div className="xl:col-span-4 h-[calc(100vh-140px)] sticky top-6 overflow-y-auto pr-2 bg-slate-900/80 border border-slate-800/80 rounded-xl flex flex-col shadow-lg">
-          <div className="p-4 border-b border-slate-800 bg-[#0d1321] flex justify-between items-center rounded-t-xl sticky top-0 z-10">
+        <div className="xl:col-span-4 h-[calc(100vh-140px)] sticky top-6 overflow-y-auto pr-2 bg-[#151618] border border-slate-800/80 rounded-xl flex flex-col shadow-lg">
+          <div className="p-4 border-b border-slate-800/80 bg-[#0c0d0e]/60 flex justify-between items-center rounded-t-xl sticky top-0 z-10">
             <div>
               <h2 className="font-mono text-xs font-bold text-slate-400 tracking-wider">// VERIFIED TIMELINE</h2>
               <span className="text-[9px] text-slate-500">Chronological pipeline stream</span>
             </div>
-            <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 text-[9px] font-bold border border-emerald-500/20">LIVE FEED</span>
+            <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-450 text-[9px] font-bold border border-emerald-500/20">LIVE FEED</span>
           </div>
           
           <div className="p-4 flex flex-col gap-3">
             {timeline.length === 0 ? (
-              <div className="flex flex-col justify-center items-center text-center py-20 text-slate-600 font-mono text-xs gap-3">
-                <RefreshCw size={24} className="animate-spin text-slate-700" />
+              <div className="flex flex-col justify-center items-center text-center py-20 text-slate-500 font-mono text-xs gap-3">
+                <RefreshCw size={24} className="animate-spin text-slate-600" />
                 <span>No verified events scraped yet.</span>
               </div>
             ) : (
               timeline.map((event) => (
                 <div 
                   key={event.id} 
-                  className="p-3.5 rounded-lg bg-slate-900/50 border border-slate-800/60 hover:border-slate-700 transition-colors flex flex-col gap-2"
+                  className="p-3.5 rounded-lg bg-[#0c0d0e]/30 border border-slate-800/60 hover:border-slate-700 transition-colors flex flex-col gap-2"
                 >
                   <div className="flex justify-between items-center">
                     <span className={`px-2 py-0.5 rounded text-[9px] font-bold ${getTagStyles(event.company_symbol)}`}>
@@ -1716,7 +1812,7 @@ function MarketIntelligenceDashboardView() {
                       href={event.source_url} 
                       target="_blank" 
                       rel="noreferrer" 
-                      className="text-sky-400 hover:text-sky-300 flex items-center gap-1 font-semibold transition-colors"
+                      className="text-sky-400 hover:text-sky-300 flex items-center gap-1 font-semibold transition-colors border-0 bg-transparent cursor-pointer"
                     >
                       <LinkIcon size={10} />
                       <span>Source</span>
