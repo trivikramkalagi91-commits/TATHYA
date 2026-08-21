@@ -419,7 +419,7 @@ export default function App() {
                       <button onClick={() => setNotificationsOpen(false)} className="text-zinc-650 hover:text-black border-0 bg-transparent cursor-pointer font-bold text-[10px] uppercase">[Close]</button>
                     </div>
                   </div>
-                  <div className="max-h-80 overflow-y-auto bg-white">
+                  <div style={{ maxHeight: '320px', overflowY: 'auto' }} className="bg-white">
                     {alerts.length === 0 ? (
                       <p className="p-6 text-center text-zinc-650 font-bold uppercase">No active system alerts.</p>
                     ) : (
