@@ -310,7 +310,7 @@ export default function App() {
       </aside>
 
       {/* Main Console Content Body */}
-      <div className="flex-1 flex flex-col min-w-0 bg-[var(--bg-base)]">
+      <div className="flex-1 flex flex-col min-w-0 bg-[var(--bg-base)] overflow-hidden">
         {/* Top Ticker Bar (in.investing.com style) */}
         <div className="custom-ticker">
           {[
