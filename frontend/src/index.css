@@ -530,4 +530,30 @@ a:hover {
   border-right: none;
 }
 
+/* Positioning Utilities */
+.relative {
+  position: relative !important;
+}
+.absolute {
+  position: absolute !important;
+}
+.z-50 {
+  z-index: 50 !important;
+}
+.right-0 {
+  right: 0 !important;
+}
+.mt-3 {
+  margin-top: 0.75rem !important;
+}
+.top-14 {
+  top: 3.5rem !important;
+}
+.left-4 {
+  left: 1rem !important;
+}
+.right-4 {
+  right: 1rem !important;
+}
+
 
