@@ -1013,11 +1013,11 @@ function OverviewDashboardView() {
             <table className="table">
               <thead>
                 <tr>
-                  <th className="whitespace-nowrap border-b-2 border-black text-black font-bold uppercase font-sans text-xs">SCRAPER</th>
-                  <th className="whitespace-nowrap border-b-2 border-black text-black font-bold uppercase font-sans text-xs">STAMP</th>
-                  <th className="whitespace-nowrap border-b-2 border-black text-black font-bold uppercase font-sans text-xs">RECORDS</th>
-                  <th className="whitespace-nowrap border-b-2 border-black text-black font-bold uppercase font-sans text-xs">HEALTH</th>
-                  <th className="whitespace-nowrap border-b-2 border-black text-black font-bold uppercase font-sans text-xs">STATUS</th>
+                  <th style={{ position: 'sticky', top: 0, backgroundColor: '#faf0d9', zIndex: 10 }} className="whitespace-nowrap border-b-2 border-black text-black font-bold uppercase font-sans text-xs">SCRAPER</th>
+                  <th style={{ position: 'sticky', top: 0, backgroundColor: '#faf0d9', zIndex: 10 }} className="whitespace-nowrap border-b-2 border-black text-black font-bold uppercase font-sans text-xs">STAMP</th>
+                  <th style={{ position: 'sticky', top: 0, backgroundColor: '#faf0d9', zIndex: 10 }} className="whitespace-nowrap border-b-2 border-black text-black font-bold uppercase font-sans text-xs">RECORDS</th>
+                  <th style={{ position: 'sticky', top: 0, backgroundColor: '#faf0d9', zIndex: 10 }} className="whitespace-nowrap border-b-2 border-black text-black font-bold uppercase font-sans text-xs">HEALTH</th>
+                  <th style={{ position: 'sticky', top: 0, backgroundColor: '#faf0d9', zIndex: 10 }} className="whitespace-nowrap border-b-2 border-black text-black font-bold uppercase font-sans text-xs">STATUS</th>
                 </tr>
               </thead>
               <tbody>
