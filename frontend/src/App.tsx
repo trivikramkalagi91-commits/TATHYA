@@ -1167,7 +1167,7 @@ function SourcesDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
               <div 
                 key={source.id} 
                 onClick={() => selectSource(source)}
-                className={`p-4 cursor-pointer text-left transition-all ${selectedSource?.id === source.id ? 'bg-[#faf0d9] border-l-4 border-black font-extrabold' : 'hover:bg-zinc-100 bg-white'}`}
+                className={`p-4 cursor-pointer text-left border-b-2 border-black transition-all ${selectedSource?.id === source.id ? 'bg-[#faf0d9] border-l-4 border-black font-extrabold' : 'hover:bg-zinc-100 bg-white'}`}
               >
                 <div className="flex justify-between items-center">
                   <strong className="font-mono text-xs text-black font-bold">{source.name}</strong>
@@ -1472,7 +1472,7 @@ function RepairsDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
               <div 
                 key={r.id} 
                 onClick={() => selectRepair(r)}
-                className={`p-4 cursor-pointer text-left transition-all ${selectedRepair?.id === r.id ? 'bg-[#faf0d9] border-l-4 border-black font-extrabold' : 'hover:bg-zinc-100 bg-white'}`}
+                className={`p-4 cursor-pointer text-left border-b-2 border-black transition-all ${selectedRepair?.id === r.id ? 'bg-[#faf0d9] border-l-4 border-black font-extrabold' : 'hover:bg-zinc-100 bg-white'}`}
               >
                 <div className="flex justify-between items-center">
                   <span className="font-mono text-xs font-bold text-black">REPAIR #{r.id}</span>
