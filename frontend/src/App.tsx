@@ -1612,16 +1612,16 @@ function MarketIntelligenceDashboardView() {
 
   const loadData = async () => {
     try {
-      const watchRes = await api.get('/api/v1/market/watchlist');
-      const timelineRes = await api.get('/api/v1/market/events');
-      const oppRes = await api.get('/api/v1/market/opportunities');
+      const [watchRes, timelineRes, oppRes, whyRes] = await Promise.all([
+        api.get('/api/v1/market/watchlist'),
+        api.get('/api/v1/market/events'),
+        api.get('/api/v1/market/opportunities'),
+        api.get(`/api/v1/market/why-moved/${selectedSymbol}`)
+      ]);
       
       setWatchlist(watchRes.data);
       setTimeline(timelineRes.data);
       setOpportunities(oppRes.data);
-
-      // Load why moved for selected symbol
-      const whyRes = await api.get(`/api/v1/market/why-moved/${selectedSymbol}`);
       setWhyMoved(whyRes.data);
     } catch (err) {
       console.error(err);
@@ -1801,7 +1801,7 @@ function MarketIntelligenceDashboardView() {
           {/* Bottom Row split: Evidence & Trade Scenario */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Evidence Breakdown Card */}
-            <div className="border-2 border-black bg-white rounded-none p-5 shadow-sm flex flex-col gap-4 min-h-[360px] text-black">
+            <div className="border-2 border-black bg-white rounded-none p-5 shadow-sm flex flex-col gap-4 text-black h-full">
               <div className="border-b-2 border-black pb-3 flex justify-between items-center bg-transparent">
                 <h3 className="text-xs font-mono font-bold text-black tracking-wider uppercase">
                   // EVIDENCE BREAKDOWN{whyMoved ? `: ${whyMoved.symbol}` : ''}
@@ -1837,7 +1837,7 @@ function MarketIntelligenceDashboardView() {
             </div>
 
             {/* Trade Scenario Card */}
-            <div className="border-2 border-black bg-white rounded-none p-5 shadow-sm flex flex-col gap-4 min-h-[360px] text-black">
+            <div className="border-2 border-black bg-white rounded-none p-5 shadow-sm flex flex-col gap-4 text-black h-full">
               <div className="border-b-2 border-black pb-3">
                 <h3 className="text-xs font-mono font-bold text-black tracking-wider uppercase">
                   // QUANT TRADE SCENARIO{whyMoved ? `: ${whyMoved.symbol}` : ''}
@@ -1871,7 +1871,7 @@ function MarketIntelligenceDashboardView() {
                         <strong style={{ color: '#0288d1' }} className="tabular-nums font-bold">{activeOpp.trade_scenario.risk_reward_ratio}</strong>
                       </div>
                     </div>
-                    <div className="text-[10px] text-black leading-relaxed font-sans bg-zinc-50 p-2.5 border-2 border-black rounded-none font-bold">
+                    <div className="text-[10px] text-black leading-relaxed font-sans bg-zinc-50 p-2.5 border-2 border-black rounded-none font-bold mt-auto">
                       ⚡ <strong>Model Recommendation:</strong> Supporting data pipeline reports 100% selector health. Automated execution sandbox matches historical layout.
                     </div>
                   </div>
@@ -1891,54 +1891,57 @@ function MarketIntelligenceDashboardView() {
         <div className="xl:col-span-4 sticky top-6 bg-white border-2 border-black rounded-none flex flex-col shadow-sm text-black">
           <div className="p-4 border-b-2 border-black bg-[#faf0d9] flex justify-between items-center sticky top-0 z-10">
             <div>
-              <h2 className="font-mono text-xs font-bold text-black tracking-wider">// VERIFIED TIMELINE</h2>
+              <h2 className="font-mono text-xs font-bold text-black tracking-wider">// VERIFIED TIMELINE: {selectedSymbol}</h2>
               <span className="text-[9px] text-zinc-650 font-bold">Chronological pipeline stream</span>
             </div>
             <span className="px-2 py-0.5 border border-black bg-emerald-50 text-emerald-700 text-[9px] font-bold rounded-none">LIVE FEED</span>
           </div>
           
           <div style={{ maxHeight: 'calc(100vh - 200px)', overflowY: 'auto' }} className="p-4 flex flex-col gap-3">
-            {timeline.length === 0 ? (
-              <div className="flex flex-col justify-center items-center text-center py-20 text-zinc-650 font-mono text-xs gap-3 font-bold">
-                <RefreshCw size={24} className="animate-spin text-black" />
-                <span>No verified events scraped yet.</span>
-              </div>
-            ) : (
-              timeline.map((event) => (
-                <div 
-                  key={event.id} 
-                  className="p-4 border-2 border-black bg-[#faf0d9] hover:bg-zinc-50 shadow-sm hover:shadow-[3px_3px_0px_#000000] transition-all flex flex-col gap-2.5 rounded-none text-black"
-                >
-                  <div className="flex justify-between items-center">
-                    <span style={{ backgroundColor: event.company_symbol === 'AAPL' ? '#e8f0fe' : event.company_symbol === 'TSLA' ? '#fce8e6' : event.company_symbol === 'TCS' ? '#fef7e0' : event.company_symbol === 'RELIANCE' ? '#e6f4ea' : '#f1f3f4', color: event.company_symbol === 'AAPL' ? '#1a73e8' : event.company_symbol === 'TSLA' ? '#c5221f' : event.company_symbol === 'TCS' ? '#b06000' : event.company_symbol === 'RELIANCE' ? '#137333' : '#3c4043', borderColor: 'currentColor' }} className="px-2 py-0.5 border text-[9px] font-bold rounded-none">
-                      {event.company_symbol}
-                    </span>
-                    <span className="text-[10px] text-zinc-600 font-bold tabular-nums font-mono">
-                      {formatRelativeTime(event.publish_time)}
-                    </span>
-                  </div>
-                  
-                  <p className="text-black text-xs font-serif leading-snug line-clamp-2 hover:line-clamp-none transition-all cursor-pointer font-extrabold">
-                    {event.headline}
-                  </p>
-                  
-                  <div className="flex justify-between items-center border-t-2 border-black pt-2 text-[10px] text-zinc-600 font-mono font-bold">
-                    <span className="truncate max-w-[120px]">
-                      Source: {event.source_name}
-                    </span>
-                    <a 
-                      href={event.source_url} 
-                      target="_blank" 
-                      rel="noreferrer" 
-                      className="text-black hover:text-zinc-650 flex items-center gap-1 font-bold transition-colors border-0 bg-transparent cursor-pointer"
-                    >
-                      <LinkIcon size={10} />
-                      <span>Source</span>
-                    </a>
-                  </div>
+            {(() => {
+              const filteredTimeline = timeline.filter(event => event.company_symbol.toUpperCase() === selectedSymbol.toUpperCase());
+              return filteredTimeline.length === 0 ? (
+                <div className="flex flex-col justify-center items-center text-center py-20 text-zinc-650 font-mono text-xs gap-3 font-bold">
+                  <RefreshCw size={24} className="text-black" />
+                  <span>No verified events scraped for {selectedSymbol} yet.</span>
                 </div>
-              ))
-            )}
+              ) : (
+                filteredTimeline.map((event) => (
+                  <div 
+                    key={event.id} 
+                    className="p-4 border-2 border-black bg-[#faf0d9] hover:bg-zinc-50 shadow-sm hover:shadow-[3px_3px_0px_#000000] transition-all flex flex-col gap-2.5 rounded-none text-black"
+                  >
+                    <div className="flex justify-between items-center">
+                      <span style={{ backgroundColor: event.company_symbol === 'AAPL' ? '#e8f0fe' : event.company_symbol === 'TSLA' ? '#fce8e6' : event.company_symbol === 'TCS' ? '#fef7e0' : event.company_symbol === 'RELIANCE' ? '#e6f4ea' : '#f1f3f4', color: event.company_symbol === 'AAPL' ? '#1a73e8' : event.company_symbol === 'TSLA' ? '#c5221f' : event.company_symbol === 'TCS' ? '#b06000' : event.company_symbol === 'RELIANCE' ? '#137333' : '#3c4043', borderColor: 'currentColor' }} className="px-2 py-0.5 border text-[9px] font-bold rounded-none">
+                        {event.company_symbol}
+                      </span>
+                      <span className="text-[10px] text-zinc-600 font-bold tabular-nums font-mono">
+                        {formatRelativeTime(event.publish_time)}
+                      </span>
+                    </div>
+                    
+                    <p className="text-black text-xs font-serif leading-snug line-clamp-2 hover:line-clamp-none transition-all cursor-pointer font-extrabold">
+                      {event.headline}
+                    </p>
+                    
+                    <div className="flex justify-between items-center border-t-2 border-black pt-2 text-[10px] text-zinc-600 font-mono font-bold">
+                      <span className="truncate max-w-[120px]">
+                        Source: {event.source_name}
+                      </span>
+                      <a 
+                        href={event.source_url} 
+                        target="_blank" 
+                        rel="noreferrer" 
+                        className="text-black hover:text-zinc-650 flex items-center gap-1 font-bold transition-colors border-0 bg-transparent cursor-pointer"
+                      >
+                        <LinkIcon size={10} />
+                        <span>Source</span>
+                      </a>
+                    </div>
+                  </div>
+                ))
+              );
+            })()}
           </div>
         </div>
       </div>
