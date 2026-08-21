@@ -1301,32 +1301,39 @@ function SourcesDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
 
         {/* Scrape Execution Output Logs */}
         {scrapeResult && (
-          <div className="panel border border-[#242427] bg-[#131315] p-6 flex flex-col gap-4 font-mono text-xs">
-            <div className="flex justify-between align-center border-b border-[#242427] pb-3">
-              <strong className="text-zinc-200">SCRAPER EXTRACTION RUN REPORT</strong>
-              <span className={`badge ${scrapeResult.status === 'HEALTHY' ? 'badge-success' : 'badge-danger'}`}>
+          <div className="border-2 border-black bg-[#faf0d9] p-6 flex flex-col gap-4 font-mono text-xs shadow-sm">
+            <div className="flex justify-between items-center border-b-2 border-black pb-3">
+              <strong className="text-black font-extrabold">SCRAPER EXTRACTION RUN REPORT</strong>
+              <span 
+                style={{ 
+                  backgroundColor: scrapeResult.status === 'HEALTHY' ? '#e6f4ea' : '#fce8e6',
+                  color: scrapeResult.status === 'HEALTHY' ? '#137333' : '#c5221f',
+                  borderColor: scrapeResult.status === 'HEALTHY' ? '#137333' : '#c5221f'
+                }} 
+                className="badge border font-bold font-mono text-[9px] uppercase px-2 py-0.5 rounded-none"
+              >
                 {scrapeResult.status}
               </span>
             </div>
             
-            <div className="grid grid-3 gap-4">
-              <div>
-                <span className="text-zinc-500 block">RECORDS EXTRACTED</span>
-                <span className="text-md font-bold mt-1 block">{scrapeResult.records_count}</span>
+            <div className="flex flex-row items-stretch justify-between text-black py-2">
+              <div className="flex-1 pr-6 text-left border-r-2 border-black">
+                <span className="text-zinc-650 font-bold block mb-1">RECORDS EXTRACTED</span>
+                <span className="text-sm font-extrabold mt-1 block text-black">{scrapeResult.records_count}</span>
               </div>
-              <div>
-                <span className="text-zinc-500 block">HEALTH SCORE</span>
-                <span className={`text-md font-bold mt-1 block ${scrapeResult.health_score === 100 ? 'text-emerald-400' : 'text-red-400'}`}>
+              <div className="flex-1 px-6 text-left border-r-2 border-black">
+                <span className="text-zinc-650 font-bold block mb-1">HEALTH SCORE</span>
+                <span style={{ color: scrapeResult.health_score === 100 ? '#10b981' : '#ef4444' }} className="text-sm font-extrabold mt-1 block">
                   {scrapeResult.health_score}%
                 </span>
               </div>
-              <div>
-                <span className="text-zinc-500 block">REPAIR STATE</span>
-                <span className="text-md mt-1 block">
+              <div className="flex-1 pl-6 text-left">
+                <span className="text-zinc-650 font-bold block mb-1">REPAIR STATE</span>
+                <span className="text-sm font-bold mt-1 block">
                   {scrapeResult.repair_proposal_id ? (
-                    <strong className="text-red-400 animate-pulse">PROPOSAL PENDING</strong>
+                    <strong style={{ color: '#ef4444' }} className="animate-pulse">PROPOSAL PENDING</strong>
                   ) : (
-                    <span className="text-emerald-400">NO ACTION NEEDED</span>
+                    <span style={{ color: '#10b981' }} className="font-extrabold">NO ACTION NEEDED</span>
                   )}
                 </span>
               </div>
