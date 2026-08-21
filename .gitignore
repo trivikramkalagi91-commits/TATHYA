@@ -1,0 +1,27 @@
+# Environments & Secrets
+.env
+.env.*
+!.env.example
+
+# Databases
+*.db
+*.sqlite
+
+# Dependency directories
+node_modules/
+jspm_packages/
+web_modules/
+frontend/node_modules/
+
+# Build outputs
+dist/
+build/
+.next/
+out/
+.nuxt/
+
+# IDEs & System files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
