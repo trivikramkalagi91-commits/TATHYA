@@ -143,42 +143,42 @@ export default function App() {
   // Render Public Website pages if not logged in / app page
   if (!isAppPath) {
     return (
-      <div className="bg-[#0b0b0c] min-h-screen text-zinc-100 flex flex-col selection:bg-amber-500 selection:text-black">
+      <div className="bg-white min-h-screen text-black flex flex-col selection:bg-black selection:text-white font-sans">
         {/* Marketing Navbar */}
-        <header className="border-b border-[#242427] bg-[#0b0b0c] sticky top-0 z-50">
-          <div className="max-w-7xl mx-auto px-6 h-16 flex align-center justify-between">
-            <div className="flex align-center gap-6">
+        <header className="border-b-2 border-black bg-white sticky top-0 z-50">
+          <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div className="flex items-center gap-8">
               <span 
-                className="font-mono text-xl font-bold tracking-widest text-[#f59e0b] cursor-pointer"
+                className="font-serif text-2xl font-bold tracking-tight text-black cursor-pointer hover:underline"
                 onClick={() => navigateTo('home')}
               >
-                TATHYA
+                Tathya
               </span>
-              <nav className="flex align-center gap-6 text-sm text-zinc-400 font-mono">
-                <a href="#product" className={currentPath === 'product' ? 'text-zinc-100' : ''}>PRODUCT</a>
-                <a href="#solutions" className={currentPath === 'solutions' ? 'text-zinc-100' : ''}>SOLUTIONS</a>
-                <a href="#how-it-works" className={currentPath === 'how-it-works' ? 'text-zinc-100' : ''}>HOW IT WORKS</a>
-                <a href="#security" className={currentPath === 'security' ? 'text-zinc-100' : ''}>SECURITY</a>
-                <a href="#docs" className={currentPath === 'docs' ? 'text-zinc-100' : ''}>DOCUMENTATION</a>
+              <nav className="hidden md:flex items-center gap-6 text-xs text-zinc-800 font-bold uppercase tracking-wider">
+                <a href="#product" className={`hover:underline ${currentPath === 'product' ? 'underline decoration-2' : ''}`}>Product</a>
+                <a href="#solutions" className={`hover:underline ${currentPath === 'solutions' ? 'underline decoration-2' : ''}`}>Solutions</a>
+                <a href="#how-it-works" className={`hover:underline ${currentPath === 'how-it-works' ? 'underline decoration-2' : ''}`}>How It Works</a>
+                <a href="#security" className={`hover:underline ${currentPath === 'security' ? 'underline decoration-2' : ''}`}>Security</a>
+                <a href="#docs" className={`hover:underline ${currentPath === 'docs' ? 'underline decoration-2' : ''}`}>Documentation</a>
               </nav>
             </div>
             
-            <div className="flex align-center gap-4 font-mono text-xs">
+            <div className="flex items-center gap-4 font-mono text-xs">
               {user ? (
                 <>
-                  <button onClick={() => navigateTo('app-overview')} className="btn btn-secondary px-3 py-1.5">
+                  <button onClick={() => navigateTo('app-overview')} className="px-4 py-2 border-2 border-black bg-black text-white font-bold rounded-none cursor-pointer">
                     CONSOLE
                   </button>
-                  <button onClick={handleLogout} className="text-zinc-400 hover:text-zinc-100">
+                  <button onClick={handleLogout} className="text-zinc-600 hover:text-black font-bold cursor-pointer border-0 bg-transparent">
                     LOGOUT
                   </button>
                 </>
               ) : (
                 <>
-                  <a href="#login" className="px-3 py-1.5 text-zinc-400 hover:text-zinc-100 flex align-center">
+                  <a href="#login" className="px-4 py-2 text-black hover:underline font-bold">
                     SIGN IN
                   </a>
-                  <a href="#signup" className="btn btn-primary py-1.5 px-4 font-bold">
+                  <a href="#signup" className="px-4 py-2 border-2 border-black bg-black text-white font-bold rounded-none hover:bg-zinc-800">
                     GET STARTED
                   </a>
                 </>
@@ -188,7 +188,7 @@ export default function App() {
         </header>
 
         {/* Public Routes Rendering */}
-        <main className="flex-1">
+        <main className="flex-1 bg-white">
           {currentPath === 'home' && <HomeView />}
           {currentPath === 'product' && <ProductView />}
           {currentPath === 'solutions' && <SolutionsView />}
@@ -199,8 +199,15 @@ export default function App() {
           {currentPath === 'signup' && <SignupView setUser={setUser} fetchAlerts={fetchAlerts} error={authError} setError={setAuthError} />}
         </main>
 
-        <footer className="border-t border-[#242427] py-8 text-center text-xs text-zinc-600 font-mono bg-[#0b0b0c]">
-          <p>© 2026 TATHYA PLATFORM. "EVIDENCE BEFORE ACTION." POWERED BY BRIGHT DATA DCA INTEGRATIONS.</p>
+        {/* Marketing Footer */}
+        <footer className="bg-black text-white py-12 border-t-2 border-black flex flex-col gap-6 items-center justify-center text-center">
+          <span className="font-serif text-xl font-bold tracking-tight">Tathya Scraper Platform</span>
+          <div className="flex gap-6 text-xs font-bold uppercase tracking-wider text-zinc-400">
+            <a href="#product" className="hover:text-white">Product</a>
+            <a href="#solutions" className="hover:text-white">Solutions</a>
+            <a href="#docs" className="hover:text-white">Docs</a>
+          </div>
+          <span className="text-[10px] text-zinc-650 font-mono">Tathya Platform - © 2026</span>
         </footer>
       </div>
     );
@@ -406,6 +413,7 @@ export default function App() {
 
 function HomeView() {
   const [filter, setFilter] = useState<'all' | 'healthy' | 'warning' | 'standby'>('all');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const projects = [
     {
@@ -413,10 +421,11 @@ function HomeView() {
       category: "Financial News",
       status: "healthy",
       statusText: "HEALTHY",
-      color: "bg-emerald-500",
-      pillStyle: "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20",
+      color: "bg-emerald-400",
       description: "Asynchronous scraper monitoring live financial headlines, tickers, and price actions.",
       difficulty: "Hard",
+      level: "Level 3",
+      levelColor: "bg-[#fde047] text-black",
       target: "finance.yahoo.com"
     },
     {
@@ -424,10 +433,11 @@ function HomeView() {
       category: "News Aggregator",
       status: "healthy",
       statusText: "HEALTHY",
-      color: "bg-emerald-500",
-      pillStyle: "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20",
+      color: "bg-emerald-400",
       description: "Continuous XML feed collector fetching macroeconomic headlines and keyword anchors.",
       difficulty: "Easy",
+      level: "Level 1",
+      levelColor: "bg-[#86efac] text-black",
       target: "news.google.com"
     },
     {
@@ -435,10 +445,11 @@ function HomeView() {
       category: "Local Sandbox",
       status: "healthy",
       statusText: "HEALTHY",
-      color: "bg-emerald-500",
-      pillStyle: "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20",
+      color: "bg-emerald-400",
       description: "Local mock DOM target server testing self-healing algorithms and selectors in isolation.",
       difficulty: "Medium",
+      level: "Level 2",
+      levelColor: "bg-[#fde047] text-black",
       target: "localhost:8000"
     },
     {
@@ -446,10 +457,11 @@ function HomeView() {
       category: "Corporate Disclosures",
       status: "warning",
       statusText: "PAUSED",
-      color: "bg-amber-500",
-      pillStyle: "bg-amber-500/10 text-amber-400 border border-amber-500/20",
+      color: "bg-amber-400",
       description: "Regulatory registry scraper tracking SEC Edgar XBRL financial files and forms.",
       difficulty: "Hard",
+      level: "Level 3",
+      levelColor: "bg-[#fde047] text-black",
       target: "sec.gov/edgar"
     },
     {
@@ -457,120 +469,109 @@ function HomeView() {
       category: "Indian Markets",
       status: "standby",
       statusText: "STANDBY",
-      color: "bg-indigo-500",
-      pillStyle: "bg-indigo-500/10 text-indigo-400 border border-indigo-500/20",
+      color: "bg-indigo-400",
       description: "Exchange disclosure collector monitoring Indian corporate press releases and statements.",
       difficulty: "Medium",
+      level: "Level 2",
+      levelColor: "bg-[#fde047] text-black",
       target: "nseindia.com"
     }
   ];
 
   const filteredProjects = projects.filter(p => {
-    if (filter === 'all') return true;
-    return p.status === filter;
+    const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                          p.category.toLowerCase().includes(searchQuery.toLowerCase());
+    if (filter === 'all') return matchesSearch;
+    return p.status === filter && matchesSearch;
   });
 
   return (
-    <div className="flex flex-col gap-12 py-16 px-6 max-w-6xl mx-auto text-slate-200">
+    <div className="flex flex-col gap-12 py-16 px-6 max-w-6xl mx-auto text-black bg-white">
       {/* Hero Header */}
-      <section className="flex flex-col gap-4 text-left max-w-3xl">
-        <span className="font-mono text-xs text-amber-500 tracking-widest font-bold uppercase">// FRONTEND PRACTICE</span>
-        <h1 className="text-4xl md:text-5xl font-mono font-extrabold tracking-tight text-white leading-tight">
-          Recreate real-world <br/>
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-200">data pipelines</span>.
+      <section className="flex flex-col items-center justify-center text-center max-w-2xl mx-auto mb-4">
+        <h1 className="text-5xl font-serif font-bold text-black tracking-tight mb-4">
+          Project Library
         </h1>
-        <p className="text-slate-400 text-sm md:text-base leading-relaxed font-sans mt-2">
-          A curated collection of web scrapers and self-healing intelligence pipelines. Audit DOM structures, monitor selector health, and practice data healing models.
-        </p>
-      </section>
+        
+        <h3 className="font-serif font-bold text-black border-b-2 border-black pb-1 mb-4 text-base">
+          How to get started:
+        </h3>
+        <ul className="flex flex-col gap-2 text-left font-sans text-xs text-zinc-800 font-bold max-w-xs mx-auto mb-6">
+          <li>→ Choose one of our scraper targets below.</li>
+          <li>→ Monitor and extract real-time web news.</li>
+          <li>→ Inspect active DOM structures.</li>
+          <li>✔ Recover lost market intelligence.</li>
+        </ul>
 
-      {/* Filter Tabs Navigation */}
-      <div className="border-b border-slate-800 pb-3 flex flex-wrap gap-2 items-center justify-between mt-4">
-        <div className="flex bg-[#151618] p-1 rounded-lg border border-slate-800/80 gap-1">
+        {/* Filters bar */}
+        <div className="flex flex-wrap justify-center gap-2 mt-4">
           {(['all', 'healthy', 'warning', 'standby'] as const).map((tab) => (
             <button
               key={tab}
               onClick={() => setFilter(tab)}
-              className={`px-3 py-1.5 rounded-md font-semibold text-xs font-mono transition-all border-0 cursor-pointer uppercase ${filter === tab ? 'bg-[#222326] text-white' : 'text-slate-400 hover:text-slate-200 bg-transparent'}`}
+              className={`px-4 py-2 border-2 border-black font-bold font-mono text-xs cursor-pointer transition-all rounded-none ${filter === tab ? 'bg-black text-white' : 'bg-white text-black hover:bg-zinc-100'}`}
             >
-              {tab}
+              {tab === 'all' ? 'View All' : tab.toUpperCase()}
             </button>
           ))}
         </div>
-        <span className="text-[10px] text-slate-500 font-mono font-semibold uppercase">Showing {filteredProjects.length} Monitored Targets</span>
-      </div>
+
+        {/* Search Input */}
+        <div className="w-full max-w-md mt-4">
+          <input 
+            type="text" 
+            placeholder="Search for project by name: Yahoo" 
+            className="w-full border-2 border-black px-4 py-3 bg-white text-black focus:outline-none font-mono text-xs rounded-none"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
+      </section>
 
       {/* Interactive Project Grid */}
-      <section className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+      <section className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 max-w-5xl mx-auto w-full">
         {filteredProjects.map((project, idx) => (
           <div 
             key={idx} 
-            className="group bg-[#151618] border border-slate-800/80 rounded-2xl overflow-hidden hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between shadow-lg cursor-pointer"
+            className="group bg-white border-2 border-black rounded-none overflow-hidden relative flex flex-col justify-between transition-all hover:shadow-[6px_6px_0px_#000000] cursor-pointer"
             onClick={() => window.location.hash = '#login'}
           >
-            {/* Color Accent Card Top Header */}
-            <div className="h-2.5 bg-gradient-to-r from-slate-800 to-slate-700/80 relative">
-              <span className={`absolute right-4 top-1.5 w-1.5 h-1.5 rounded-full ${project.color}`}></span>
+            {/* Top Mockup Area with Image/Icon placeholder */}
+            <div className="h-48 bg-[#faf0d9] border-b-2 border-black relative flex items-center justify-center p-6 text-center">
+              <div className="flex flex-col items-center">
+                <span className="text-zinc-500 font-mono text-[9px] uppercase tracking-wider font-bold mb-2">{project.target}</span>
+                <span className="font-serif font-bold text-lg text-black hover:underline">{project.name}</span>
+              </div>
+              {/* Level Badge on top right */}
+              <span className={`absolute right-0 top-0 border-l-2 border-b-2 border-black px-3 py-1 font-mono text-[9px] font-bold uppercase tracking-wider ${project.levelColor}`}>
+                {project.level}
+              </span>
             </div>
 
-            <div className="p-5 flex-1 flex flex-col gap-4">
-              <div className="flex justify-between items-start">
-                <span className="text-[10px] text-slate-500 font-mono font-bold uppercase tracking-wider">{project.category}</span>
-                <span className={`px-2 py-0.5 rounded text-[8px] font-bold font-mono ${project.pillStyle}`}>
-                  {project.statusText}
-                </span>
-              </div>
-
-              <div className="flex flex-col gap-1.5">
-                <h3 className="text-base font-bold text-white font-sans group-hover:text-amber-400 transition-colors">
-                  {project.name}
-                </h3>
-                <p className="text-slate-400 text-xs leading-relaxed font-sans">
-                  {project.description}
-                </p>
-              </div>
+            {/* Lower half text panel with cream background */}
+            <div className="p-5 bg-[#faf0d9]/60 border-t-0 flex flex-col gap-3 text-left flex-grow">
+              <span className="text-[10px] text-zinc-500 font-mono font-bold uppercase tracking-wider">{project.category}</span>
+              <h3 className="text-lg font-bold text-black font-serif group-hover:underline decoration-2">
+                {project.name}
+              </h3>
+              <p className="text-zinc-600 text-xs leading-relaxed font-sans font-medium">
+                {project.description}
+              </p>
             </div>
 
             {/* Bottom Card Footer Details */}
-            <div className="p-4 bg-[#0c0d0e]/60 border-t border-slate-800/40 flex justify-between items-center font-mono text-[9px] text-slate-500">
-              <div className="flex gap-2">
-                <span>DIFFICULTY:</span>
-                <strong className="text-slate-400">{project.difficulty.toUpperCase()}</strong>
-              </div>
-              <span className="text-sky-400 hover:underline">{project.target}</span>
+            <div className="p-4 bg-white border-t-2 border-black flex justify-between items-center font-mono text-[10px] text-black font-bold">
+              <span>STATUS:</span>
+              <span className="underline uppercase">{project.statusText}</span>
             </div>
           </div>
         ))}
       </section>
 
-      {/* Website change issue callout */}
-      <section className="bg-[#151618] border border-slate-800/80 rounded-2xl p-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-center mt-6">
-        <div>
-          <span className="font-mono text-xs text-amber-500 font-bold uppercase">// THE CORE CHALLENGE</span>
-          <h2 className="text-2xl mt-2 font-mono font-bold leading-tight text-white">Websites break. Tathya heals them.</h2>
-          <p className="text-slate-400 text-xs mt-3 leading-relaxed font-sans">
-            Websites deploy changes daily. A renamed class, a restructured tag, or a new attribute silently breaks standard scrapers. Broken scrapers produce missing fields and corrupt downstream data layers without throwing server errors.
-          </p>
-        </div>
-        <div className="grid grid-cols-2 gap-3 text-[10px] font-mono">
-          <div className="p-3 border border-slate-800/80 bg-[#0c0d0e]/60 rounded-xl">
-            <strong className="text-amber-400">DOM REDESIGNS</strong>
-            <p className="text-slate-500 mt-1">Div classes shift during system deployments.</p>
-          </div>
-          <div className="p-3 border border-slate-800/80 bg-[#0c0d0e]/60 rounded-xl">
-            <strong className="text-amber-400">RENAMED FIELDS</strong>
-            <p className="text-slate-500 mt-1">Identifiers mapping symbols are relocated.</p>
-          </div>
-          <div className="p-3 border border-slate-800/80 bg-[#0c0d0e]/60 rounded-xl">
-            <strong className="text-amber-400">DYNAMIC LAYOUTS</strong>
-            <p className="text-slate-500 mt-1">Asynchronous elements bypass basic HTTP calls.</p>
-          </div>
-          <div className="p-3 border border-slate-800/80 bg-[#0c0d0e]/60 rounded-xl">
-            <strong className="text-amber-400">MISSING DOM</strong>
-            <p className="text-slate-500 mt-1">Timestamps and category footers disappear.</p>
-          </div>
-        </div>
-      </section>
+      {/* Retro marketing note */}
+      <div className="text-center font-bold text-xs mt-6 text-zinc-700 max-w-lg mx-auto">
+        There are no rules with these scrapers. Use any configurations, selectors, or selectors databases you want to recreate and learn from them.
+      </div>
     </div>
   );
 }
@@ -721,31 +722,31 @@ function LoginView({ setUser, fetchAlerts, error, setError }: { setUser: any; fe
   };
 
   return (
-    <div className="py-20 px-6 max-w-md mx-auto flex flex-col gap-6 text-slate-200">
+    <div className="py-20 px-6 max-w-md mx-auto flex flex-col gap-6 text-black bg-white">
       <div className="text-center mb-2">
-        <div className="w-10 h-10 bg-white text-[#0c0d0e] rounded-lg font-bold flex items-center justify-center text-xl mx-auto mb-3 shadow-md">T</div>
-        <p className="text-slate-400 text-xs font-mono">Market intelligence, unified.</p>
+        <h2 className="text-3xl font-serif font-bold text-black tracking-tight mb-2">Sign In</h2>
+        <p className="text-zinc-650 text-xs font-mono font-bold">Tathya Market Intelligence</p>
       </div>
 
       {error && (
-        <div className="p-3.5 bg-rose-950/20 border border-rose-500/30 text-rose-400 text-xs rounded-lg">
+        <div className="p-3.5 border-2 border-red-500 bg-red-50 text-red-700 text-xs font-bold font-mono">
           {error}
         </div>
       )}
 
-      <div className="bg-[#151618] border border-slate-800/80 rounded-2xl p-8 shadow-xl flex flex-col gap-5">
+      <div className="bg-[#faf0d9] border-2 border-black rounded-none p-8 flex flex-col gap-5">
         {/* Segmented Selector Toggle */}
-        <div className="flex bg-[#0c0d0e] p-1 rounded-lg border border-slate-800/80">
+        <div className="flex bg-white p-1 border-2 border-black rounded-none">
           <button 
             type="button"
-            className="flex-1 py-1.5 text-center rounded-md font-semibold text-xs transition-all bg-[#222326] text-white border-0 cursor-pointer"
+            className="flex-1 py-2 text-center rounded-none font-bold text-xs transition-all bg-black text-white border-0 cursor-pointer"
           >
             Sign In
           </button>
           <button 
             type="button"
             onClick={() => window.location.hash = '#signup'}
-            className="flex-1 py-1.5 text-center rounded-md font-semibold text-xs transition-all text-slate-400 hover:text-slate-200 border-0 bg-transparent cursor-pointer"
+            className="flex-1 py-2 text-center rounded-none font-bold text-xs transition-all text-black hover:bg-zinc-100 border-0 bg-transparent cursor-pointer"
           >
             Create Account
           </button>
@@ -753,21 +754,21 @@ function LoginView({ setUser, fetchAlerts, error, setError }: { setUser: any; fe
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div className="form-group mb-0">
-            <label className="text-[11px] font-semibold tracking-wider text-slate-400 uppercase font-sans mb-1.5">Email</label>
+            <label className="text-[10px] font-bold tracking-wider text-black uppercase font-mono mb-1.5">Email</label>
             <input 
               type="email" 
-              className="w-full bg-[#0c0d0e] border border-slate-800/80 rounded-lg px-3 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-slate-600 transition-colors font-sans" 
+              className="w-full bg-white border-2 border-black rounded-none px-3 py-2.5 text-xs text-black focus:outline-none transition-colors font-mono" 
               required 
-              placeholder="webofjee@gmail.com"
+              placeholder="admin@tathya.io"
               value={email}
               onChange={e => setEmail(e.target.value)}
             />
           </div>
           <div className="form-group mb-0">
-            <label className="text-[11px] font-semibold tracking-wider text-slate-400 uppercase font-sans mb-1.5">Password</label>
+            <label className="text-[10px] font-bold tracking-wider text-black uppercase font-mono mb-1.5">Password</label>
             <input 
               type="password" 
-              className="w-full bg-[#0c0d0e] border border-slate-800/80 rounded-lg px-3 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-slate-600 transition-colors font-sans" 
+              className="w-full bg-white border-2 border-black rounded-none px-3 py-2.5 text-xs text-black focus:outline-none transition-colors font-mono" 
               required 
               placeholder="••••••••"
               value={password}
@@ -778,17 +779,17 @@ function LoginView({ setUser, fetchAlerts, error, setError }: { setUser: any; fe
           <button 
             type="submit" 
             disabled={loading} 
-            className="w-full bg-white hover:bg-slate-200 text-[#0c0d0e] font-bold py-3 px-4 rounded-lg text-sm transition-all shadow-md shadow-white/5 border-0 flex items-center justify-center cursor-pointer mt-2"
+            className="w-full bg-black hover:bg-zinc-800 text-white font-bold py-3 px-4 rounded-none text-xs border-2 border-black flex items-center justify-center cursor-pointer mt-2"
           >
             {loading ? 'Authenticating...' : 'Sign In'}
           </button>
         </form>
       </div>
       
-      <div className="p-4 text-[10px] font-mono text-slate-500 border border-slate-800/40 rounded-xl bg-slate-900/40 leading-relaxed">
-        💡 <strong>Developer Sandbox Credentials:</strong><br/>
-        Email: <span className="text-slate-300 font-semibold">admin@tathya.io</span><br/>
-        Password: <span className="text-slate-300 font-semibold">tathya_admin_2026</span>
+      <div className="p-4 text-[10px] font-mono text-zinc-600 border-2 border-black rounded-none bg-white leading-relaxed">
+        💡 <strong>Developer Credentials:</strong><br/>
+        Email: <span className="text-black font-bold underline">admin@tathya.io</span><br/>
+        Password: <span className="text-black font-bold underline">tathya_admin_2026</span>
       </div>
     </div>
   );
@@ -822,31 +823,31 @@ function SignupView({ setUser, fetchAlerts, error, setError }: { setUser: any; f
   };
 
   return (
-    <div className="py-20 px-6 max-w-md mx-auto flex flex-col gap-6 text-slate-200">
+    <div className="py-20 px-6 max-w-md mx-auto flex flex-col gap-6 text-black bg-white">
       <div className="text-center mb-2">
-        <div className="w-10 h-10 bg-white text-[#0c0d0e] rounded-lg font-bold flex items-center justify-center text-xl mx-auto mb-3 shadow-md">T</div>
-        <p className="text-slate-400 text-xs font-mono">Market intelligence, unified.</p>
+        <h2 className="text-3xl font-serif font-bold text-black tracking-tight mb-2">Create Account</h2>
+        <p className="text-zinc-655 text-xs font-mono font-bold">Tathya Market Intelligence</p>
       </div>
 
       {error && (
-        <div className="p-3.5 bg-rose-950/20 border border-rose-500/30 text-rose-400 text-xs rounded-lg">
+        <div className="p-3.5 border-2 border-red-500 bg-red-50 text-red-700 text-xs font-bold font-mono">
           {error}
         </div>
       )}
 
-      <div className="bg-[#151618] border border-slate-800/80 rounded-2xl p-8 shadow-xl flex flex-col gap-5">
+      <div className="bg-[#faf0d9] border-2 border-black rounded-none p-8 flex flex-col gap-5">
         {/* Segmented Selector Toggle */}
-        <div className="flex bg-[#0c0d0e] p-1 rounded-lg border border-slate-800/80">
+        <div className="flex bg-white p-1 border-2 border-black rounded-none">
           <button 
             type="button"
             onClick={() => window.location.hash = '#login'}
-            className="flex-1 py-1.5 text-center rounded-md font-semibold text-xs transition-all text-slate-400 hover:text-slate-200 border-0 bg-transparent cursor-pointer"
+            className="flex-1 py-2 text-center rounded-none font-bold text-xs transition-all text-black hover:bg-zinc-100 border-0 bg-transparent cursor-pointer"
           >
             Sign In
           </button>
           <button 
             type="button"
-            className="flex-1 py-1.5 text-center rounded-md font-semibold text-xs transition-all bg-[#222326] text-white border-0 cursor-pointer"
+            className="flex-1 py-2 text-center rounded-none font-bold text-xs transition-all bg-black text-white border-0 cursor-pointer"
           >
             Create Account
           </button>
@@ -854,10 +855,10 @@ function SignupView({ setUser, fetchAlerts, error, setError }: { setUser: any; f
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div className="form-group mb-0">
-            <label className="text-[11px] font-semibold tracking-wider text-slate-400 uppercase font-sans mb-1.5">Full Name</label>
+            <label className="text-[10px] font-bold tracking-wider text-black uppercase font-mono mb-1.5">Full Name</label>
             <input 
               type="text" 
-              className="w-full bg-[#0c0d0e] border border-slate-800/80 rounded-lg px-3 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-slate-600 transition-colors font-sans" 
+              className="w-full bg-white border-2 border-black rounded-none px-3 py-2.5 text-xs text-black focus:outline-none transition-colors font-mono" 
               required 
               placeholder="John Doe"
               value={fullName}
@@ -865,23 +866,23 @@ function SignupView({ setUser, fetchAlerts, error, setError }: { setUser: any; f
             />
           </div>
           <div className="form-group mb-0">
-            <label className="text-[11px] font-semibold tracking-wider text-slate-400 uppercase font-sans mb-1.5">Email Address</label>
+            <label className="text-[10px] font-bold tracking-wider text-black uppercase font-mono mb-1.5">Email Address</label>
             <input 
               type="email" 
-              className="w-full bg-[#0c0d0e] border border-slate-800/80 rounded-lg px-3 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-slate-600 transition-colors font-sans" 
+              className="w-full bg-white border-2 border-black rounded-none px-3 py-2.5 text-xs text-black focus:outline-none transition-colors font-mono" 
               required 
-              placeholder="webofjee@gmail.com"
+              placeholder="admin@tathya.io"
               value={email}
               onChange={e => setEmail(e.target.value)}
             />
           </div>
           <div className="form-group mb-0">
-            <label className="text-[11px] font-semibold tracking-wider text-slate-400 uppercase font-sans mb-1.5">Password</label>
+            <label className="text-[10px] font-bold tracking-wider text-black uppercase font-mono mb-1.5">Password</label>
             <input 
               type="password" 
-              className="w-full bg-[#0c0d0e] border border-slate-800/80 rounded-lg px-3 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-slate-600 transition-colors font-sans" 
+              className="w-full bg-white border-2 border-black rounded-none px-3 py-2.5 text-xs text-black focus:outline-none transition-colors font-mono" 
               required 
-              placeholder="Create a password (min 6 characters)"
+              placeholder="Min 6 characters"
               value={password}
               onChange={e => setPassword(e.target.value)}
             />
@@ -890,7 +891,7 @@ function SignupView({ setUser, fetchAlerts, error, setError }: { setUser: any; f
           <button 
             type="submit" 
             disabled={loading} 
-            className="w-full bg-white hover:bg-slate-200 text-[#0c0d0e] font-bold py-3 px-4 rounded-lg text-sm transition-all shadow-md shadow-white/5 border-0 flex items-center justify-center cursor-pointer mt-2"
+            className="w-full bg-black hover:bg-zinc-800 text-white font-bold py-3 px-4 rounded-none text-xs border-2 border-black flex items-center justify-center cursor-pointer mt-2"
           >
             {loading ? 'Creating...' : 'Create Account'}
           </button>
