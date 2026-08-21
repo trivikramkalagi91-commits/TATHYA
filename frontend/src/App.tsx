@@ -621,7 +621,7 @@ function HomeView() {
       </section>
 
       {/* Retro marketing note */}
-      <div className="text-center font-bold text-xs mt-24 mb-16 text-zinc-700 max-w-lg mx-auto">
+      <div style={{ marginTop: '96px', marginBottom: '64px' }} className="text-center font-bold text-xs text-zinc-700 max-w-lg mx-auto">
         There are no rules with these scrapers. Use any configurations, selectors, or selectors databases you want to recreate and learn from them.
       </div>
     </div>
