@@ -1294,17 +1294,19 @@ function SourcesDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
             </div>
           </div>
         ) : (
-          <div style={{ minHeight: '400px' }} className="border-2 border-black bg-[#faf0d9] p-12 text-center text-black flex flex-col items-center justify-center gap-6 shadow-sm">
+          <div style={{ minHeight: '400px' }} className="border-2 border-black bg-[#faf0d9] p-12 text-center text-black flex flex-col items-center justify-start gap-8 shadow-sm">
             <div className="flex flex-col gap-2">
               <h3 className="font-serif font-bold text-lg uppercase tracking-tight">Select a Data Source</h3>
               <p className="text-zinc-650 text-xs font-mono font-bold max-w-sm">
                 Choose a scraper pipeline from the left menu to configure DOM selectors, validation schemas, and trigger target site extractions.
               </p>
             </div>
-            <div className="animate-bounce-left text-black mt-4">
-              <svg width="96" height="96" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M9 14L4 9l5-5" />
-                <path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5v0a5.5 5.5 0 0 1-5.5 5.5H11" />
+            <div className="animate-bounce-left text-black mt-8">
+              <svg width="180" height="120" viewBox="0 0 100 60" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                {/* Hand-drawn spiral path arching over and pointing left */}
+                <path d="M 85 45 C 95 38, 92 20, 75 18 C 55 15, 38 28, 48 38 C 58 48, 68 35, 58 25 C 48 15, 28 15, 12 28" />
+                {/* Hand-drawn arrowhead pointing left */}
+                <path d="M 22 23 L 10 30 L 18 42" />
               </svg>
             </div>
           </div>
