@@ -1971,52 +1971,52 @@ function SettingsDashboardView({ user }: { user: User | null }) {
   };
 
   return (
-    <div className="max-w-xl mx-auto flex flex-col gap-6">
-      <div className="panel border border-[#242427] bg-[#131315]">
-        <div className="p-4 border-b border-[#242427] font-mono font-bold text-zinc-300">
+    <div className="max-w-xl mx-auto flex flex-col gap-6 text-black">
+      <div className="border-2 border-black bg-white rounded-none p-0 flex flex-col shadow-sm text-black">
+        <div className="p-4 border-b-2 border-black font-mono font-bold text-black uppercase tracking-wider bg-[#faf0d9]">
           EXTERNAL API CONFIGURATION
         </div>
         
         <form onSubmit={saveSettings} className="p-6 flex flex-col gap-4 font-mono text-xs">
           {msg && (
-            <div className="p-3 bg-emerald-950/40 border border-emerald-500 text-emerald-400 text-xs font-mono rounded">
+            <div style={{ backgroundColor: '#e6f4ea', color: '#137333', borderColor: '#137333' }} className="p-3 border font-bold font-mono text-xs rounded-none">
               {msg}
             </div>
           )}
 
-          <div className="form-group">
-            <label className="form-label">BRIGHT DATA API TOKEN</label>
+          <div className="form-group flex flex-col gap-1.5">
+            <label className="text-black font-extrabold uppercase">BRIGHT DATA API TOKEN</label>
             <input 
               type="password" 
-              className="form-input" 
+              className="w-full bg-white border-2 border-black rounded-none px-3 py-2 text-xs text-black focus:outline-none font-mono font-bold" 
               value={brightToken}
               onChange={e => setBrightToken(e.target.value)}
             />
-            <span className="text-[10px] text-zinc-500 mt-1 block">Backend-only server-side token. Never exposed.</span>
+            <span className="text-[10px] text-zinc-650 font-bold block">Backend-only server-side token. Never exposed.</span>
           </div>
 
-          <div className="form-group">
-            <label className="form-label">MARKET NEWS PROVIDER KEY (FINNHUB)</label>
+          <div className="form-group flex flex-col gap-1.5">
+            <label className="text-black font-extrabold uppercase">MARKET NEWS PROVIDER KEY (FINNHUB)</label>
             <input 
               type="password" 
-              className="form-input" 
+              className="w-full bg-white border-2 border-black rounded-none px-3 py-2 text-xs text-black focus:outline-none font-mono font-bold" 
               value={newsToken}
               onChange={e => setNewsToken(e.target.value)}
             />
-            <span className="text-[10px] text-zinc-500 mt-1 block">Used to retrieve real-time US company quotes.</span>
+            <span className="text-[10px] text-zinc-650 font-bold block">Used to retrieve real-time US company quotes.</span>
           </div>
 
-          <button type="submit" className="btn btn-primary w-full font-bold font-mono py-2 mt-2">
+          <button type="submit" className="px-4 py-3 border-2 border-black bg-black text-white hover:bg-zinc-800 font-bold text-xs rounded-none cursor-pointer uppercase font-mono shadow-sm mt-2">
             SAVE CONFIGURATION
           </button>
         </form>
       </div>
 
-      <div className="panel border border-[#242427] bg-[#131315] p-6 font-mono text-xs flex flex-col gap-2">
-        <h4 className="font-bold text-zinc-200">USER PROFILE DETAILS</h4>
-        <p className="text-zinc-400">ID: {user?.id}</p>
-        <p className="text-zinc-400">Email: {user?.email}</p>
-        <p className="text-zinc-400">Full Name: {user?.full_name}</p>
+      <div className="border-2 border-black bg-[#faf0d9] p-6 font-mono text-xs flex flex-col gap-2.5 rounded-none shadow-sm text-black">
+        <h4 className="font-bold text-black border-b-2 border-black pb-2 mb-1">// USER PROFILE DETAILS</h4>
+        <p className="text-zinc-700 font-bold">ID: {user?.id}</p>
+        <p className="text-zinc-700 font-bold">Email: {user?.email}</p>
+        <p className="text-zinc-700 font-bold">Full Name: {user?.full_name}</p>
       </div>
     </div>
   );
