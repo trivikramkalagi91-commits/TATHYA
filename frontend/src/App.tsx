@@ -1316,27 +1316,35 @@ function SourcesDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
               </span>
             </div>
             
-            <div className="flex flex-row items-stretch justify-between text-black py-2">
-              <div className="flex-1 pr-6 text-left border-r-2 border-black">
-                <span className="text-zinc-650 font-bold block mb-1">RECORDS EXTRACTED</span>
-                <span className="text-sm font-extrabold mt-1 block text-black">{scrapeResult.records_count}</span>
-              </div>
-              <div className="flex-1 px-6 text-left border-r-2 border-black">
-                <span className="text-zinc-650 font-bold block mb-1">HEALTH SCORE</span>
-                <span style={{ color: scrapeResult.health_score === 100 ? '#10b981' : '#ef4444' }} className="text-sm font-extrabold mt-1 block">
-                  {scrapeResult.health_score}%
-                </span>
-              </div>
-              <div className="flex-1 pl-6 text-left">
-                <span className="text-zinc-650 font-bold block mb-1">REPAIR STATE</span>
-                <span className="text-sm font-bold mt-1 block">
-                  {scrapeResult.repair_proposal_id ? (
-                    <strong style={{ color: '#ef4444' }} className="animate-pulse">PROPOSAL PENDING</strong>
-                  ) : (
-                    <span style={{ color: '#10b981' }} className="font-extrabold">NO ACTION NEEDED</span>
-                  )}
-                </span>
-              </div>
+            <div className="table-container py-2">
+              <table className="table border-2 border-black w-full text-left">
+                <thead>
+                  <tr className="bg-[#faf0d9] border-b-2 border-black text-black">
+                    <th className="p-2.5 font-bold uppercase text-[10px] border-r-2 border-black">PARAMETER</th>
+                    <th className="p-2.5 font-bold uppercase text-[10px]">VALUE</th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white">
+                  <tr className="border-b border-black/25">
+                    <td className="p-2.5 font-bold text-zinc-700 border-r-2 border-black text-[10px] uppercase">RECORDS EXTRACTED</td>
+                    <td className="p-2.5 font-extrabold text-black font-mono text-[10px]">{scrapeResult.records_count}</td>
+                  </tr>
+                  <tr className="border-b border-black/25">
+                    <td className="p-2.5 font-bold text-zinc-700 border-r-2 border-black text-[10px] uppercase">HEALTH SCORE</td>
+                    <td style={{ color: scrapeResult.health_score === 100 ? '#10b981' : '#ef4444' }} className="p-2.5 font-extrabold font-mono text-[10px]">{scrapeResult.health_score}%</td>
+                  </tr>
+                  <tr>
+                    <td className="p-2.5 font-bold text-zinc-700 border-r-2 border-black text-[10px] uppercase">REPAIR STATE</td>
+                    <td className="p-2.5 text-[10px] font-bold">
+                      {scrapeResult.repair_proposal_id ? (
+                        <strong style={{ color: '#ef4444' }} className="animate-pulse">PROPOSAL PENDING</strong>
+                      ) : (
+                        <span style={{ color: '#10b981' }} className="font-extrabold">NO ACTION NEEDED</span>
+                      )}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
 
             {scrapeResult.repair_proposal_id && (
