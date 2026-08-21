@@ -1010,7 +1010,7 @@ function OverviewDashboardView() {
         <div className="bg-[#faf0d9] border-2 border-black rounded-none p-6 flex flex-col justify-between shadow-sm hover:shadow-[4px_4px_0px_#000000] cursor-pointer transition-all">
           <h2 className="text-base font-serif font-bold mb-4 text-black uppercase">RECENT SCRAPER WORKFLOW ACTIVITIES</h2>
           <div style={{ maxHeight: '350px', overflowY: 'auto' }} className="table-container">
-            <table className="table">
+            <table style={{ borderCollapse: 'separate', borderSpacing: 0 }} className="table">
               <thead>
                 <tr>
                   <th style={{ position: 'sticky', top: 0, backgroundColor: '#faf0d9', zIndex: 10 }} className="whitespace-nowrap border-b-2 border-black text-black font-bold uppercase font-sans text-xs">SCRAPER</th>
