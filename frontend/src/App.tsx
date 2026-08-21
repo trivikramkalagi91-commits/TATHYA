@@ -1386,6 +1386,7 @@ function SourcesDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
 
 function RepairsDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
   const [repairs, setRepairs] = useState<any[]>([]);
+  const [collectors, setCollectors] = useState<any[]>([]);
   const [selectedRepair, setSelectedRepair] = useState<any>(null);
   const [approving, setApproving] = useState<boolean>(false);
   const [verificationLog, setVerificationLog] = useState<string[]>([]);
@@ -1395,6 +1396,9 @@ function RepairsDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
     try {
       const res = await api.get('/api/v1/repairs/');
       setRepairs(res.data);
+      
+      const collRes = await api.get('/api/v1/collectors/');
+      setCollectors(collRes.data);
       
       // If a repair is selected, reload its status
       if (selectedRepair) {
@@ -1519,26 +1523,39 @@ function RepairsDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
             </div>
 
             {/* Before / After comparison */}
-            <div>
-              <strong className="text-zinc-650 font-bold mb-2 block">// SELECTOR CONFIGURATION DIFF (PROPOSED FIXES)</strong>
-              <div className="grid grid-2 gap-4">
-                <div className="p-4 border-2 border-black bg-zinc-55">
-                  <span className="text-red-750 font-bold block mb-1">DEGRADED CONFIG (VERSION A)</span>
-                  <span className="text-zinc-600 block text-[9px] font-bold">Failed to parse fields</span>
-                  <pre className="text-black font-bold mt-2 bg-[#faf0d9] p-3 border border-black text-[10px] whitespace-pre-wrap">
-                    {`row_container: .market-event\nsymbol: .symbol\nheadline: .headline\ntimestamp: .timestamp`}
-                  </pre>
+            {(() => {
+              const coll = collectors.find(c => c.id === selectedRepair.collector_id);
+              const oldMapping = coll ? (typeof coll.selector_mapping === 'string' ? JSON.parse(coll.selector_mapping) : coll.selector_mapping) : {};
+              const oldStr = Object.entries(oldMapping).map(([k, v]) => `${k}: ${v}`).join('\n') || 'No old selectors';
+
+              const newMapping = selectedRepair.proposed_selectors 
+                ? (typeof selectedRepair.proposed_selectors === 'string' ? JSON.parse(selectedRepair.proposed_selectors) : selectedRepair.proposed_selectors)
+                : {};
+              const newStr = Object.entries(newMapping).map(([k, v]) => `${k}: ${v}`).join('\n') || 'No proposed selectors';
+
+              return (
+                <div>
+                  <strong className="text-zinc-650 font-bold mb-2 block">// SELECTOR CONFIGURATION DIFF (PROPOSED FIXES)</strong>
+                  <div className="grid grid-2 gap-4">
+                    <div className="p-4 border-2 border-black bg-zinc-55">
+                      <span className="text-red-750 font-bold block mb-1">DEGRADED CONFIG (VERSION A)</span>
+                      <span className="text-zinc-600 block text-[9px] font-bold">Failed to parse fields</span>
+                      <pre className="text-black font-bold mt-2 bg-[#faf0d9] p-3 border border-black text-[10px] whitespace-pre-wrap">
+                        {oldStr}
+                      </pre>
+                    </div>
+                    
+                    <div className="p-4 border-2 border-black bg-zinc-55">
+                      <span className="text-emerald-750 font-bold block mb-1">REPAIRED CONFIG (PROPOSAL)</span>
+                      <span className="text-zinc-600 block text-[9px] font-bold">Deduced from Version B footprint</span>
+                      <pre className="text-black font-bold mt-2 bg-[#faf0d9] p-3 border border-black text-[10px] whitespace-pre-wrap">
+                        {newStr}
+                      </pre>
+                    </div>
+                  </div>
                 </div>
-                
-                <div className="p-4 border-2 border-black bg-zinc-55">
-                  <span className="text-emerald-750 font-bold block mb-1">REPAIRED CONFIG (PROPOSAL)</span>
-                  <span className="text-zinc-600 block text-[9px] font-bold">Deduced from Version B footprint</span>
-                  <pre className="text-black font-bold mt-2 bg-[#faf0d9] p-3 border border-black text-[10px] whitespace-pre-wrap">
-                    {`row_container: article.event-card\nsymbol: attr:data-symbol\nheadline: .title\ntimestamp: time`}
-                  </pre>
-                </div>
-              </div>
-            </div>
+              );
+            })()}
 
             {/* Healing Heuristic Explanation */}
             <div className="bg-[#faf0d9] p-4 border-2 border-black">
