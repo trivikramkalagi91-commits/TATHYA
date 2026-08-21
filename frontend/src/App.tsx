@@ -301,7 +301,7 @@ export default function App() {
       {/* Main Console Content Body */}
       <div className="flex-1 flex flex-col min-w-0 bg-[var(--bg-base)]">
         {/* Top Ticker Bar (in.investing.com style) */}
-        <div className="bg-slate-950 border-b border-slate-800 py-3.5 px-8 overflow-x-auto whitespace-nowrap flex flex-row flex-nowrap items-center gap-4 text-xs font-mono select-none scrollbar-none">
+        <div className="bg-white border-b-2 border-black py-3.5 px-8 overflow-x-auto whitespace-nowrap flex flex-row flex-nowrap items-center gap-4 text-xs font-mono select-none scrollbar-none">
           {[
             { label: 'NIFTY 50', price: '24,315.20', change: '▲ +185.10 (+0.77%)', positive: true },
             { label: 'SENSEX', price: '79,642.50', change: '▲ +628.30 (+0.80%)', positive: true },
@@ -310,10 +310,10 @@ export default function App() {
             { label: 'BRENT CRUDE', price: '$77.12', change: '▼ -0.42 (-0.54%)', positive: false },
             { label: 'US 10Y BOND', price: '3.82%', change: '▲ +0.02 (+0.52%)', positive: true },
           ].map((item, idx) => (
-            <div key={idx} className="flex flex-row flex-nowrap items-center gap-2 min-w-max bg-slate-900 border border-slate-800 rounded-md px-3 py-1.5">
-              <span className="text-xs font-semibold text-slate-400 whitespace-nowrap">{item.label}</span>
-              <span className="text-sm font-bold text-slate-100 whitespace-nowrap">{item.price}</span>
-              <span className={`font-semibold text-xs whitespace-nowrap ${item.positive ? 'text-emerald-400' : 'text-rose-400'}`}>{item.change}</span>
+            <div key={idx} className="flex flex-row flex-nowrap items-center gap-2 min-w-max bg-white border-2 border-black rounded-none px-3 py-1.5 shadow-sm">
+              <span className="text-xs font-bold text-black whitespace-nowrap">{item.label}</span>
+              <span className="text-xs font-mono font-bold text-zinc-700 whitespace-nowrap">{item.price}</span>
+              <span className={`font-bold text-xs whitespace-nowrap ${item.positive ? 'text-emerald-600' : 'text-rose-600'}`}>{item.change}</span>
             </div>
           ))}
         </div>
@@ -924,12 +924,12 @@ function OverviewDashboardView() {
           { title: 'RECORDS COLLECTED', val: metrics?.records_collected || 0, label: 'Scraped items' },
           { title: 'AVG RECOVERY TIME', val: `${metrics?.avg_recovery_time_mins || 0}m`, label: 'From break to heal' }
         ].map((item, idx) => (
-          <div key={idx} className="border border-slate-800 bg-slate-900 rounded-lg p-4 flex flex-col justify-between shadow-sm">
-            <span className="text-xs font-semibold tracking-wider uppercase text-slate-400 block">{item.title}</span>
-            <span className={`text-3xl font-extrabold my-1 block tabular-nums ${item.warning ? 'text-rose-400' : 'text-white'}`}>
+          <div key={idx} className="border-2 border-black bg-[#faf0d9] rounded-none p-4 flex flex-col justify-between shadow-sm hover:shadow-[4px_4px_0px_#000000] cursor-pointer transition-all">
+            <span className="text-xs font-bold tracking-wider uppercase text-black block">{item.title}</span>
+            <span className={`text-3xl font-extrabold my-1 block tabular-nums ${item.warning ? 'text-red-600' : 'text-black'}`}>
               {item.val}
             </span>
-            <span className="text-xs text-slate-500 font-normal block leading-tight mt-1">{item.label}</span>
+            <span className="text-xs text-zinc-650 font-bold block leading-tight mt-1">{item.label}</span>
           </div>
         ))}
       </div>
