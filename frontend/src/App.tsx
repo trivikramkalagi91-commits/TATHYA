@@ -389,7 +389,7 @@ export default function App() {
         </header>
 
         {/* Dashboard Pages */}
-        <main className="flex-1 p-8 overflow-y-auto max-w-7xl w-full mx-auto">
+        <main className="flex-1 p-8 overflow-y-auto w-full">
           {currentPath === 'app-overview' && <OverviewDashboardView />}
           {currentPath === 'app-sources' && <SourcesDashboardView fetchAlerts={fetchAlerts} />}
           {currentPath === 'app-repairs' && <RepairsDashboardView fetchAlerts={fetchAlerts} />}
