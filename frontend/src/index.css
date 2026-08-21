@@ -498,18 +498,26 @@ a:hover {
   }
 }
 
-/* Custom Ticker Styles */
-.custom-ticker {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 1.5rem;
-  padding: 0.75rem 2rem;
+/* Custom Ticker Styles - Continuously Moving Marquee */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.marquee-container {
+  overflow: hidden;
+  width: 100%;
   background-color: #ffffff;
   border-bottom: 2px solid #000000;
-  overflow-x: auto;
-  white-space: nowrap;
-  width: 100%;
+  display: flex;
+  align-items: center;
+  height: 3.5rem;
+}
+.marquee-content {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+  animation: marquee 35s linear infinite;
+  width: max-content;
 }
 .custom-ticker-item {
   display: flex;

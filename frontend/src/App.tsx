@@ -14,6 +14,7 @@ import {
   ChevronDown,
   BookOpen,
   LogOut,
+  Menu,
   Link as LinkIcon
 } from 'lucide-react';
 import api from './lib/api';
@@ -51,6 +52,7 @@ export default function App() {
   const [alerts, setAlerts] = useState<any[]>([]);
   const [notificationsOpen, setNotificationsOpen] = useState<boolean>(false);
   const [workspaceOpen, setWorkspaceOpen] = useState<boolean>(false);
+  const [sidebarOpen, setSidebarOpen] = useState<boolean>(true);
   const [authError, setAuthError] = useState<string>('');
 
   // Handle Hash Routing
@@ -216,126 +218,155 @@ export default function App() {
 
   // Render Dashboard Portal Shell
   return (
-    <div className="bg-[var(--bg-base)] min-h-screen text-[var(--text-primary)] flex font-sans">      {/* Dashboard Left Sidebar */}
-      <aside className="custom-sidebar">
-        <div className="flex flex-col">
-          <div className="sidebar-logo-area">
-            <span className="font-serif text-xl font-bold tracking-tight text-black">Tathya</span>
-            <span className="text-[9px] bg-[#86efac] text-black border-2 border-black px-1.5 py-0.5 rounded-none font-mono font-bold uppercase tracking-wider">LIVE</span>
-          </div>
-
-          {/* Workspace Selector */}
-          <div className="sidebar-workspace-area">
-            <span className="text-zinc-550 text-[9px] font-bold uppercase tracking-wider">// WORKSPACE</span>
-            <div 
-              onClick={() => setWorkspaceOpen(!workspaceOpen)} 
-              className="flex items-center justify-between text-black cursor-pointer hover:underline"
-            >
-              <span className="font-bold text-xs">Primary Workspace</span>
-              <ChevronDown size={14} className={`text-black transition-transform ${workspaceOpen ? 'rotate-180' : ''}`} />
+    <div className="bg-[var(--bg-base)] min-h-screen text-[var(--text-primary)] flex font-sans">
+      {/* Dashboard Left Sidebar (Closable) */}
+      {sidebarOpen && (
+        <aside className="custom-sidebar">
+          <div className="flex flex-col">
+            <div className="sidebar-logo-area">
+              <span className="font-serif text-xl font-bold tracking-tight text-black">Tathya</span>
+              <span className="text-[9px] bg-[#86efac] text-black border-2 border-black px-1.5 py-0.5 rounded-none font-mono font-bold uppercase tracking-wider">LIVE</span>
             </div>
-            {workspaceOpen && (
-              <div className="absolute left-4 right-4 top-14 bg-white border-2 border-black z-50 p-1 flex flex-col gap-1 shadow-[3px_3px_0px_#000000]">
-                <div onClick={() => { setWorkspaceOpen(false); alert("Switched to Primary Workspace"); }} className="p-2 hover:bg-zinc-100 cursor-pointer font-bold text-[9px] text-black uppercase">Primary Workspace</div>
-                <div onClick={() => { setWorkspaceOpen(false); alert("Switched to Sandbox Analytics"); }} className="p-2 hover:bg-zinc-100 cursor-pointer font-bold text-[9px] text-black uppercase">Sandbox Analytics</div>
-                <div onClick={() => { setWorkspaceOpen(false); alert("Switched to Prod Scraping Flow"); }} className="p-2 hover:bg-zinc-100 cursor-pointer font-bold text-[9px] text-black uppercase">Prod Scraping Flow</div>
+
+            {/* Workspace Selector */}
+            <div className="sidebar-workspace-area">
+              <span className="text-zinc-550 text-[9px] font-bold uppercase tracking-wider">// WORKSPACE</span>
+              <div 
+                onClick={() => setWorkspaceOpen(!workspaceOpen)} 
+                className="flex items-center justify-between text-black cursor-pointer hover:underline"
+              >
+                <span className="font-bold text-xs">Primary Workspace</span>
+                <ChevronDown size={14} className={`text-black transition-transform ${workspaceOpen ? 'rotate-180' : ''}`} />
               </div>
-            )}
+              {workspaceOpen && (
+                <div className="absolute left-4 right-4 top-14 bg-white border-2 border-black z-50 p-1 flex flex-col gap-1 shadow-[3px_3px_0px_#000000]">
+                  <div onClick={() => { setWorkspaceOpen(false); alert("Switched to Primary Workspace"); }} className="p-2 hover:bg-zinc-100 cursor-pointer font-bold text-[9px] text-black uppercase">Primary Workspace</div>
+                  <div onClick={() => { setWorkspaceOpen(false); alert("Switched to Sandbox Analytics"); }} className="p-2 hover:bg-zinc-100 cursor-pointer font-bold text-[9px] text-black uppercase">Sandbox Analytics</div>
+                  <div onClick={() => { setWorkspaceOpen(false); alert("Switched to Prod Scraping Flow"); }} className="p-2 hover:bg-zinc-100 cursor-pointer font-bold text-[9px] text-black uppercase">Prod Scraping Flow</div>
+                </div>
+              )}
+            </div>
+
+            {/* Navigation Tabs */}
+            <nav className="sidebar-links-nav">
+              <button
+                onClick={() => navigateTo('app-overview')}
+                className={`sidebar-item-link ${currentPath === 'app-overview' ? 'active' : ''}`}
+              >
+                <Activity size={14} />
+                <span>Overview</span>
+              </button>
+              
+              <button
+                onClick={() => navigateTo('app-sources')}
+                className={`sidebar-item-link ${currentPath === 'app-sources' ? 'active' : ''}`}
+              >
+                <LinkIcon size={14} />
+                <span>Sources & Scrapers</span>
+              </button>
+              
+              <button
+                onClick={() => navigateTo('app-repairs')}
+                className={`sidebar-item-link ${currentPath === 'app-repairs' ? 'active' : ''}`}
+              >
+                <Zap size={14} />
+                <span>Self-Healing Logs</span>
+              </button>
+              
+              <button
+                onClick={() => navigateTo('app-market')}
+                className={`sidebar-item-link ${currentPath === 'app-market' ? 'active' : ''}`}
+              >
+                <TrendingUp size={14} />
+                <span>Market Intelligence</span>
+              </button>
+              
+              <button
+                onClick={() => navigateTo('app-settings')}
+                className={`sidebar-item-link ${currentPath === 'app-settings' ? 'active' : ''}`}
+              >
+                <Settings size={14} />
+                <span>Integrations & Keys</span>
+              </button>
+
+              <div className="border-t-2 border-black my-1"></div>
+
+              <button
+                onClick={() => navigateTo('app-docs')}
+                className={`sidebar-item-link ${currentPath === 'app-docs' ? 'active' : ''}`}
+              >
+                <BookOpen size={14} />
+                <span>System Manual</span>
+              </button>
+            </nav>
           </div>
 
-          {/* Navigation Tabs */}
-          <nav className="sidebar-links-nav">
-            <button
-              onClick={() => navigateTo('app-overview')}
-              className={`sidebar-item-link ${currentPath === 'app-overview' ? 'active' : ''}`}
-            >
-              <Activity size={14} />
-              <span>Overview</span>
+          {/* User Footer Panel */}
+          <div className="sidebar-footer">
+            <div className="flex flex-col text-xs">
+              <span className="font-bold text-black text-[11px]">{user?.full_name || 'Engineer'}</span>
+              <span className="text-[9px] text-zinc-500 font-mono tracking-tight">{user?.email}</span>
+            </div>
+            <button onClick={handleLogout} className="text-zinc-650 hover:text-black transition-colors border-0 bg-transparent cursor-pointer" title="Logout">
+              <LogOut size={16} />
             </button>
-            
-            <button
-              onClick={() => navigateTo('app-sources')}
-              className={`sidebar-item-link ${currentPath === 'app-sources' ? 'active' : ''}`}
-            >
-              <LinkIcon size={14} />
-              <span>Sources & Scrapers</span>
-            </button>
-            
-            <button
-              onClick={() => navigateTo('app-repairs')}
-              className={`sidebar-item-link ${currentPath === 'app-repairs' ? 'active' : ''}`}
-            >
-              <Zap size={14} />
-              <span>Self-Healing Logs</span>
-            </button>
-            
-            <button
-              onClick={() => navigateTo('app-market')}
-              className={`sidebar-item-link ${currentPath === 'app-market' ? 'active' : ''}`}
-            >
-              <TrendingUp size={14} />
-              <span>Market Intelligence</span>
-            </button>
-            
-            <button
-              onClick={() => navigateTo('app-settings')}
-              className={`sidebar-item-link ${currentPath === 'app-settings' ? 'active' : ''}`}
-            >
-              <Settings size={14} />
-              <span>Integrations & Keys</span>
-            </button>
-
-            <div className="border-t-2 border-black my-1"></div>
-
-            <button
-              onClick={() => navigateTo('app-docs')}
-              className={`sidebar-item-link ${currentPath === 'app-docs' ? 'active' : ''}`}
-            >
-              <BookOpen size={14} />
-              <span>System Manual</span>
-            </button>
-          </nav>
-        </div>
-
-        {/* User Footer Panel */}
-        <div className="sidebar-footer">
-          <div className="flex flex-col text-xs">
-            <span className="font-bold text-black text-[11px]">{user?.full_name || 'Engineer'}</span>
-            <span className="text-[9px] text-zinc-500 font-mono tracking-tight">{user?.email}</span>
           </div>
-          <button onClick={handleLogout} className="text-zinc-650 hover:text-black transition-colors border-0 bg-transparent cursor-pointer" title="Logout">
-            <LogOut size={16} />
-          </button>
-        </div>
-      </aside>
+        </aside>
+      )}
 
       {/* Main Console Content Body */}
       <div className="flex-1 flex flex-col min-w-0 bg-[var(--bg-base)] overflow-hidden">
-        {/* Top Ticker Bar (in.investing.com style) */}
-        <div className="custom-ticker">
-          {[
-            { label: 'NIFTY 50', price: '24,315.20', change: '▲ +185.10 (+0.77%)', positive: true },
-            { label: 'SENSEX', price: '79,642.50', change: '▲ +628.30 (+0.80%)', positive: true },
-            { label: 'USD/INR', price: '83.92', change: '▼ -0.05 (-0.06%)', positive: false },
-            { label: 'GOLD IN', price: '₹71,850', change: '▲ +240 (+0.34%)', positive: true },
-            { label: 'BRENT CRUDE', price: '$77.12', change: '▼ -0.42 (-0.54%)', positive: false },
-            { label: 'US 10Y BOND', price: '3.82%', change: '▲ +0.02 (+0.52%)', positive: true },
-          ].map((item, idx) => (
-            <div key={idx} className="custom-ticker-item">
-              <span className="text-xs font-bold text-black">{item.label}</span>
-              <span className="text-xs font-mono font-bold text-zinc-700">{item.price}</span>
-              <span className={`font-bold text-xs ${item.positive ? 'text-emerald-600' : 'text-rose-600'}`}>{item.change}</span>
-            </div>
-          ))}
+        {/* Top Ticker Bar - Continuously Moving Marquee */}
+        <div className="marquee-container select-none">
+          <div className="marquee-content">
+            {[
+              { label: 'NIFTY 50', price: '24,315.20', change: '▲ +185.10 (+0.77%)', positive: true },
+              { label: 'SENSEX', price: '79,642.50', change: '▲ +628.30 (+0.80%)', positive: true },
+              { label: 'USD/INR', price: '83.92', change: '▼ -0.05 (-0.06%)', positive: false },
+              { label: 'GOLD IN', price: '₹71,850', change: '▲ +240 (+0.34%)', positive: true },
+              { label: 'BRENT CRUDE', price: '$77.12', change: '▼ -0.42 (-0.54%)', positive: false },
+              { label: 'US 10Y BOND', price: '3.82%', change: '▲ +0.02 (+0.52%)', positive: true },
+            ].map((item, idx) => (
+              <div key={idx} className="custom-ticker-item">
+                <span className="text-xs font-bold text-black">{item.label}</span>
+                <span className="text-xs font-mono font-bold text-zinc-700">{item.price}</span>
+                <span className={`font-bold text-xs ${item.positive ? 'text-emerald-600' : 'text-rose-600'}`}>{item.change}</span>
+              </div>
+            ))}
+            {/* Duplicated for seamless loop animation */}
+            {[
+              { label: 'NIFTY 50', price: '24,315.20', change: '▲ +185.10 (+0.77%)', positive: true },
+              { label: 'SENSEX', price: '79,642.50', change: '▲ +628.30 (+0.80%)', positive: true },
+              { label: 'USD/INR', price: '83.92', change: '▼ -0.05 (-0.06%)', positive: false },
+              { label: 'GOLD IN', price: '₹71,850', change: '▲ +240 (+0.34%)', positive: true },
+              { label: 'BRENT CRUDE', price: '$77.12', change: '▼ -0.42 (-0.54%)', positive: false },
+              { label: 'US 10Y BOND', price: '3.82%', change: '▲ +0.02 (+0.52%)', positive: true },
+            ].map((item, idx) => (
+              <div key={`dup-${idx}`} className="custom-ticker-item">
+                <span className="text-xs font-bold text-black">{item.label}</span>
+                <span className="text-xs font-mono font-bold text-zinc-700">{item.price}</span>
+                <span className={`font-bold text-xs ${item.positive ? 'text-emerald-600' : 'text-rose-600'}`}>{item.change}</span>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Top Header bar */}
         <header className="h-16 border-b-2 border-black bg-white flex items-center justify-between px-8">
-          {/* Breadcrumbs */}
-          <div className="flex items-center gap-2 text-xs font-mono text-zinc-600">
-            <span>CONSOLE</span>
-            <span>/</span>
-            <span className="text-black font-bold uppercase">{currentPath.replace('app-', '')}</span>
+          {/* Breadcrumbs with Toggle Menu button */}
+          <div className="flex items-center gap-4">
+            <button 
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+              className="p-2 border-2 border-black bg-white text-black hover:bg-zinc-100 flex items-center justify-center cursor-pointer rounded-none"
+              title="Toggle Sidebar"
+            >
+              <Menu size={16} />
+            </button>
+            <div className="flex items-center gap-2 text-xs font-mono text-zinc-650 font-bold">
+              <span>CONSOLE</span>
+              <span>/</span>
+              <span className="text-black uppercase">{currentPath.replace('app-', '')}</span>
+            </div>
           </div>
 
           {/* Topbar Actions */}
