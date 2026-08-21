@@ -1809,7 +1809,7 @@ function MarketIntelligenceDashboardView() {
                 <span className="text-[10px] text-zinc-650 font-bold font-mono">Real-time signals</span>
               </div>
               
-              <div className="flex-grow flex flex-col gap-3 max-h-[260px] overflow-y-auto pr-1">
+              <div style={{ maxHeight: '260px', overflowY: 'auto' }} className="flex-grow flex flex-col gap-3 pr-1">
                 {!whyMoved ? (
                   <div className="flex flex-col justify-center items-center text-center p-8 border-2 border-dashed border-black bg-zinc-50 flex-grow gap-2 h-full rounded-none">
                     <Activity className="text-black" size={32} />
