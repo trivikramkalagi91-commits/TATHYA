@@ -1671,32 +1671,23 @@ function MarketIntelligenceDashboardView() {
     }
   };
 
-  const getTagStyles = (symbol: string) => {
-    const sym = (symbol || '').toUpperCase();
-    if (sym === 'AAPL') return 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20';
-    if (sym === 'TSLA') return 'bg-rose-500/10 text-rose-400 border border-rose-500/20';
-    if (sym === 'RELIANCE') return 'bg-sky-500/10 text-sky-400 border border-sky-500/20';
-    if (sym === 'TCS') return 'bg-amber-500/10 text-amber-400 border border-amber-500/20';
-    if (sym === 'INFOSYS') return 'bg-indigo-500/10 text-indigo-400 border border-indigo-500/20';
-    return 'bg-slate-800/40 text-slate-400 border border-slate-700/50';
-  };
 
   if (loading) return <div className="text-xs font-mono text-slate-500">LOADING MARKET INTELLIGENCE...</div>;
 
   const activeOpp = opportunities.find(o => o.symbol === selectedSymbol);
 
   return (
-    <div className="flex flex-col gap-6 text-slate-200">
+    <div className="flex flex-col gap-6 text-black">
       {/* Top Banner Alert Strip */}
-      <div className="panel p-3.5 border border-slate-800/80 bg-[#151618] font-mono text-xs flex justify-between items-center rounded-xl">
+      <div className="border-2 border-black bg-[#faf0d9] p-3.5 font-mono text-xs flex justify-between items-center rounded-none shadow-sm text-black">
         <div className="flex items-center gap-2">
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
           </span>
-          <span className="text-slate-300">Verified Downstream Intelligence Feed: <strong className="text-emerald-450 font-bold">ACTIVE</strong></span>
+          <span className="text-black font-bold">Verified Downstream Intelligence Feed: <strong style={{ color: '#137333' }} className="font-bold">ACTIVE</strong></span>
         </div>
-        <span className="text-slate-500 hidden md:inline text-[10px]">Only verified data from healthy collectors updates this screen.</span>
+        <span className="text-zinc-600 font-bold hidden md:inline text-[10px]">Only verified data from healthy collectors updates this screen.</span>
       </div>
 
       {/* Main Grid Scaffold */}
@@ -1706,11 +1697,11 @@ function MarketIntelligenceDashboardView() {
         <div className="xl:col-span-8 flex flex-col gap-6 w-full">
           
           {/* Watchlist Section */}
-          <div className="panel border border-slate-800/80 bg-[#151618] p-5 shadow-lg">
+          <div className="border-2 border-black bg-white rounded-none p-5 shadow-sm text-black">
             <div className="flex flex-col gap-4 mb-4">
               <div>
-                <h2 className="font-mono text-xs font-bold text-slate-200 uppercase tracking-wider">// WATCHLIST SYMBOL TRACKER</h2>
-                <span className="text-[10px] text-slate-500">Institutional real-time quotes</span>
+                <h2 className="font-mono text-xs font-bold text-black uppercase tracking-wider">// WATCHLIST SYMBOL TRACKER</h2>
+                <span className="text-[10px] text-zinc-650 font-bold">Institutional real-time quotes</span>
               </div>
 
               {/* Symbol Search Group */}
@@ -1719,14 +1710,14 @@ function MarketIntelligenceDashboardView() {
                   <input 
                     type="text" 
                     placeholder="SYMBOL (e.g. TCS)" 
-                    className="w-full bg-[#0c0d0e] border border-slate-800/80 rounded-lg px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-slate-500 font-mono uppercase"
+                    className="w-full bg-white border-2 border-black rounded-none px-3 py-2 text-xs text-black focus:outline-none font-mono uppercase font-bold placeholder-zinc-500"
                     value={symbolInput}
                     onChange={e => setSymbolInput(e.target.value)}
                   />
                 </div>
                 <button 
                   type="submit" 
-                  className="bg-white hover:bg-slate-200 text-[#0c0d0e] font-bold px-4 py-2 rounded-lg text-xs transition-colors whitespace-nowrap border-0 cursor-pointer"
+                  className="bg-black hover:bg-zinc-800 text-white font-bold px-4 py-2 rounded-none text-xs transition-colors whitespace-nowrap border-2 border-black cursor-pointer uppercase font-mono"
                 >
                   + Add Symbol
                 </button>
@@ -1737,47 +1728,47 @@ function MarketIntelligenceDashboardView() {
             <div className="w-full overflow-x-auto">
               <table className="w-full text-left border-collapse text-xs font-mono">
                 <thead>
-                  <tr className="border-b border-slate-800/80 bg-[#0c0d0e]/50">
-                    <th className="py-3 px-4 font-bold text-slate-400 min-w-[100px] text-left">SYMBOL</th>
-                    <th className="py-3 px-4 font-bold text-slate-400 min-w-[110px] text-right">LAST PRICE</th>
-                    <th className="py-3 px-4 font-bold text-slate-400 min-w-[110px] text-right">DAILY CHANGE</th>
-                    <th className="py-3 px-4 font-bold text-slate-400 min-w-[100px] text-center">ALERTS (48H)</th>
-                    <th className="py-3 px-4 font-bold text-slate-400 min-w-[130px] text-right">OPPORTUNITY SCORE</th>
-                    <th className="py-3 px-4 font-bold text-slate-400 min-w-[100px] text-right">ACTIONS</th>
+                  <tr className="border-b-2 border-black bg-[#faf0d9]">
+                    <th className="py-3 px-4 font-bold text-black min-w-[100px] text-left">SYMBOL</th>
+                    <th className="py-3 px-4 font-bold text-black min-w-[110px] text-right">LAST PRICE</th>
+                    <th className="py-3 px-4 font-bold text-black min-w-[110px] text-right">DAILY CHANGE</th>
+                    <th className="py-3 px-4 font-bold text-black min-w-[100px] text-center">ALERTS (48H)</th>
+                    <th className="py-3 px-4 font-bold text-black min-w-[130px] text-right">OPPORTUNITY SCORE</th>
+                    <th className="py-3 px-4 font-bold text-black min-w-[100px] text-right">ACTIONS</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-800/60">
+                <tbody className="divide-y-2 divide-black">
                   {watchlist.length === 0 ? (
                     <tr>
-                      <td colSpan={6} className="text-center py-8 text-slate-500 font-mono">No companies on watchlist.</td>
+                      <td colSpan={6} className="text-center py-8 text-zinc-650 font-mono font-bold">No companies on watchlist.</td>
                     </tr>
                   ) : (
                     watchlist.map((item) => (
                       <tr 
                         key={item.id} 
-                        className={`cursor-pointer transition-colors duration-150 ${selectedSymbol === item.symbol ? 'bg-[#222326] border-l-2 border-white' : 'hover:bg-slate-800/30'}`}
+                        className={`cursor-pointer transition-colors duration-150 ${selectedSymbol === item.symbol ? 'bg-[#faf0d9] border-l-4 border-black font-extrabold' : 'hover:bg-zinc-100 bg-white'}`}
                         onClick={() => setSelectedSymbol(item.symbol)}
                       >
-                        <td className="py-3 px-4 font-bold text-slate-300 min-w-[100px] text-left whitespace-nowrap">{item.symbol}</td>
-                        <td className="py-3 px-4 text-right min-w-[110px] tabular-nums font-mono whitespace-nowrap">
+                        <td className="py-3 px-4 font-bold text-black min-w-[100px] text-left whitespace-nowrap">{item.symbol}</td>
+                        <td className="py-3 px-4 text-right min-w-[110px] tabular-nums font-mono whitespace-nowrap font-bold">
                           {item.price ? (item.symbol.includes('.NS') || item.symbol.includes('TCS') || item.symbol.includes('RELIANCE') || item.symbol.includes('INFOSYS') ? `₹${item.price.toFixed(2)}` : `$${item.price.toFixed(2)}`) : 'N/A'}
                         </td>
-                        <td className={`py-3 px-4 text-right min-w-[110px] tabular-nums font-mono whitespace-nowrap ${item.change_pct >= 0 ? 'text-[#10b981]' : 'text-[#ef4444]'}`}>
+                        <td style={{ color: item.change_pct >= 0 ? '#137333' : '#c5221f' }} className="py-3 px-4 text-right min-w-[110px] tabular-nums font-mono whitespace-nowrap font-bold">
                           {item.change_pct ? `${item.change_pct > 0 ? '+' : ''}${item.change_pct.toFixed(2)}%` : 'N/A'}
                         </td>
                         <td className="py-3 px-4 text-center min-w-[100px] whitespace-nowrap">
-                          <span className="px-2 py-0.5 rounded bg-slate-900/60 text-slate-300 text-[10px] font-medium border border-slate-800/80">
+                          <span className="px-2 py-0.5 border border-black bg-zinc-100 text-black text-[10px] font-bold rounded-none">
                             {item.event_count} news
                           </span>
                         </td>
                         <td className="py-2 px-4 text-right min-w-[130px] font-mono whitespace-nowrap">
                           <div className="flex flex-col items-end gap-1">
-                            <span className="font-bold text-slate-300 text-[10px]">{item.opportunity_score ? `${item.opportunity_score}/100` : 'N/A'}</span>
+                            <span className="font-bold text-black text-[10px]">{item.opportunity_score ? `${item.opportunity_score}/100` : 'N/A'}</span>
                             {item.opportunity_score !== null && (
-                              <div className="w-16 h-1 bg-slate-900 rounded-full overflow-hidden">
+                              <div className="w-16 h-2 bg-zinc-200 border border-black rounded-none overflow-hidden">
                                 <div 
-                                  className={`h-full rounded-full ${item.opportunity_score >= 70 ? 'bg-[#10b981]' : item.opportunity_score >= 40 ? 'bg-sky-400' : 'bg-[#ef4444]'}`}
-                                  style={{ width: `${item.opportunity_score}%` }}
+                                  style={{ backgroundColor: item.opportunity_score >= 70 ? '#137333' : item.opportunity_score >= 40 ? '#0288d1' : '#c5221f', width: `${item.opportunity_score}%` }}
+                                  className="h-full rounded-none"
                                 ></div>
                               </div>
                             )}
@@ -1787,13 +1778,13 @@ function MarketIntelligenceDashboardView() {
                           <div className="flex items-center justify-end gap-3">
                             <button 
                               onClick={(e) => { e.stopPropagation(); setSelectedSymbol(item.symbol); }}
-                              className="text-slate-300 hover:text-white font-mono text-[10px] font-semibold border-b border-slate-700 pb-0.5 transition-all bg-transparent border-t-0 border-x-0 cursor-pointer"
+                              className="text-black hover:text-zinc-650 font-mono text-[10px] font-bold border-b-2 border-black pb-0.5 transition-all bg-transparent border-t-0 border-x-0 cursor-pointer"
                             >
                               ANALYZE
                             </button>
                             <button 
                               onClick={(e) => { e.stopPropagation(); removeFromWatchlist(item.symbol); }} 
-                              className="text-slate-500 hover:text-[#ef4444] transition-colors p-1 border-0 bg-transparent cursor-pointer"
+                              className="text-zinc-700 hover:text-red-705 transition-colors p-1 border-0 bg-transparent cursor-pointer"
                             >
                               <Trash2 size={13} />
                             </button>
@@ -1810,35 +1801,35 @@ function MarketIntelligenceDashboardView() {
           {/* Bottom Row split: Evidence & Trade Scenario */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Evidence Breakdown Card */}
-            <div className="panel border border-slate-800/80 bg-[#151618] p-5 shadow-lg flex flex-col gap-4 min-h-[360px]">
-              <div className="border-b border-slate-800/60 pb-3 flex justify-between items-center bg-transparent">
-                <h3 className="text-xs font-mono font-bold text-slate-400 tracking-wider uppercase">
+            <div className="border-2 border-black bg-white rounded-none p-5 shadow-sm flex flex-col gap-4 min-h-[360px] text-black">
+              <div className="border-b-2 border-black pb-3 flex justify-between items-center bg-transparent">
+                <h3 className="text-xs font-mono font-bold text-black tracking-wider uppercase">
                   // EVIDENCE BREAKDOWN{whyMoved ? `: ${whyMoved.symbol}` : ''}
                 </h3>
-                <span className="text-[10px] text-slate-500 font-mono">Real-time signals</span>
+                <span className="text-[10px] text-zinc-650 font-bold font-mono">Real-time signals</span>
               </div>
               
               <div className="flex-grow flex flex-col gap-3 max-h-[260px] overflow-y-auto pr-1">
                 {!whyMoved ? (
-                  <div className="flex flex-col justify-center items-center text-center p-8 border border-dashed border-slate-800/80 rounded-xl bg-[#0c0d0e]/40 flex-grow gap-2 h-full">
-                    <Activity className="text-slate-700" size={32} />
-                    <span className="text-slate-500 font-mono text-[10px] font-bold uppercase">NO ACTIVE SYMBOL</span>
-                    <p className="text-slate-500 text-[10px] max-w-[200px] leading-relaxed">Select a symbol from the watchlist to view verified signals explaining market fluctuations.</p>
+                  <div className="flex flex-col justify-center items-center text-center p-8 border-2 border-dashed border-black bg-zinc-50 flex-grow gap-2 h-full rounded-none">
+                    <Activity className="text-black" size={32} />
+                    <span className="text-black font-mono text-[10px] font-extrabold uppercase">NO ACTIVE SYMBOL</span>
+                    <p className="text-zinc-650 text-[10px] max-w-[200px] leading-relaxed font-bold">Select a symbol from the watchlist to view verified signals explaining market fluctuations.</p>
                   </div>
                 ) : whyMoved.possible_factors.length === 0 ? (
-                  <div className="text-center py-12 text-slate-500 font-mono text-xs border border-dashed border-slate-800/80 rounded-xl bg-[#0c0d0e]/40 h-full flex items-center justify-center">
+                  <div className="text-center py-12 text-zinc-650 font-mono text-xs border-2 border-dashed border-black bg-zinc-55 h-full flex items-center justify-center font-bold rounded-none">
                     INSUFFICIENT EVIDENCE REGISTERED
                   </div>
                 ) : (
                   whyMoved.possible_factors.map((f: any, idx: number) => (
-                    <div key={idx} className="p-3 border border-slate-800/80 rounded-lg bg-[#0c0d0e]/40 text-[11px] hover:border-slate-850 transition-colors">
-                      <div className="flex flex-col gap-1 text-[9px] font-mono border-b border-slate-800/60 pb-1.5 mb-2">
+                    <div key={idx} className="p-4 border-2 border-black bg-[#faf0d9] text-[11px] shadow-sm hover:shadow-[3px_3px_0px_#000000] transition-all text-black rounded-none">
+                      <div className="flex flex-col gap-1 text-[9px] font-mono border-b-2 border-black pb-1.5 mb-2">
                         <div className="flex justify-between items-center">
-                          <span className="text-sky-400 font-bold uppercase">{f.type}</span>
-                          <span className="text-slate-500">Source: {f.source}</span>
+                          <span className="text-black font-extrabold uppercase">{f.type}</span>
+                          <span className="text-zinc-650 font-bold">Source: {f.source}</span>
                         </div>
                       </div>
-                      <p className="text-slate-300 leading-relaxed font-sans">{f.evidence}</p>
+                      <p className="text-black leading-relaxed font-sans font-bold">{f.evidence}</p>
                     </div>
                   ))
                 )}
@@ -1846,49 +1837,49 @@ function MarketIntelligenceDashboardView() {
             </div>
 
             {/* Trade Scenario Card */}
-            <div className="panel border border-slate-800/80 bg-[#151618] p-5 shadow-lg flex flex-col gap-4 min-h-[360px]">
-              <div className="border-b border-slate-800/60 pb-3">
-                <h3 className="text-xs font-mono font-bold text-slate-400 tracking-wider uppercase">
+            <div className="border-2 border-black bg-white rounded-none p-5 shadow-sm flex flex-col gap-4 min-h-[360px] text-black">
+              <div className="border-b-2 border-black pb-3">
+                <h3 className="text-xs font-mono font-bold text-black tracking-wider uppercase">
                   // QUANT TRADE SCENARIO{whyMoved ? `: ${whyMoved.symbol}` : ''}
                 </h3>
               </div>
 
               <div className="flex flex-col flex-grow">
                 {!whyMoved ? (
-                  <div className="flex flex-col justify-center items-center text-center p-8 border border-dashed border-slate-800/80 rounded-xl bg-[#0c0d0e]/40 flex-grow gap-2 h-full">
-                    <Activity className="text-slate-700" size={32} />
-                    <span className="text-slate-500 font-mono text-[10px] font-bold uppercase">NO ACTIVE SCENARIO</span>
-                    <p className="text-slate-500 text-[10px] max-w-[200px] leading-relaxed">Select a symbol to generate entry, invalidation, and target levels.</p>
+                  <div className="flex flex-col justify-center items-center text-center p-8 border-2 border-dashed border-black bg-zinc-50 flex-grow gap-2 h-full rounded-none">
+                    <Activity className="text-black" size={32} />
+                    <span className="text-black font-mono text-[10px] font-extrabold uppercase">NO ACTIVE SCENARIO</span>
+                    <p className="text-zinc-650 text-[10px] max-w-[200px] leading-relaxed font-bold">Select a symbol to generate entry, invalidation, and target levels.</p>
                   </div>
                 ) : activeOpp ? (
                   <div className="flex flex-col justify-between flex-grow gap-4 text-xs font-mono">
-                    <div className="flex flex-col gap-2 bg-[#0c0d0e]/40 p-4 rounded-xl border border-slate-800/60">
-                      <div className="flex justify-between border-b border-slate-800/50 py-1.5">
-                        <span className="text-slate-500">Entry Zone:</span>
-                        <strong className="text-slate-200 tabular-nums">{activeOpp.trade_scenario.entry_zone}</strong>
+                    <div className="flex flex-col gap-2 bg-[#faf0d9] p-4 border-2 border-black rounded-none">
+                      <div className="flex justify-between border-b border-black/40 py-1.5">
+                        <span className="text-zinc-650 font-bold">Entry Zone:</span>
+                        <strong className="text-black font-bold tabular-nums">{activeOpp.trade_scenario.entry_zone}</strong>
                       </div>
-                      <div className="flex justify-between border-b border-slate-800/50 py-1.5">
-                        <span className="text-slate-500">Invalidation Level:</span>
-                        <strong className="text-rose-450 tabular-nums">{activeOpp.trade_scenario.invalidation_level}</strong>
+                      <div className="flex justify-between border-b border-black/40 py-1.5">
+                        <span className="text-zinc-650 font-bold">Invalidation Level:</span>
+                        <strong style={{ color: '#c5221f' }} className="tabular-nums font-bold">{activeOpp.trade_scenario.invalidation_level}</strong>
                       </div>
-                      <div className="flex justify-between border-b border-slate-800/50 py-1.5">
-                        <span className="text-slate-500">Scenario Target:</span>
-                        <strong className="text-emerald-450 tabular-nums">{activeOpp.trade_scenario.target_target}</strong>
+                      <div className="flex justify-between border-b border-black/40 py-1.5">
+                        <span className="text-zinc-650 font-bold">Scenario Target:</span>
+                        <strong style={{ color: '#137333' }} className="tabular-nums font-bold">{activeOpp.trade_scenario.target_target}</strong>
                       </div>
                       <div className="flex justify-between py-1.5">
-                        <span className="text-slate-500">Risk/Reward:</span>
-                        <strong className="text-sky-400 tabular-nums">{activeOpp.trade_scenario.risk_reward_ratio}</strong>
+                        <span className="text-zinc-650 font-bold">Risk/Reward:</span>
+                        <strong style={{ color: '#0288d1' }} className="tabular-nums font-bold">{activeOpp.trade_scenario.risk_reward_ratio}</strong>
                       </div>
                     </div>
-                    <div className="text-[10px] text-slate-500 leading-relaxed font-sans bg-[#0c0d0e]/30 p-2.5 rounded-lg border border-slate-800/40">
+                    <div className="text-[10px] text-black leading-relaxed font-sans bg-zinc-50 p-2.5 border-2 border-black rounded-none font-bold">
                       ⚡ <strong>Model Recommendation:</strong> Supporting data pipeline reports 100% selector health. Automated execution sandbox matches historical layout.
                     </div>
                   </div>
                 ) : (
-                  <div className="flex flex-col justify-center items-center text-center p-8 border border-dashed border-slate-800/80 rounded-xl bg-[#0c0d0e]/40 flex-grow gap-2 h-full">
-                    <Activity className="text-slate-700" size={32} />
-                    <span className="text-slate-500 font-mono text-[10px] font-bold uppercase">NO TRADE SCENARIOS CALCULATED</span>
-                    <p className="text-slate-500 text-[10px] max-w-[200px] leading-relaxed">Add news-active symbols or run scrapers to trigger opportunity model signals.</p>
+                  <div className="flex flex-col justify-center items-center text-center p-8 border-2 border-dashed border-black bg-zinc-50 flex-grow gap-2 h-full rounded-none">
+                    <Activity className="text-black" size={32} />
+                    <span className="text-black font-mono text-[10px] font-extrabold uppercase">NO TRADE SCENARIOS CALCULATED</span>
+                    <p className="text-zinc-650 text-[10px] max-w-[200px] leading-relaxed font-bold">Add news-active symbols or run scrapers to trigger opportunity model signals.</p>
                   </div>
                 )}
               </div>
@@ -1897,49 +1888,49 @@ function MarketIntelligenceDashboardView() {
         </div>
 
         {/* Right Section (col-span-4): Sticky Verified News Timeline Sidebar */}
-        <div className="xl:col-span-4 h-[calc(100vh-140px)] sticky top-6 overflow-y-auto pr-2 bg-[#151618] border border-slate-800/80 rounded-xl flex flex-col shadow-lg">
-          <div className="p-4 border-b border-slate-800/80 bg-[#0c0d0e]/60 flex justify-between items-center rounded-t-xl sticky top-0 z-10">
+        <div className="xl:col-span-4 h-[calc(100vh-140px)] sticky top-6 overflow-y-auto bg-white border-2 border-black rounded-none flex flex-col shadow-sm text-black">
+          <div className="p-4 border-b-2 border-black bg-[#faf0d9] flex justify-between items-center sticky top-0 z-10">
             <div>
-              <h2 className="font-mono text-xs font-bold text-slate-400 tracking-wider">// VERIFIED TIMELINE</h2>
-              <span className="text-[9px] text-slate-500">Chronological pipeline stream</span>
+              <h2 className="font-mono text-xs font-bold text-black tracking-wider">// VERIFIED TIMELINE</h2>
+              <span className="text-[9px] text-zinc-650 font-bold">Chronological pipeline stream</span>
             </div>
-            <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-450 text-[9px] font-bold border border-emerald-500/20">LIVE FEED</span>
+            <span className="px-2 py-0.5 border border-black bg-emerald-50 text-emerald-700 text-[9px] font-bold rounded-none">LIVE FEED</span>
           </div>
           
           <div className="p-4 flex flex-col gap-3">
             {timeline.length === 0 ? (
-              <div className="flex flex-col justify-center items-center text-center py-20 text-slate-500 font-mono text-xs gap-3">
-                <RefreshCw size={24} className="animate-spin text-slate-600" />
+              <div className="flex flex-col justify-center items-center text-center py-20 text-zinc-650 font-mono text-xs gap-3 font-bold">
+                <RefreshCw size={24} className="animate-spin text-black" />
                 <span>No verified events scraped yet.</span>
               </div>
             ) : (
               timeline.map((event) => (
                 <div 
                   key={event.id} 
-                  className="p-3.5 rounded-lg bg-[#0c0d0e]/30 border border-slate-800/60 hover:border-slate-700 transition-colors flex flex-col gap-2"
+                  className="p-4 border-2 border-black bg-[#faf0d9] hover:bg-zinc-50 shadow-sm hover:shadow-[3px_3px_0px_#000000] transition-all flex flex-col gap-2.5 rounded-none text-black"
                 >
                   <div className="flex justify-between items-center">
-                    <span className={`px-2 py-0.5 rounded text-[9px] font-bold ${getTagStyles(event.company_symbol)}`}>
+                    <span style={{ backgroundColor: event.company_symbol === 'AAPL' ? '#e8f0fe' : event.company_symbol === 'TSLA' ? '#fce8e6' : event.company_symbol === 'TCS' ? '#fef7e0' : event.company_symbol === 'RELIANCE' ? '#e6f4ea' : '#f1f3f4', color: event.company_symbol === 'AAPL' ? '#1a73e8' : event.company_symbol === 'TSLA' ? '#c5221f' : event.company_symbol === 'TCS' ? '#b06000' : event.company_symbol === 'RELIANCE' ? '#137333' : '#3c4043', borderColor: 'currentColor' }} className="px-2 py-0.5 border text-[9px] font-bold rounded-none">
                       {event.company_symbol}
                     </span>
-                    <span className="text-[10px] text-slate-500 tabular-nums font-mono">
+                    <span className="text-[10px] text-zinc-600 font-bold tabular-nums font-mono">
                       {formatRelativeTime(event.publish_time)}
                     </span>
                   </div>
                   
-                  <p className="text-slate-200 text-xs font-sans leading-snug line-clamp-2 hover:line-clamp-none transition-all cursor-pointer font-medium">
+                  <p className="text-black text-xs font-serif leading-snug line-clamp-2 hover:line-clamp-none transition-all cursor-pointer font-extrabold">
                     {event.headline}
                   </p>
                   
-                  <div className="flex justify-between items-center border-t border-slate-800/60 pt-2 text-[10px] text-slate-500 font-mono">
-                    <span className="text-slate-600 truncate max-w-[120px]">
+                  <div className="flex justify-between items-center border-t-2 border-black pt-2 text-[10px] text-zinc-600 font-mono font-bold">
+                    <span className="truncate max-w-[120px]">
                       Source: {event.source_name}
                     </span>
                     <a 
                       href={event.source_url} 
                       target="_blank" 
                       rel="noreferrer" 
-                      className="text-sky-400 hover:text-sky-300 flex items-center gap-1 font-semibold transition-colors border-0 bg-transparent cursor-pointer"
+                      className="text-black hover:text-zinc-650 flex items-center gap-1 font-bold transition-colors border-0 bg-transparent cursor-pointer"
                     >
                       <LinkIcon size={10} />
                       <span>Source</span>
