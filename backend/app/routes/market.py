@@ -326,9 +326,6 @@ async def get_opportunities(
             db_news = [mock_event]
             recent_headlines = [fallback_headline]
 
-        if not recent_headlines:
-            continue  # Skip symbols with zero evidence/news
-
         price_change = (quote.get("change_pct") or 0.0) if quote else 0.0
         news_volume = len(recent_headlines)
         
@@ -350,8 +347,8 @@ async def get_opportunities(
         signals.append(OpportunitySignal(
             symbol=item.symbol,
             opportunity_score=opp_score,
-            headline=recent_headlines[0],
-            source=db_news[0].source_name if db_news else "Finnhub API Feed",
+            headline=recent_headlines[0] if recent_headlines else "No recent market news announcements tracked.",
+            source=db_news[0].source_name if db_news else "No Scraped News Source",
             publish_time=db_news[0].publish_time if db_news else datetime.datetime.utcnow(),
             evidence_breakdown={
                 "news_density": f"{news_volume} active factors tracked",
