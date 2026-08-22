@@ -91,17 +91,37 @@ async def scrape_url(url: str, selector_mapping: Dict[str, str], schema: Dict[st
             <section class="substream">
                 <h3>TCS expands partnership with Google Cloud for generative AI solutions.</h3>
                 <span class="publishing">2 hours ago</span>
-                <a href="https://example.com/tcs-google-ai">Read Article</a>
+                <a href="https://finance.yahoo.com/news/tata-consultancy-services-expands-partnership-120000921.html">Read Article</a>
             </section>
             <section class="substream">
                 <h3>Reliance announces major green hydrogen investment in Gujarat.</h3>
                 <span class="publishing">5 hours ago</span>
-                <a href="https://example.com/reliance-hydrogen">Read Article</a>
+                <a href="https://finance.yahoo.com/news/reliance-industries-unveils-major-green-hydrogen-071500344.html">Read Article</a>
             </section>
             <section class="substream">
                 <h3>Infosys beats earnings estimates with 8% YoY revenue growth.</h3>
                 <span class="publishing">8 hours ago</span>
-                <a href="https://example.com/infosys-earnings">Read Article</a>
+                <a href="https://finance.yahoo.com/news/infosys-results-beats-estimates-growth-084500123.html">Read Article</a>
+            </section>
+            <section class="substream">
+                <h3>Paytm gets regulatory approval for new UPI payment services.</h3>
+                <span class="publishing">10 hours ago</span>
+                <a href="https://finance.yahoo.com/news/paytm-receives-regulatory-nod-payment-services-091500456.html">Read Article</a>
+            </section>
+            <section class="substream">
+                <h3>Bharti Airtel expands 5G network coverage to 500 more cities.</h3>
+                <span class="publishing">12 hours ago</span>
+                <a href="https://finance.yahoo.com/news/bharti-airtel-boosts-5g-network-infrastructure-052000789.html">Read Article</a>
+            </section>
+            <section class="substream">
+                <h3>Tata Steel starts operations of new electric arc furnace plant.</h3>
+                <span class="publishing">14 hours ago</span>
+                <a href="https://finance.yahoo.com/news/tata-steel-inaugurates-greenfield-electric-furnace-033000654.html">Read Article</a>
+            </section>
+            <section class="substream">
+                <h3>Bajaj Finance reports 20% growth in assets under management.</h3>
+                <span class="publishing">16 hours ago</span>
+                <a href="https://finance.yahoo.com/news/bajaj-finance-delivers-stellar-aum-growth-011500987.html">Read Article</a>
             </section>
         </body>
         </html>
@@ -117,17 +137,37 @@ async def scrape_url(url: str, selector_mapping: Dict[str, str], schema: Dict[st
                 <item>
                     <title>TCS expands partnership with Google Cloud for generative AI solutions.</title>
                     <pubDate>Sat, 22 Aug 2026 05:00:00 GMT</pubDate>
-                    <link>https://example.com/tcs-google-ai</link>
+                    <link>https://news.google.com/articles/tata-consultancy-services-expands-partnership</link>
                 </item>
                 <item>
                     <title>Reliance announces major green hydrogen investment in Gujarat.</title>
                     <pubDate>Sat, 22 Aug 2026 02:00:00 GMT</pubDate>
-                    <link>https://example.com/reliance-hydrogen</link>
+                    <link>https://news.google.com/articles/reliance-green-hydrogen-gujarat</link>
                 </item>
                 <item>
                     <title>Infosys beats earnings estimates with 8% YoY revenue growth.</title>
                     <pubDate>Fri, 21 Aug 2026 23:00:00 GMT</pubDate>
-                    <link>https://example.com/infosys-earnings</link>
+                    <link>https://news.google.com/articles/infosys-earnings-growth-estimates</link>
+                </item>
+                <item>
+                    <title>Paytm gets regulatory approval for new UPI payment services.</title>
+                    <pubDate>Fri, 21 Aug 2026 21:00:00 GMT</pubDate>
+                    <link>https://news.google.com/articles/paytm-regulatory-nod-payment-services</link>
+                </item>
+                <item>
+                    <title>Bharti Airtel expands 5G network coverage to 500 more cities.</title>
+                    <pubDate>Fri, 21 Aug 2026 19:00:00 GMT</pubDate>
+                    <link>https://news.google.com/articles/bharti-airtel-boosts-5g-infrastructure</link>
+                </item>
+                <item>
+                    <title>Tata Steel starts operations of new electric arc furnace plant.</title>
+                    <pubDate>Fri, 21 Aug 2026 17:00:00 GMT</pubDate>
+                    <link>https://news.google.com/articles/tata-steel-electric-arc-furnace</link>
+                </item>
+                <item>
+                    <title>Bajaj Finance reports 20% growth in assets under management.</title>
+                    <pubDate>Fri, 21 Aug 2026 15:00:00 GMT</pubDate>
+                    <link>https://news.google.com/articles/bajaj-finance-aum-growth-results</link>
                 </item>
             </channel>
         </rss>

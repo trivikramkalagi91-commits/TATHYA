@@ -135,6 +135,10 @@ def tag_symbols(headline: str) -> List[str]:
         "TCS": ["TCS", "TATA CONSULTANCY"],
         "RELIANCE": ["RELIANCE", "RIL", "JIO"],
         "INFY": ["INFOSYS", "INFY"],
+        "PAYTM": ["PAYTM", "ONE97"],
+        "BHARTIARTL": ["BHARTIARTL", "AIRTEL"],
+        "TATASTEEL": ["TATASTEEL", "TATA STEEL"],
+        "BAJFINANCE": ["BAJFINANCE", "BAJAJ FINANCE"],
         "AAPL": ["AAPL", "APPLE"],
         "TSLA": ["TSLA", "TESLA"]
     }
