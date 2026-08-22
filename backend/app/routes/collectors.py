@@ -257,9 +257,14 @@ async def run_collector(
             else:
                 err_msg = poll_err or "Timeout retrieving Bright Data dataset"
         
-        if err_msg:
-            run_status = "FAILED"
-            logger.error(f"Bright Data scrape failed: {err_msg}")
+        # Fallback to local parsing if Bright Data returned empty records or encountered an API error
+        if not records or err_msg:
+            logger.warning(f"Bright Data scrape returned no records or failed ({err_msg}). Falling back to local BeautifulSoup parser.")
+            err_msg = ""
+            run_status = "SUCCESS"
+            records, html_excerpt, err_msg = await scrape_url(source.url, selectors, schema)
+            if err_msg:
+                run_status = "FAILED"
     else:
         # Run Local HTML/BeautifulSoup parsing
         records, html_excerpt, err_msg = await scrape_url(source.url, selectors, schema)
