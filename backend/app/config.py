@@ -12,6 +12,8 @@ class Settings(BaseSettings):
 
     # Bright Data API Settings
     BRIGHT_DATA_API_TOKEN: str = ""
+    DEFAULT_YAHOO_COLLECTOR_ID: str = ""
+    DEFAULT_GOOGLE_COLLECTOR_ID: str = ""
     
     # Market Intelligence (Finnhub) Settings
     MARKET_NEWS_API_KEY: str = ""

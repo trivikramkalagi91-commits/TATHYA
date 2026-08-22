@@ -172,9 +172,18 @@ async def run_collector(
     err_msg = ""
     run_status = "SUCCESS"
 
+    # Determine the Bright Data Collector ID to use
+    brightdata_id = collector.brightdata_collector_id
+    if not brightdata_id or not brightdata_id.strip():
+        if "yahoo" in source.url.lower():
+            brightdata_id = settings.DEFAULT_YAHOO_COLLECTOR_ID
+        elif "google" in source.url.lower():
+            brightdata_id = settings.DEFAULT_GOOGLE_COLLECTOR_ID
+
     # Check if we should run in Real Mode via Bright Data API
     use_brightdata = (
-        collector.brightdata_collector_id is not None
+        brightdata_id is not None
+        and brightdata_id.strip() != ""
         and brightdata_client.is_configured
         # For our local demo-target URL, we force local scraping so it is testable locally
         and "demo-site/target" not in source.url
@@ -183,7 +192,7 @@ async def run_collector(
     if use_brightdata:
         # Trigger real Bright Data Scraping
         snapshot_id, err_msg = await brightdata_client.trigger_run(
-            collector.brightdata_collector_id,
+            brightdata_id,
             source.url
         )
         if snapshot_id:
