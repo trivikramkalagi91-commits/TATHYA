@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Tathya — How It Works (Whiteboard Explainer)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Architects+Daughter&family=Inter:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --board:#FCFCF7;
+    --grid:#E7E7DE;
+    --ink:#232323;
+    --blue:#1E5AA8;
+    --green:#12805C;
+    --red:#C23B3B;
+    --purple:#6B3FA0;
+    --paper-shadow: rgba(35,35,35,0.14);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;height:100%;background:#EDECE4;font-family:'Inter',sans-serif;}
+  .frame{
+    max-width:1100px;
+    margin:24px auto;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  .toolbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:10px 16px;
+    background:#1c1c1c;
+    border-radius:12px;
+    color:#f2f2ef;
+  }
+  .toolbar .title{
+    font-family:'Kalam',cursive;
+    font-weight:700;
+    font-size:18px;
+    letter-spacing:.3px;
+  }
+  .controls{display:flex;align-items:center;gap:8px;}
+  .btn{
+    background:#2e2e2e;
+    border:1px solid #3d3d3d;
+    color:#f2f2ef;
+    border-radius:8px;
+    padding:7px 12px;
+    font-family:'Inter',sans-serif;
+    font-size:13px;
+    font-weight:600;
+    cursor:pointer;
+    transition:background .15s;
+  }
+  .btn:hover{background:#3d3d3d;}
+  .btn.primary{background:var(--blue);border-color:var(--blue);}
+  .btn.primary:hover{background:#184a8c;}
+  .dots{display:flex;gap:6px;align-items:center;}
+  .dot{
+    width:8px;height:8px;border-radius:50%;
+    background:#4a4a4a;cursor:pointer;
+    transition:background .15s, transform .15s;
+  }
+  .dot.active{background:#f2f2ef;transform:scale(1.3);}
+
+  .board-wrap{
+    position:relative;
+    background:var(--board);
+    border-radius:14px;
+    box-shadow: 0 18px 40px var(--paper-shadow), inset 0 0 0 10px #fff, inset 0 0 0 12px #d9d9cf;
+    overflow:hidden;
+  }
+  svg#board{display:block;width:100%;height:auto;}
+
+  .node .box{fill:#fff;stroke:var(--ink);stroke-width:2.5;}
+  .node .box.blue{stroke:var(--blue);}
+  .node .box.green{stroke:var(--green);}
+  .node .box.purple{stroke:var(--purple);}
+  .node .box.red{stroke:var(--red);}
+  .node .box.shadow{fill:none;stroke:var(--ink);stroke-width:2;opacity:.25;}
+  .node text{font-family:'Kalam',cursive;fill:var(--ink);}
+  .node .label-main{font-weight:700;font-size:22px;}
+  .node .label-sub{font-size:15px;fill:#555;}
+  .chip .box{fill:#fff;stroke-width:2;}
+  .chip text{font-family:'Kalam',cursive;font-size:15px;fill:var(--ink);}
+
+  .arrow{
+    fill:none;
+    stroke:var(--ink);
+    stroke-width:3;
+    stroke-linecap:round;
+    transition: stroke-dashoffset 0.9s cubic-bezier(.4,.1,.2,1);
+  }
+  .arrow.blue{stroke:var(--blue);}
+  .arrow.green{stroke:var(--green);}
+  .arrow.purple{stroke:var(--purple);}
+  .arrow.red{stroke:var(--red);}
+  .arrow-label{font-family:'Kalam',cursive;font-size:14px;fill:#555;}
+
+  [data-step]{ opacity:0; transform: translateY(10px); transition: opacity .5s ease, transform .5s ease; }
+  [data-step].shown{ opacity:1; transform: translateY(0); }
+
+  .title-card{font-family:'Kalam',cursive;}
+  .title-card .big{font-size:52px;font-weight:700;fill:var(--ink);}
+  .title-card .sub{font-size:22px;fill:#555;}
+
+  .legend-tray{
+    position:absolute;
+    left:0; right:0; bottom:0;
+    display:flex;
+    justify-content:center;
+    gap:26px;
+    padding:10px 0 14px;
+    background:linear-gradient(180deg, rgba(217,217,207,0) 0%, rgba(217,217,207,0.55) 40%, rgba(217,217,207,0.85) 100%);
+    font-family:'Architects Daughter',cursive;
+    font-size:13px;
+    color:#3a3a3a;
+    pointer-events:none;
+  }
+  .legend-item{display:flex;align-items:center;gap:6px;}
+  .legend-cap{width:10px;height:10px;border-radius:50%;display:inline-block;}
+
+  .caption-strip{
+    min-height:64px;
+    background:#1c1c1c;
+    color:#f6f6f2;
+    border-radius:12px;
+    padding:14px 20px;
+    font-family:'Kalam',cursive;
+    font-size:19px;
+    line-height:1.4;
+    display:flex;
+    align-items:center;
+  }
+  .step-count{
+    font-family:'Inter',sans-serif;
+    font-size:12px;
+    color:#9a9a9a;
+    margin-right:14px;
+    white-space:nowrap;
+  }
+  .cue{
+    font-family:'Inter',sans-serif;
+    font-size:12px;
+    color:#8f8f8f;
+    text-align:center;
+    padding-top:2px;
+  }
+  @media (max-width:720px){
+    .title-card .big{font-size:34px;}
+    .title-card .sub{font-size:16px;}
+    .toolbar{flex-wrap:wrap;}
+  }
+</style>
+</head>
+<body>
+<div class="frame">
+
+  <div class="toolbar">
+    <div class="title">✎ TATHYA — How It Works</div>
+    <div class="controls">
+      <button class="btn" id="prevBtn" title="Previous">◀ Prev</button>
+      <button class="btn primary" id="playBtn" title="Play / Pause">▶ Play</button>
+      <button class="btn" id="nextBtn" title="Next">Next ▶</button>
+      <button class="btn" id="muteBtn" title="Mute narration">🔊 Voice</button>
+      <button class="btn" id="restartBtn" title="Restart">↺ Restart</button>
+    </div>
+  </div>
+
+  <div class="board-wrap">
+    <svg id="board" viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+          <path d="M40 0H0V40" fill="none" stroke="#E7E7DE" stroke-width="1"/>
+        </pattern>
+        <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="7" refY="3.5" orient="auto">
+          <polygon points="0 0, 8 3.5, 0 7" fill="var(--ink)"/>
+        </marker>
+        <marker id="arrowhead-blue" markerWidth="10" markerHeight="10" refX="7" refY="3.5" orient="auto">
+          <polygon points="0 0, 8 3.5, 0 7" fill="#1E5AA8"/>
+        </marker>
+        <marker id="arrowhead-green" markerWidth="10" markerHeight="10" refX="7" refY="3.5" orient="auto">
+          <polygon points="0 0, 8 3.5, 0 7" fill="#12805C"/>
+        </marker>
+        <marker id="arrowhead-purple" markerWidth="10" markerHeight="10" refX="7" refY="3.5" orient="auto">
+          <polygon points="0 0, 8 3.5, 0 7" fill="#6B3FA0"/>
+        </marker>
+        <marker id="arrowhead-red" markerWidth="10" markerHeight="10" refX="7" refY="3.5" orient="auto">
+          <polygon points="0 0, 8 3.5, 0 7" fill="#C23B3B"/>
+        </marker>
+      </defs>
+
+      <rect x="0" y="0" width="1200" height="800" fill="var(--board)"/>
+      <rect x="0" y="0" width="1200" height="800" fill="url(#grid)"/>
+
+      <!-- TITLE CARD (step 0, hides at step 2) -->
+      <g class="title-card" data-step="0" data-hide-step="2" text-anchor="middle">
+        <text x="600" y="340" class="big">How Tathya Works</text>
+        <text x="600" y="385" class="sub">a self-healing market intelligence pipeline</text>
+        <text x="600" y="430" class="sub" fill="#888">— press Play —</text>
+      </g>
+
+      <!-- PROBLEM ICON (step 1, hides at step 2) -->
+      <g data-step="1" data-hide-step="2" text-anchor="middle">
+        <rect x="470" y="250" width="260" height="140" rx="10" class="box red" fill="#fff" stroke="#C23B3B" stroke-width="2.5"/>
+        <text x="600" y="300" font-family="Kalam" font-size="34" fill="#C23B3B">🌐 ⚡ 💥</text>
+        <text x="600" y="345" font-family="Kalam" font-size="19" fill="#333">a website redesigns its HTML —</text>
+        <text x="600" y="372" font-family="Kalam" font-size="19" fill="#333">the scraper breaks, silently</text>
+      </g>
+
+      <!-- MAIN FLOW -->
+      <!-- User -->
+      <g class="node" data-step="2" text-anchor="middle">
+        <circle cx="600" cy="42" r="18" fill="none" stroke="var(--ink)" stroke-width="2.5"/>
+        <path d="M577 90 Q600 60 623 90" fill="none" stroke="var(--ink)" stroke-width="2.5"/>
+        <text x="600" y="112" class="label-sub" text-anchor="middle">You</text>
+      </g>
+      <path class="arrow draw" data-step="2" d="M600,95 L600,122" marker-end="url(#arrowhead)"/>
+
+      <!-- Frontend -->
+      <g class="node" data-step="2" text-anchor="middle">
+        <rect x="500" y="125" width="200" height="70" rx="12" class="box blue"/>
+        <text x="600" y="155" class="label-main">React Console</text>
+        <text x="600" y="177" class="label-sub">(frontend)</text>
+      </g>
+      <path class="arrow draw" data-step="3" d="M600,195 L600,232" marker-end="url(#arrowhead)"/>
+
+      <!-- Backend -->
+      <g class="node" data-step="3" text-anchor="middle">
+        <rect x="500" y="235" width="200" height="70" rx="12" class="box"/>
+        <text x="600" y="265" class="label-main">FastAPI</text>
+        <text x="600" y="287" class="label-sub">(backend)</text>
+      </g>
+      <path class="arrow draw" data-step="4" d="M600,305 L600,342" marker-end="url(#arrowhead)"/>
+
+      <!-- Bright Data -->
+      <g class="node" data-step="4" text-anchor="middle">
+        <rect x="500" y="345" width="200" height="70" rx="12" class="box blue"/>
+        <text x="600" y="375" class="label-main">Bright Data</text>
+        <text x="600" y="397" class="label-sub">Scraper Studio</text>
+      </g>
+
+      <!-- Source chips -->
+      <g class="chip" data-step="4" text-anchor="middle">
+        <rect x="255" y="352" width="170" height="56" rx="10" class="box blue" fill="#fff" stroke="#1E5AA8" stroke-width="2"/>
+        <text x="340" y="385" text-anchor="middle">Google News</text>
+      </g>
+      <path class="arrow draw blue" data-step="4" d="M425,378 Q460,378 495,378" marker-end="url(#arrowhead-blue)"/>
+
+      <g class="chip" data-step="4" text-anchor="middle">
+        <rect x="775" y="352" width="170" height="56" rx="10" class="box blue" fill="#fff" stroke="#1E5AA8" stroke-width="2"/>
+        <text x="860" y="385" text-anchor="middle">Yahoo Finance</text>
+      </g>
+      <path class="arrow draw blue" data-step="4" d="M775,378 Q740,378 705,378" marker-end="url(#arrowhead-blue)"/>
+
+      <path class="arrow draw" data-step="5" d="M600,415 L600,452" marker-end="url(#arrowhead)"/>
+      <text class="arrow-label" data-step="5" x="618" y="440">field fill-rate</text>
+
+      <!-- Health Engine -->
+      <g class="node" data-step="5" text-anchor="middle">
+        <rect x="500" y="455" width="200" height="70" rx="12" class="box"/>
+        <text x="600" y="485" class="label-main">Health Engine</text>
+        <text x="600" y="507" class="label-sub">scores every field</text>
+      </g>
+
+      <!-- Branch: Supabase (healthy) -->
+      <path class="arrow draw green" data-step="6" d="M540,525 Q400,560 340,583" marker-end="url(#arrowhead-green)"/>
+      <g class="node" data-step="6" text-anchor="middle">
+        <rect x="220" y="585" width="220" height="72" rx="12" class="box green"/>
+        <text x="330" y="616" class="label-main">Supabase</text>
+        <text x="330" y="638" class="label-sub" fill="#12805C">✓ 100% healthy → saved</text>
+      </g>
+
+      <!-- Branch: Self-Healing (degraded) -->
+      <path class="arrow draw purple" data-step="7" d="M660,525 Q800,560 860,583" marker-end="url(#arrowhead-purple)"/>
+      <g class="node" data-step="7" text-anchor="middle">
+        <rect x="740" y="585" width="240" height="72" rx="12" class="box purple"/>
+        <text x="860" y="616" class="label-main">Self-Healing Engine</text>
+        <text x="860" y="638" class="label-sub" fill="#C23B3B">⚠ degraded field detected</text>
+      </g>
+
+      <!-- 4-step healing loop -->
+      <path class="arrow draw purple" data-step="8" d="M860,657 L860,690" marker-end="url(#arrowhead-purple)"/>
+
+      <g class="chip" data-step="8" text-anchor="middle">
+        <rect x="600" y="695" width="120" height="48" rx="10" class="box purple" fill="#fff" stroke="#6B3FA0" stroke-width="2"/>
+        <text x="660" y="725" text-anchor="middle">Detect</text>
+      </g>
+      <path class="arrow draw purple" data-step="8" d="M780,695 Q795,719 780,743" marker-end="url(#arrowhead-purple)" transform="translate(-60,0)"/>
+      <path class="arrow draw purple" data-step="8" d="M720,719 L745,719" marker-end="url(#arrowhead-purple)"/>
+
+      <g class="chip" data-step="8" text-anchor="middle">
+        <rect x="745" y="695" width="120" height="48" rx="10" class="box purple" fill="#fff" stroke="#6B3FA0" stroke-width="2"/>
+        <text x="805" y="725" text-anchor="middle">Analyze DOM</text>
+      </g>
+      <path class="arrow draw purple" data-step="8" d="M865,719 L890,719" marker-end="url(#arrowhead-purple)"/>
+
+      <g class="chip" data-step="8" text-anchor="middle">
+        <rect x="890" y="695" width="130" height="48" rx="10" class="box purple" fill="#fff" stroke="#6B3FA0" stroke-width="2"/>
+        <text x="955" y="725" text-anchor="middle">Propose fix</text>
+      </g>
+      <path class="arrow draw purple" data-step="8" d="M1020,719 L1045,719" marker-end="url(#arrowhead-purple)"/>
+
+      <g class="chip" data-step="8" text-anchor="middle">
+        <rect x="1045" y="695" width="120" height="48" rx="10" class="box purple" fill="#fff" stroke="#6B3FA0" stroke-width="2"/>
+        <text x="1105" y="725" text-anchor="middle">Verify</text>
+      </g>
+
+      <!-- Restored loop back to Health Engine -->
+      <path class="arrow draw green" data-step="9" d="M1105,695 C1160,600 1160,470 704,486" marker-end="url(#arrowhead-green)"/>
+      <text class="arrow-label" data-step="9" x="900" y="470" fill="#12805C">restored to 100% ✓</text>
+
+      <!-- Closing overlay -->
+      <g data-step="10" text-anchor="middle">
+        <rect x="0" y="0" width="1200" height="800" fill="#FCFCF7" opacity="0.88"/>
+        <text x="600" y="380" font-family="Kalam" font-weight="700" font-size="46" fill="var(--ink)" text-anchor="middle">That's the theory.</text>
+        <text x="600" y="430" font-family="Kalam" font-weight="700" font-size="46" fill="var(--blue)" text-anchor="middle">Now — let's see it live ▶</text>
+      </g>
+
+      <rect x="0" y="0" width="1200" height="800" fill="none" stroke="#00000000"/>
+    </svg>
+
+    <div class="legend-tray">
+      <div class="legend-item"><span class="legend-cap" style="background:#1E5AA8;"></span>data flow</div>
+      <div class="legend-item"><span class="legend-cap" style="background:#12805C;"></span>healthy</div>
+      <div class="legend-item"><span class="legend-cap" style="background:#6B3FA0;"></span>self-healing</div>
+      <div class="legend-item"><span class="legend-cap" style="background:#C23B3B;"></span>problem</div>
+    </div>
+  </div>
+
+  <div class="caption-strip">
+    <span class="step-count" id="stepCount">1 / 11</span>
+    <span id="captionText">Press Play to begin.</span>
+  </div>
+  <div class="dots" id="dots" style="justify-content:center;"></div>
+  <div class="cue">This board is meant to be screen-recorded as the opening of your video — cut to your real screen demo footage right after the final "let's see it live" card.</div>
+</div>
+
+<script>
+(function(){
+  const captions = [
+    "How Tathya works: a self-healing market intelligence pipeline.",
+    "Websites change constantly. When they do, scrapers can break silently — and nobody notices until the data looks wrong.",
+    "It starts with a person opening Tathya's console, a React and TypeScript frontend, and clicking Run Scraper.",
+    "The frontend calls Tathya's FastAPI backend, which orchestrates the entire pipeline.",
+    "The backend triggers Bright Data's Scraper Studio, pulling real-time articles from Google News and Yahoo Finance.",
+    "Every batch of scraped data is checked against a required schema. Tathya scores its health by how many fields actually came back filled in.",
+    "When health is one hundred percent, records flow straight into Supabase. Job done.",
+    "But if a field drops out, a broken selector, a redesigned page, Tathya's self-healing engine takes over instead of just alerting someone.",
+    "It detects the failure, analyzes the live HTML, proposes new CSS selectors, and verifies them, automatically.",
+    "Once verified, the pipeline is restored to full health, and the healed selectors go straight back into rotation.",
+    "That's the theory. Now, let's see it live."
+  ];
+  const total = captions.length;
+  let current = 0;
+  let playing = false;
+  let muted = false;
+  const synth = window.speechSynthesis;
+
+  const els = Array.from(document.querySelectorAll('[data-step]'));
+  const drawPaths = document.querySelectorAll('path.draw');
+
+  drawPaths.forEach(p => {
+    try {
+      const len = p.getTotalLength();
+      p.style.strokeDasharray = len;
+      p.style.strokeDashoffset = len;
+    } catch(e){}
+  });
+
+  const dotsWrap = document.getElementById('dots');
+  for (let i=0;i<total;i++){
+    const d = document.createElement('div');
+    d.className = 'dot' + (i===0?' active':'');
+    d.addEventListener('click', ()=>{ stopSpeech(); goTo(i); if(playing) speakCurrent(); });
+    dotsWrap.appendChild(d);
+  }
+
+  function render(){
+    els.forEach(el=>{
+      const step = parseInt(el.getAttribute('data-step'),10);
+      const hideStep = el.getAttribute('data-hide-step');
+      let show = current >= step;
+      if (hideStep !== null && current >= parseInt(hideStep,10)) show = false;
+      el.classList.toggle('shown', show);
+      if (show && el.tagName === 'path' && el.classList.contains('draw')){
+        el.style.strokeDashoffset = 0;
+      }
+    });
+    document.getElementById('captionText').textContent = captions[current];
+    document.getElementById('stepCount').textContent = (current+1) + ' / ' + total;
+    Array.from(dotsWrap.children).forEach((d,i)=> d.classList.toggle('active', i===current));
+  }
+
+  function goTo(n){
+    current = Math.max(0, Math.min(total-1, n));
+    render();
+  }
+
+  function stopSpeech(){
+    if (synth) synth.cancel();
+  }
+
+  function speakCurrent(){
+    if (muted || !synth){
+      if (playing) setTimeout(()=> advance(), 3200);
+      return;
+    }
+    synth.cancel();
+    const utter = new SpeechSynthesisUtterance(captions[current]);
+    utter.rate = 0.97;
+    utter.pitch = 1;
+    utter.onend = () => { if (playing) advance(); };
+    utter.onerror = () => { if (playing) setTimeout(()=>advance(), 500); };
+    synth.speak(utter);
+  }
+
+  function advance(){
+    if (current < total-1){
+      goTo(current+1);
+      speakCurrent();
+    } else {
+      playing = false;
+      updatePlayBtn();
+    }
+  }
+
+  function updatePlayBtn(){
+    document.getElementById('playBtn').textContent = playing ? '⏸ Pause' : '▶ Play';
+  }
+
+  document.getElementById('playBtn').addEventListener('click', ()=>{
+    playing = !playing;
+    updatePlayBtn();
+    if (playing){
+      speakCurrent();
+    } else {
+      stopSpeech();
+    }
+  });
+  document.getElementById('nextBtn').addEventListener('click', ()=>{
+    stopSpeech();
+    goTo(current+1);
+    if (playing) speakCurrent();
+  });
+  document.getElementById('prevBtn').addEventListener('click', ()=>{
+    stopSpeech();
+    goTo(current-1);
+    if (playing) speakCurrent();
+  });
+  document.getElementById('restartBtn').addEventListener('click', ()=>{
+    stopSpeech();
+    playing = false;
+    updatePlayBtn();
+    goTo(0);
+  });
+  document.getElementById('muteBtn').addEventListener('click', function(){
+    muted = !muted;
+    this.textContent = muted ? '🔇 Muted' : '🔊 Voice';
+    if (muted) stopSpeech();
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

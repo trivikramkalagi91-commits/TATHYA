@@ -46,7 +46,18 @@ Built for the [**Scrape-Verse Hackathon**](https://www.wemakedevs.org/events/scr
 
 ---
 
+## How It Works — Visual Explainer
+
+![Tathya Self-Healing Concept — DEGRADED to HEALED via AI Repair](screenshots/tathya-whiteboard.jpg)
+
+> 📄 **[Interactive Whiteboard Explainer →](docs/Tathya_Whiteboard_Explainer.html)** _(Open in browser for full animated walkthrough)_
+
+---
+
 ## Screenshots
+
+### Login Page (Hackathon Judge Credentials)
+![Login Page — Sign in with developer credentials provided for hackathon evaluation](screenshots/login-page.png)
 
 ### Overview Dashboard
 ![Overview Dashboard — Live KPI metrics, scraper activity timeline, and pipeline health monitor](screenshots/overview-dashboard.png)
@@ -54,11 +65,14 @@ Built for the [**Scrape-Verse Hackathon**](https://www.wemakedevs.org/events/scr
 ### Sources & Scrapers
 ![Sources & Scrapers — All data pipeline sources with HEALTHY status and 100% health scores](screenshots/sources-scrapers.png)
 
-### Scraper Run Report (Google News — 38 Records, 100% Health)
-![Scraper Run Report — Google News Feed extraction with HEALTHY status, CSS selector mapping, and validation schema](screenshots/scraper-run-report.png)
+### Scraper Run Report (Google News — 34 Records, 100% Health)
+![Scraper Run Report — Google News Feed extraction with HEALTHY status, CSS selector mapping, and validation schema](screenshots/scraper-run-34-records.png)
 
 ### Self-Healing Logs & Repair Proposals
 ![Self-Healing Logs — Repair proposals with REPAIRED, PENDING APPROVAL, and FAILED states](screenshots/self-healing-logs.png)
+
+### Bright Data Scraper Studio — Custom Yahoo Finance Scraper
+![Bright Data Scraper Studio — Yahoo Finance custom scraper with 20 structured output records, interaction code, and parser code](screenshots/brightdata-scraper-studio.png)
 
 ### Project Library (Landing Page)
 ![Project Library — Choose a scraper target, filter by health status](screenshots/project-library.png)
