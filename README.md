@@ -50,7 +50,53 @@ Built for the [**Scrape-Verse Hackathon**](https://www.wemakedevs.org/events/scr
 
 ![Tathya Self-Healing Concept — DEGRADED to HEALED via AI Repair](screenshots/tathya-whiteboard.jpg)
 
-> 📄 **[Interactive Whiteboard Explainer →](https://htmlpreview.github.io/?https://github.com/trivikramkalagi91-commits/TATHYA/blob/master/docs/Tathya_Whiteboard_Explainer.html)** _(Click to open full animated walkthrough)_
+> 📄 **[Interactive Animated Walkthrough →](https://htmlpreview.github.io/?https://github.com/trivikramkalagi91-commits/TATHYA/blob/master/docs/Tathya_Whiteboard_Explainer.html)** _(Click for the full animated version with voice narration)_
+
+### The Problem
+
+> Websites change constantly. When they do, scrapers break **silently** — and nobody notices until the data looks wrong.
+
+### The Tathya Pipeline
+
+```mermaid
+flowchart TB
+    U["👤 You"] -->|Click 'Run Scraper'| FE
+    FE["React Console<br/>(frontend)"] -->|REST API call| BE
+    BE["FastAPI<br/>(backend)"] -->|Trigger + Poll| BD
+
+    GN["📰 Google News"] -->|RSS feed| BD
+    YF["💹 Yahoo Finance"] -->|News feed| BD
+    BD["⚡ Bright Data<br/>Scraper Studio"] -->|scraped records| HE
+
+    HE["🔍 Health Engine<br/>scores every field"]
+
+    HE -->|"✅ 100% healthy"| DB["🗄️ Supabase<br/>records saved"]
+    HE -->|"⚠️ field missing"| SH["🔧 Self-Healing Engine"]
+
+    SH --> D["1. Detect failure"]
+    D --> A["2. Analyze live DOM"]
+    A --> P["3. Propose new CSS selectors"]
+    P --> V["4. Verify fix"]
+    V -->|"restored to 100% ✓"| HE
+
+    style DB fill:#d4edda,stroke:#12805C,stroke-width:2px
+    style SH fill:#f3e8ff,stroke:#6B3FA0,stroke-width:2px
+    style BD fill:#dbeafe,stroke:#1E5AA8,stroke-width:2px
+    style HE fill:#fff,stroke:#232323,stroke-width:2px
+```
+
+### Step-by-Step Breakdown
+
+| Step | What Happens | Detail |
+|------|-------------|--------|
+| 1️⃣ | **User clicks Run Scraper** | React frontend sends request to FastAPI backend |
+| 2️⃣ | **Backend triggers Bright Data** | Calls Scraper Studio API to crawl Google News & Yahoo Finance |
+| 3️⃣ | **Data is collected** | 38+ real articles returned with headlines, URLs, timestamps |
+| 4️⃣ | **Health Engine scores data** | Checks field fill-rates against required schema (headline, url, timestamp) |
+| 5️⃣ | **If 100% healthy** | Records saved directly to Supabase. Job done ✅ |
+| 6️⃣ | **If a field drops** | Self-Healing Engine activates — a broken selector or redesigned page detected ⚠️ |
+| 7️⃣ | **Detect → Analyze → Propose → Verify** | Analyzes live HTML, proposes new CSS selectors, verifies automatically |
+| 8️⃣ | **Pipeline restored** | Healed selectors go back into rotation. 100% health restored ✅ |
 
 ---
 
