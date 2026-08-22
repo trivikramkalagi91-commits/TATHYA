@@ -200,7 +200,59 @@ async def run_collector(
             # Poll the dataset API for the resulting rows
             brightdata_records, poll_err = await brightdata_client.poll_dataset(snapshot_id)
             if brightdata_records:
-                records = brightdata_records
+                import urllib.parse
+                # Extract inner list from dict wrapper if nested
+                inner_list = []
+                if isinstance(brightdata_records, list):
+                    # Check if the list contains a wrapper dict
+                    for item in brightdata_records:
+                        if isinstance(item, dict):
+                            if "articles" in item and isinstance(item["articles"], list):
+                                inner_list.extend(item["articles"])
+                            elif "news" in item and isinstance(item["news"], list):
+                                inner_list.extend(item["news"])
+                            else:
+                                inner_list.append(item)
+                        else:
+                            inner_list.append(item)
+                elif isinstance(brightdata_records, dict):
+                    if "articles" in brightdata_records and isinstance(brightdata_records["articles"], list):
+                        inner_list = brightdata_records["articles"]
+                    elif "news" in brightdata_records and isinstance(brightdata_records["news"], list):
+                        inner_list = brightdata_records["news"]
+                    else:
+                        inner_list = [brightdata_records]
+
+                # Map inner list items to match standard schema keys
+                mapped_records = []
+                for item in inner_list:
+                    if not isinstance(item, dict):
+                        continue
+                    
+                    # 1. Headline
+                    headline = item.get("headline") or item.get("title") or ""
+                    
+                    # 2. URL
+                    url_val = item.get("url") or item.get("link")
+                    if not url_val or not str(url_val).strip():
+                        # Fallback URL if not returned by scraper
+                        if headline:
+                            url_val = f"https://news.google.com/search?q={urllib.parse.quote(str(headline))}"
+                        else:
+                            url_val = source.url
+                    
+                    # 3. Timestamp
+                    timestamp = item.get("timestamp") or item.get("pubDate")
+                    if not timestamp or not str(timestamp).strip():
+                        timestamp = datetime.datetime.utcnow().isoformat() + "Z"
+                        
+                    mapped_records.append({
+                        "headline": str(headline),
+                        "url": str(url_val),
+                        "timestamp": str(timestamp)
+                    })
+                
+                records = mapped_records
                 html_excerpt = f"Bright Data Dataset Snapshot: {snapshot_id}"
             else:
                 err_msg = poll_err or "Timeout retrieving Bright Data dataset"
