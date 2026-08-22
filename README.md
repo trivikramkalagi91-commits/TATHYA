@@ -46,6 +46,25 @@ Built for the [**Scrape-Verse Hackathon**](https://www.wemakedevs.org/events/scr
 
 ---
 
+## Screenshots
+
+### Overview Dashboard
+![Overview Dashboard — Live KPI metrics, scraper activity timeline, and pipeline health monitor](screenshots/overview-dashboard.png)
+
+### Sources & Scrapers
+![Sources & Scrapers — All data pipeline sources with HEALTHY status and 100% health scores](screenshots/sources-scrapers.png)
+
+### Scraper Run Report (Google News — 38 Records, 100% Health)
+![Scraper Run Report — Google News Feed extraction with HEALTHY status, CSS selector mapping, and validation schema](screenshots/scraper-run-report.png)
+
+### Self-Healing Logs & Repair Proposals
+![Self-Healing Logs — Repair proposals with REPAIRED, PENDING APPROVAL, and FAILED states](screenshots/self-healing-logs.png)
+
+### Project Library (Landing Page)
+![Project Library — Choose a scraper target, filter by health status](screenshots/project-library.png)
+
+---
+
 ## What Tathya Does
 
 ```mermaid
