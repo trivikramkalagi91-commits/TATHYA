@@ -12,6 +12,7 @@ from backend.app.services.scraper import scrape_url
 from backend.app.services.health_engine import calculate_health_score
 from backend.app.services.healing_engine import generate_repair_proposal
 from backend.app.integrations.brightdata import BrightDataClient
+from backend.app.config import settings
 
 router = APIRouter(prefix="/api/v1/collectors", tags=["collectors"])
 logger = logging.getLogger(__name__)
