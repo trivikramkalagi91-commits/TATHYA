@@ -6,7 +6,7 @@
 
 Built for the [**Scrape-Verse Hackathon**](https://www.wemakedevs.org/events/scrape-verse) by WeMakeDevs × Bright Data.
 
-[![Live Demo](https://img.shields.io/badge/Live-Tathya%20on%20Vercel-000000?style=for-the-badge&logo=vercel)](https://tathya-nhh2s5m7-tvk3.vercel.app)
+[![Live Demo](https://img.shields.io/badge/Live-Tathya%20on%20Vercel-000000?style=for-the-badge&logo=vercel)](https://tathya-tvk3.vercel.app)
 [![API Health](https://img.shields.io/badge/API-Render%20Backend-22c55e?style=for-the-badge&logo=render)](https://tathya-backend.onrender.com/docs)
 [![Bright Data](https://img.shields.io/badge/Powered%20By-Bright%20Data-0ea5e9?style=for-the-badge)](https://brightdata.com)
 
@@ -22,7 +22,7 @@ Built for the [**Scrape-Verse Hackathon**](https://www.wemakedevs.org/events/scr
 
 | Surface | URL |
 |---|---|
-| **Tathya UI** | [tathya-nhh2s5m7-tvk3.vercel.app](https://tathya-nhh2s5m7-tvk3.vercel.app) |
+| **Tathya UI** | [tathya-tvk3.vercel.app](https://tathya-tvk3.vercel.app) |
 | **Backend API Docs** | [tathya-backend.onrender.com/docs](https://tathya-backend.onrender.com/docs) |
 | **Source Code** | [github.com/trivikramkalagi91-commits/TATHYA](https://github.com/trivikramkalagi91-commits/TATHYA) |
 
@@ -36,7 +36,7 @@ Built for the [**Scrape-Verse Hackathon**](https://www.wemakedevs.org/events/scr
 
 ## 3-Minute Judge Walkthrough
 
-1. Open the [Live Demo](https://tathya-nhh2s5m7-tvk3.vercel.app) → Sign in with the credentials above
+1. Open the [Live Demo](https://tathya-tvk3.vercel.app) → Sign in with the credentials above
 2. **Overview** → See live KPI metrics: Active Sources, Healthy Scrapers, Records Collected, Repairs Count
 3. **Sources & Scrapers** → Click **Google News Feed** → Click **RUN SCRAPER** → Watch it extract 38+ real-time articles at 100% Health
 4. **Self-Healing Logs** → Review repair proposals with side-by-side selector diffs → **Approve & Restore** a pending proposal → Watch live verification progress
@@ -50,7 +50,7 @@ Built for the [**Scrape-Verse Hackathon**](https://www.wemakedevs.org/events/scr
 
 ![Tathya Self-Healing Concept — DEGRADED to HEALED via AI Repair](screenshots/tathya-whiteboard.jpg)
 
-> 📄 **[Interactive Whiteboard Explainer →](docs/Tathya_Whiteboard_Explainer.html)** _(Open in browser for full animated walkthrough)_
+> 📄 **[Interactive Whiteboard Explainer →](https://htmlpreview.github.io/?https://github.com/trivikramkalagi91-commits/TATHYA/blob/master/docs/Tathya_Whiteboard_Explainer.html)** _(Click to open full animated walkthrough)_
 
 ---
 
@@ -116,12 +116,12 @@ journey
 
 Tathya uses **Bright Data's Scraper Studio** to create and run **two custom web scrapers**:
 
-### 1. Google News Scraper (`c_mt1kxhy7xk57uulqt`)
+### 1. Google News Scraper
 - **Target:** `https://news.google.com/rss`
 - **Custom Parser Code:** Extracts article titles, links, and publish dates from the Google News RSS XML feed
 - **Output:** 38+ real-time news articles per run
 
-### 2. Yahoo Finance Scraper (`c_mt1jr7ct6tl8herk2`)
+### 2. Yahoo Finance Scraper
 - **Target:** `https://finance.yahoo.com/news/`
 - **Custom Parser Code:** Uses structural CSS selectors (`h3`, `a`, `time`) to extract headlines, URLs, timestamps, and publisher sources from Yahoo's live news feed
 - **Output:** 20+ real-time financial news articles per run
