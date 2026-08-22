@@ -34,7 +34,8 @@ class BrightDataClient:
         }
         params = {
             "collector": collector_id,
-            "queue_next": 1
+            "queue_next": 1,
+            "override_incompatible_schema": 1
         }
         # Payload specifies the target URL(s) to scrape
         payload = [{"url": target_url}]
