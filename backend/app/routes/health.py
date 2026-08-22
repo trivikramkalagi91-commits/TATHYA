@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import func
 from backend.app.db.session import get_db
 from backend.app.routes.auth import get_current_user
-from backend.app.models.models import User, Source, Collector, Repair, HealthCheck, ScrapeRun
+from backend.app.models.models import User, Source, Collector, Repair, HealthCheck, ScrapeRun, Project
 from backend.app.schemas.schemas import DashboardMetrics
 
 router = APIRouter(prefix="/api/v1/health", tags=["health"])
