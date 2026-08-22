@@ -27,6 +27,12 @@ const safeNewDate = (dtStr: any): Date => {
   return new Date(cleanStr);
 };
 
+const isIndianStock = (symbol: string): boolean => {
+  if (!symbol) return true;
+  const usStocks = ['AAPL', 'TSLA', 'MSFT', 'GOOG', 'AMZN', 'NVDA', 'META'];
+  return !usStocks.includes(symbol.toUpperCase());
+};
+
 // Path definitions for simple hash routing
 // Routes: #home, #product, #solutions, #how-it-works, #security, #docs, #login, #signup
 // Authenticated App: #app, #app/sources, #app/repairs, #app/market, #app/settings, #app/docs
@@ -1775,7 +1781,7 @@ function MarketIntelligenceDashboardView() {
                       >
                         <td className="py-3 px-4 font-bold text-black min-w-[100px] text-left border-b-2 border-black whitespace-nowrap">{item.symbol}</td>
                         <td className="py-3 px-4 text-right min-w-[110px] tabular-nums font-mono border-b-2 border-black whitespace-nowrap font-bold">
-                          {item.price ? (item.symbol.includes('.NS') || item.symbol.includes('TCS') || item.symbol.includes('RELIANCE') || item.symbol.includes('INFOSYS') || item.symbol.includes('INFY') ? `₹${item.price.toFixed(2)}` : `$${item.price.toFixed(2)}`) : 'N/A'}
+                          {item.price ? (isIndianStock(item.symbol) ? `₹${item.price.toFixed(2)}` : `$${item.price.toFixed(2)}`) : 'N/A'}
                         </td>
                         <td style={{ color: item.change_pct >= 0 ? '#137333' : '#c5221f' }} className="py-3 px-4 text-right min-w-[110px] tabular-nums font-mono border-b-2 border-black whitespace-nowrap font-bold">
                           {item.change_pct ? `${item.change_pct > 0 ? '+' : ''}${item.change_pct.toFixed(2)}%` : 'N/A'}

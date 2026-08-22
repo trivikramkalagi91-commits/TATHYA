@@ -45,7 +45,8 @@ async def fetch_finnhub_quote(symbol: str) -> Dict[str, Any]:
     # 2. Yahoo Finance fallback (supports Indian .NS/.BO suffixes, e.g. TCS.NS, RELIANCE.NS)
     try:
         yf_symbol = symbol
-        if "." not in symbol and symbol in ["TCS", "RELIANCE", "INFY"]:
+        us_stocks = ["AAPL", "TSLA", "MSFT", "GOOG", "AMZN", "NVDA", "META"]
+        if "." not in symbol and symbol.upper() not in us_stocks:
             yf_symbol = f"{symbol}.NS"
 
         url = f"https://query1.finance.yahoo.com/v8/finance/chart/{yf_symbol}"
@@ -343,6 +344,9 @@ async def get_opportunities(
         invalidation = round(current_price * 0.95, 2)
         target = round(current_price * 1.15, 2)
         
+        us_stocks = ["AAPL", "TSLA", "MSFT", "GOOG", "AMZN", "NVDA", "META"]
+        currency = "$" if item.symbol.upper() in us_stocks else "₹"
+        
         signals.append(OpportunitySignal(
             symbol=item.symbol,
             opportunity_score=opp_score,
@@ -355,9 +359,9 @@ async def get_opportunities(
                 "scraped_pipeline_health": "Verified 100% Healthy" if db_news else "API Direct (Not Scraped)"
             },
             trade_scenario={
-                "entry_zone": f"${current_price:.2f}",
-                "invalidation_level": f"${invalidation:.2f}",
-                "target_target": f"${target:.2f}",
+                "entry_zone": f"{currency}{current_price:.2f}",
+                "invalidation_level": f"{currency}{invalidation:.2f}",
+                "target_target": f"{currency}{target:.2f}",
                 "risk_reward_ratio": "1 : 3.0"
             }
         ))

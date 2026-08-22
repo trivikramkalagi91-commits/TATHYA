@@ -17,28 +17,37 @@ def get_dashboard_metrics(
     """
     Aggregates database metrics to feed the top-level Overview dashboard indicators.
     """
-    # Count Active Sources for the current user
-    user_sources = db.query(Source).join(Project).join(Workspace).filter(Workspace.owner_id == current_user.id)
-    active_sources = user_sources.count()
+    # Fetch user's workspaces first
+    workspace_ids = [w.id for w in current_user.workspaces]
+    projects = db.query(Project).filter(Project.workspace_id.in_(workspace_ids)).all()
+    project_ids = [p.id for p in projects]
 
-    # Count Scraper states for the current user
-    user_collectors = db.query(Collector).join(Source).join(Project).join(Workspace).filter(Workspace.owner_id == current_user.id)
-    healthy_collectors = db.query(Collector).join(Source).join(Project).join(Workspace).filter(
-        Workspace.owner_id == current_user.id,
+    # Fetch sources linked to those projects
+    sources = db.query(Source).filter(Source.project_id.in_(project_ids)).all()
+    source_ids = [s.id for s in sources]
+    active_sources = len(source_ids)
+
+    # Fetch collectors linked to those sources
+    collectors = db.query(Collector).filter(Collector.source_id.in_(source_ids)).all()
+    collector_ids = [c.id for c in collectors]
+
+    # Scrapers states count
+    healthy_collectors = db.query(Collector).filter(
+        Collector.id.in_(collector_ids),
         Collector.status == "HEALTHY"
     ).count()
-    degraded_collectors = db.query(Collector).join(Source).join(Project).join(Workspace).filter(
-        Workspace.owner_id == current_user.id,
+    degraded_collectors = db.query(Collector).filter(
+        Collector.id.in_(collector_ids),
         Collector.status.in_(["DEGRADED", "FAILED"])
     ).count()
 
     # Count Total Repairs for the current user
-    user_repairs = db.query(Repair).join(Collector).join(Source).join(Project).join(Workspace).filter(Workspace.owner_id == current_user.id)
+    user_repairs = db.query(Repair).filter(Repair.collector_id.in_(collector_ids))
     repairs_count = user_repairs.count()
 
     # Count Total Records scraped for the current user
-    records_sum = db.query(func.sum(Collector.records_collected)).join(Source).join(Project).join(Workspace).filter(
-        Workspace.owner_id == current_user.id
+    records_sum = db.query(func.sum(Collector.records_collected)).filter(
+        Collector.id.in_(collector_ids)
     ).scalar() or 0
 
     # Calculate Average Recovery Time in minutes for the current user
@@ -71,8 +80,16 @@ def get_health_checks_history(
     """
     Returns recent health status runs across the platform to populate the dashboard activity stream.
     """
-    runs = db.query(ScrapeRun).join(Collector).join(Source).join(Project).join(Workspace).filter(
-        Workspace.owner_id == current_user.id
+    workspace_ids = [w.id for w in current_user.workspaces]
+    projects = db.query(Project).filter(Project.workspace_id.in_(workspace_ids)).all()
+    project_ids = [p.id for p in projects]
+    sources = db.query(Source).filter(Source.project_id.in_(project_ids)).all()
+    source_ids = [s.id for s in sources]
+    collectors = db.query(Collector).filter(Collector.source_id.in_(source_ids)).all()
+    collector_ids = [c.id for c in collectors]
+
+    runs = db.query(ScrapeRun).filter(
+        ScrapeRun.collector_id.in_(collector_ids)
     ).order_by(ScrapeRun.run_at.desc()).limit(15).all()
     
     result = []
