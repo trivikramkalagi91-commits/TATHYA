@@ -134,7 +134,7 @@ def tag_symbols(headline: str) -> List[str]:
     mapping = {
         "TCS": ["TCS", "TATA CONSULTANCY"],
         "RELIANCE": ["RELIANCE", "RIL", "JIO"],
-        "INFOSYS": ["INFOSYS", "INFY"],
+        "INFY": ["INFOSYS", "INFY"],
         "AAPL": ["AAPL", "APPLE"],
         "TSLA": ["TSLA", "TESLA"]
     }

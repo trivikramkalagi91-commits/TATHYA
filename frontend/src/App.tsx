@@ -1775,7 +1775,7 @@ function MarketIntelligenceDashboardView() {
                       >
                         <td className="py-3 px-4 font-bold text-black min-w-[100px] text-left border-b-2 border-black whitespace-nowrap">{item.symbol}</td>
                         <td className="py-3 px-4 text-right min-w-[110px] tabular-nums font-mono border-b-2 border-black whitespace-nowrap font-bold">
-                          {item.price ? (item.symbol.includes('.NS') || item.symbol.includes('TCS') || item.symbol.includes('RELIANCE') || item.symbol.includes('INFOSYS') ? `₹${item.price.toFixed(2)}` : `$${item.price.toFixed(2)}`) : 'N/A'}
+                          {item.price ? (item.symbol.includes('.NS') || item.symbol.includes('TCS') || item.symbol.includes('RELIANCE') || item.symbol.includes('INFOSYS') || item.symbol.includes('INFY') ? `₹${item.price.toFixed(2)}` : `$${item.price.toFixed(2)}`) : 'N/A'}
                         </td>
                         <td style={{ color: item.change_pct >= 0 ? '#137333' : '#c5221f' }} className="py-3 px-4 text-right min-w-[110px] tabular-nums font-mono border-b-2 border-black whitespace-nowrap font-bold">
                           {item.change_pct ? `${item.change_pct > 0 ? '+' : ''}${item.change_pct.toFixed(2)}%` : 'N/A'}
@@ -1918,7 +1918,7 @@ function MarketIntelligenceDashboardView() {
         <div className="xl:col-span-4 sticky top-6 bg-white border-2 border-black rounded-none flex flex-col shadow-sm text-black">
           <div className="p-4 border-b-2 border-black bg-[#faf0d9] flex justify-between items-center sticky top-0 z-10">
             <div>
-              <h2 className="font-mono text-xs font-bold text-black tracking-wider">// VERIFIED TIMELINE: {selectedSymbol}</h2>
+              <h2 className="font-mono text-xs font-bold text-black tracking-wider">// VERIFIED TIMELINE: ALL STOCKS</h2>
               <span className="text-[9px] text-zinc-650 font-bold">Chronological pipeline stream</span>
             </div>
             <span className="px-2 py-0.5 border border-black bg-emerald-50 text-emerald-700 text-[9px] font-bold rounded-none">LIVE FEED</span>
@@ -1926,11 +1926,11 @@ function MarketIntelligenceDashboardView() {
           
           <div style={{ maxHeight: 'calc(100vh - 200px)', overflowY: 'auto' }} className="p-4 flex flex-col gap-3">
             {(() => {
-              const filteredTimeline = timeline.filter(event => event.company_symbol.toUpperCase() === selectedSymbol.toUpperCase());
+              const filteredTimeline = timeline;
               return filteredTimeline.length === 0 ? (
                 <div className="flex flex-col justify-center items-center text-center py-20 text-zinc-650 font-mono text-xs gap-3 font-bold">
                   <RefreshCw size={24} className="text-black" />
-                  <span>No verified events scraped for {selectedSymbol} yet.</span>
+                  <span>No verified events scraped yet.</span>
                 </div>
               ) : (
                 filteredTimeline.map((event) => (

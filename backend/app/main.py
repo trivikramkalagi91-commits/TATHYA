@@ -200,7 +200,7 @@ def seed_initial_data(db: Session):
         db.refresh(watchlist)
 
         # Add initial tracking symbols
-        symbols = ["TCS", "RELIANCE", "INFOSYS"]
+        symbols = ["TCS", "RELIANCE", "INFY"]
         for s in symbols:
             item = WatchlistItem(
                 watchlist_id=watchlist.id,

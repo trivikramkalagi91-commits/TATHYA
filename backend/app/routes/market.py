@@ -45,7 +45,7 @@ async def fetch_finnhub_quote(symbol: str) -> Dict[str, Any]:
     # 2. Yahoo Finance fallback (supports Indian .NS/.BO suffixes, e.g. TCS.NS, RELIANCE.NS)
     try:
         yf_symbol = symbol
-        if "." not in symbol and symbol in ["TCS", "RELIANCE", "INFOSYS"]:
+        if "." not in symbol and symbol in ["TCS", "RELIANCE", "INFY"]:
             yf_symbol = f"{symbol}.NS"
 
         url = f"https://query1.finance.yahoo.com/v8/finance/chart/{yf_symbol}"
@@ -134,7 +134,7 @@ def get_market_events(
                 id=997,
                 source_name="Tathya Controlled Feed",
                 source_url="http://localhost:8000/api/v1/demo-site/target",
-                company_symbol="INFOSYS",
+                company_symbol="INFY",
                 headline="Infosys beats earnings estimates with 8% YoY revenue growth.",
                 category="Results",
                 publish_time=now - datetime.timedelta(hours=8),
@@ -178,7 +178,7 @@ async def get_watchlist(
         ).count()
         
         # Fallback count if no live events scraped yet for demo symbols
-        if event_count == 0 and item.symbol in ["TCS", "RELIANCE", "INFOSYS"]:
+        if event_count == 0 and item.symbol in ["TCS", "RELIANCE", "INFY"]:
             event_count = 1
 
         # Calculate a mockup opportunity score if real quote exists
@@ -300,8 +300,8 @@ async def get_opportunities(
             if h and h not in recent_headlines:
                 recent_headlines.append(h)
 
-        # Fallback news for TCS, RELIANCE, INFOSYS if no news found in DB or API
-        if not recent_headlines and item.symbol in ["TCS", "RELIANCE", "INFOSYS"]:
+        # Fallback news for TCS, RELIANCE, INFY if no news found in DB or API
+        if not recent_headlines and item.symbol in ["TCS", "RELIANCE", "INFY"]:
             now = datetime.datetime.utcnow()
             if item.symbol == "TCS":
                 fallback_headline = "TCS expands partnership with Google Cloud for generative AI solutions."
@@ -412,7 +412,7 @@ async def get_why_moved(
                 })
 
     # Add fallback factors if empty for demo symbols
-    if not factors and symbol in ["TCS", "RELIANCE", "INFOSYS"]:
+    if not factors and symbol in ["TCS", "RELIANCE", "INFY"]:
         now = datetime.datetime.utcnow()
         if symbol == "TCS":
             evidence = "TCS expands partnership with Google Cloud for generative AI solutions."

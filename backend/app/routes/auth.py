@@ -196,13 +196,13 @@ def signup(user_in: UserCreate, db: Session = Depends(get_db)):
     db.refresh(watchlist)
 
     # Seed initial watchlist symbols
-    symbols = ["TCS", "RELIANCE", "INFOSYS"]
+    symbols = ["TCS", "RELIANCE", "INFY"]
     for s in symbols:
-        item = WatchlistItem(
-            watchlist_id=watchlist.id,
-            symbol=s
-        )
-        db.add(item)
+         item = WatchlistItem(
+             watchlist_id=watchlist.id,
+             symbol=s
+         )
+         db.add(item)
     db.commit()
 
     return user

@@ -32,7 +32,7 @@ MARKET_NEWS_DATA = [
         "url": "https://example.com/reliance-green-hydrogen"
     },
     {
-        "symbol": "INFOSYS",
+        "symbol": "INFY",
         "headline": "Infosys beats earnings estimates with 8% YoY revenue growth.",
         "timestamp": "2026-08-20T10:35:00Z",
         "category": "Results",
