@@ -106,7 +106,8 @@ async def approve_repair_proposal(
     repair.status = "HEALING"
     db.commit()
 
-    # 2. Apply proposed selector mappings to the collector
+    # 2. Apply proposed selector mappings to the collector (backing up the old mapping first)
+    old_selectors_str = collector.selector_mapping
     proposed_mapping = json.loads(repair.proposed_selectors)
     collector.selector_mapping = json.dumps(proposed_mapping)
     collector.last_repair_at = datetime.datetime.utcnow()
@@ -137,6 +138,10 @@ async def approve_repair_proposal(
         )
         db.add(alert)
     else:
+        # Revert selectors in DB back to original degraded mapping
+        collector.selector_mapping = old_selectors_str
+        db.commit()
+        
         repair.status = "FAILED"
         repair.verification_details = f"Verification failed. New health score is only {new_health}%. Scraper remains degraded."
 

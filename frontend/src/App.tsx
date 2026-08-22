@@ -19,6 +19,14 @@ import {
 } from 'lucide-react';
 import api from './lib/api';
 
+const safeNewDate = (dtStr: any): Date => {
+  if (!dtStr) return new Date();
+  if (dtStr instanceof Date) return dtStr;
+  const str = String(dtStr);
+  const cleanStr = str.endsWith('Z') || /[-+]\d{2}:\d{2}$/.test(str) ? str : `${str}Z`;
+  return new Date(cleanStr);
+};
+
 // Path definitions for simple hash routing
 // Routes: #home, #product, #solutions, #how-it-works, #security, #docs, #login, #signup
 // Authenticated App: #app, #app/sources, #app/repairs, #app/market, #app/settings, #app/docs
@@ -435,7 +443,7 @@ export default function App() {
                             </div>
                           </div>
                           <p className="text-zinc-800 text-[10px] font-bold leading-normal">{alert.description}</p>
-                          <span className="text-[9px] text-zinc-550 font-bold">{new Date(alert.created_at).toLocaleString()}</span>
+                          <span className="text-[9px] text-zinc-550 font-bold">{safeNewDate(alert.created_at).toLocaleString()}</span>
                         </div>
                       ))
                     )}
@@ -1029,7 +1037,7 @@ function OverviewDashboardView() {
                     <tr key={run.id} className="border-b border-black/25">
                       <td className="font-mono font-bold text-black text-xs whitespace-nowrap">{run.collector_name}</td>
                       <td className="text-zinc-650 text-[10px] font-mono font-bold whitespace-nowrap">
-                        {new Date(run.run_at).toLocaleString()}
+                        {safeNewDate(run.run_at).toLocaleString()}
                       </td>
                       <td className="font-mono font-bold text-black text-xs whitespace-nowrap">{run.records_count}</td>
                       <td className="font-mono font-bold whitespace-nowrap">
@@ -1492,7 +1500,7 @@ function RepairsDashboardView({ fetchAlerts }: { fetchAlerts: any }) {
                 </div>
                 <p className="text-zinc-650 text-xs mt-0.5 truncate font-mono font-bold">{r.failure_reason}</p>
                 <span className="text-[9px] text-zinc-600 font-mono mt-0.5 block font-bold">
-                  Started: {new Date(r.started_at).toLocaleString()}
+                  Started: {safeNewDate(r.started_at).toLocaleString()}
                 </span>
               </div>
             ))
@@ -1674,7 +1682,7 @@ function MarketIntelligenceDashboardView() {
   const formatRelativeTime = (publishTime: string) => {
     try {
       const now = new Date();
-      const pub = new Date(publishTime);
+      const pub = safeNewDate(publishTime);
       const diffMs = now.getTime() - pub.getTime();
       const diffMins = Math.floor(diffMs / 60000);
       if (diffMins < 1) return 'Just now';
