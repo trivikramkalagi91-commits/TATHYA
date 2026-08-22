@@ -21,6 +21,12 @@ class Settings(BaseSettings):
     # CORS configuration
     BACKEND_CORS_ORIGINS: list[str] = ["http://localhost:5173", "http://127.0.0.1:5173"]
 
+    def __init__(self, **values):
+        super().__init__(**values)
+        secret_key = os.getenv("JWT_SECRET_KEY")
+        if secret_key:
+            self.JWT_SECRET = secret_key
+
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"
