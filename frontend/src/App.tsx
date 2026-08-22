@@ -334,14 +334,20 @@ export default function App() {
           </div>
 
           {/* User Footer Panel */}
-          <div className="sidebar-footer">
-            <div className="flex flex-col text-xs">
-              <span className="font-bold text-black text-[11px]">{user?.full_name || 'Engineer'}</span>
-              <span className="text-[9px] text-zinc-500 font-mono tracking-tight">{user?.email}</span>
+          <div className="sidebar-footer" style={{flexDirection: 'column', gap: '8px'}}>
+            <div className="flex items-center gap-1.5 w-full" style={{paddingBottom: '6px', borderBottom: '1px solid #e4e4e7'}}>
+              <span style={{width: '7px', height: '7px', borderRadius: '50%', backgroundColor: '#22c55e', display: 'inline-block', flexShrink: 0, boxShadow: '0 0 4px #22c55e'}}></span>
+              <span className="text-[9px] font-mono text-zinc-500 tracking-tight">Bright Data — Connected</span>
             </div>
-            <button onClick={handleLogout} className="text-zinc-650 hover:text-black transition-colors border-0 bg-transparent cursor-pointer" title="Logout">
-              <LogOut size={16} />
-            </button>
+            <div className="flex items-center justify-between w-full">
+              <div className="flex flex-col text-xs">
+                <span className="font-bold text-black text-[11px]">{user?.full_name || 'Engineer'}</span>
+                <span className="text-[9px] text-zinc-500 font-mono tracking-tight">{user?.email}</span>
+              </div>
+              <button onClick={handleLogout} className="text-zinc-650 hover:text-black transition-colors border-0 bg-transparent cursor-pointer" title="Logout">
+                <LogOut size={16} />
+              </button>
+            </div>
           </div>
         </aside>
       )}
@@ -855,6 +861,7 @@ function LoginView({ setUser, fetchAlerts, error, setError }: { setUser: any; fe
       
       <div className="p-4 text-[10px] font-mono text-zinc-600 border-2 border-black rounded-none bg-white leading-relaxed">
         💡 <strong>Developer Credentials:</strong><br/>
+        <span className="text-zinc-400 italic">Provided for hackathon judges for evaluation purposes only.</span><br/><br/>
         Email: <span className="text-black font-bold underline">admin@tathya.io</span><br/>
         Password: <span className="text-black font-bold underline">tathya_admin_2026</span>
       </div>
